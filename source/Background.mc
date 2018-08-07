@@ -17,5 +17,4 @@ class Background extends Ui.Drawable {
         dc.setColor(Gfx.COLOR_TRANSPARENT, App.getApp().getProperty("BackgroundColor"));
         dc.clear();
     }
-
 }
