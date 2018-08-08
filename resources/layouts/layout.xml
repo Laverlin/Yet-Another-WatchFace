@@ -11,5 +11,5 @@
     
     <label id="TimeHourLabel" x="90" y="59" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     <label id="TimeMinuteLabel" x="90" y="120" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="TimeSecondLabel" x="113" y="152" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="TimeSecondLabel" x="113" y="150" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
  </layout>

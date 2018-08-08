@@ -27,7 +27,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     //
     function onPartialUpdate(dc)
     {
-		
+    	var clockTime = Sys.getClockTime();
+    	var viewSecond = View.findDrawableById("TimeSecondLabel");
+    	
+    	viewSecond.setText(clockTime.sec.format("%02d"));
+
+		dc.setClip(viewSecond.locX - viewSecond.width, viewSecond.locY, viewSecond.width, viewSecond.height);
+        
+        View.onUpdate(dc);
     }
 
     // Update the view
