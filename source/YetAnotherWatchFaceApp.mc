@@ -3,6 +3,8 @@ using Toybox.WatchUi as Ui;
 
 class YetAnotherWatchFaceApp extends App.AppBase {
 
+	hidden var _watchFaceView; 
+	
     function initialize() {
         AppBase.initialize();
     }
@@ -20,12 +22,14 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     // Return the initial view of your application here
     //
     function getInitialView() {
-        return [ new YetAnotherWatchFaceView() ];
+    	_watchFaceView = new YetAnotherWatchFaceView();
+        return [ _watchFaceView ];
     }
 
     // New app settings have been received so trigger a UI update
     //
     function onSettingsChanged() {
+    	_watchFaceView.UpdateSetting();
         Ui.requestUpdate();
     }
 
