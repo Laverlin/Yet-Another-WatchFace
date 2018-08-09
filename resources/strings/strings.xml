@@ -3,8 +3,9 @@
     <string id="AppName">Yet-Another-WatchFace</string>
 
     <string id="BackgroundColorTitle">Background Color</string>
-    <string id="ForegroundColorTitle">Foreground Color</string>
-    <string id="MilitaryFormatTitle">Military Format for 24 Hour Time</string>
+    <string id="TimeForegroundColorTitle">Time Foreground Color</string>
+    <string id="DayForegroundColorTitle">Day Foreground Color</string>
+    <string id="MonthForegroundColorTitle">Month Foreground Color</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>

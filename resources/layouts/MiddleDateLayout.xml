@@ -1,0 +1,19 @@
+<layout id="MiddleDateLayout">
+    <drawable class="Background" />
+    
+    <drawable id = "divider" class="LineDrawable" >
+    	<param name="x1">120</param> 
+    	<param name="y1">54</param>
+    	<param name="x2">120</param> 
+    	<param name="y2">186</param>
+		<param name="lineColor">Gfx.COLOR_YELLOW</param>
+    </drawable>
+    
+    <label id="TimeHourLabel" x="90" y="53" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="TimeMinuteLabel" x="90" y="132" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="TimeSecondLabel" x="115" y="162" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+     
+    <label id="TimeWeekDayLabel" x="50" y="104" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="TimeMonthLabel" x="88" y="104" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="TimeDayLabel" x="115" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+ </layout>

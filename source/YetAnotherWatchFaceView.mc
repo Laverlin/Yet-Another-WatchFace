@@ -8,7 +8,9 @@ using Toybox.Time.Gregorian as Gregorian;
 
 class YetAnotherWatchFaceView extends Ui.WatchFace {
 
-	hidden var _foregroundColor = App.getApp().getProperty("ForegroundColor");
+	hidden var _timeForegroundColor;
+	hidden var _dayForegroundColor;
+	hidden var _monthForegroundColor;
 	 
     function initialize() {
         WatchFace.initialize();
@@ -17,7 +19,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     // Load your resources here
     //
     function onLayout(dc) {
-        setLayout(Rez.Layouts.WatchFace(dc));
+        //setLayout(Rez.Layouts.WatchFace(dc));
+		setLayout(Rez.Layouts.MiddleDateLayout(dc));
+		UpdateSetting();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -30,7 +34,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     
     function UpdateSetting()
     {
-    	_foregroundColor = App.getApp().getProperty("ForegroundColor");
+	 	_timeForegroundColor = App.getApp().getProperty("TimeForegroundColor");
+		_dayForegroundColor = App.getApp().getProperty("DayForegroundColor");
+		_monthForegroundColor = App.getApp().getProperty("MonthForegroundColor");
     }
     
     // calls every second for partial update
@@ -54,35 +60,35 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         var timeNow = Gregorian.info(Time.now(), Time.FORMAT_LONG);
     	
     	var viewDivider = View.findDrawableById("divider");
-        viewDivider.setLineColor(_foregroundColor);
+        viewDivider.setLineColor(_timeForegroundColor);
     	
         // Update Time
         //
         var viewHour = View.findDrawableById("TimeHourLabel");
-        viewHour.setColor(_foregroundColor);
+        viewHour.setColor(_timeForegroundColor);
         viewHour.setText(timeNow.hour.format("%02d"));
         
         var viewMinute = View.findDrawableById("TimeMinuteLabel");
-        viewMinute.setColor(_foregroundColor);
+        viewMinute.setColor(_timeForegroundColor);
         viewMinute.setText(timeNow.min.format("%02d"));
         
         var viewSecond = View.findDrawableById("TimeSecondLabel");
-        viewSecond.setColor(_foregroundColor);
+        viewSecond.setColor(_timeForegroundColor);
         viewSecond.setText(timeNow.sec.format("%02d"));        
         
         // Update date
         //
         var viewWeekDay = View.findDrawableById("TimeWeekDayLabel");
-        viewWeekDay.setColor(Gfx.COLOR_WHITE);
-        viewWeekDay.setText(timeNow.day_of_week.substring(0, 2).toLower());
+        viewWeekDay.setColor(_dayForegroundColor);
+        viewWeekDay.setText(timeNow.day_of_week.toLower());
         
         var viewMonth = View.findDrawableById("TimeMonthLabel");
-        viewMonth.setColor(Gfx.COLOR_WHITE);
+        viewMonth.setColor(_monthForegroundColor);
         viewMonth.setText(timeNow.month.toLower());
         
         var viewDay = View.findDrawableById("TimeDayLabel");
-        viewDay.setColor(Gfx.COLOR_WHITE);
-        viewDay.setText(timeNow.day.toString());
+        viewDay.setColor(_dayForegroundColor);
+        viewDay.setText(timeNow.day.format("%02d"));
 
         // Call the parent onUpdate function to redraw the layout
         //
