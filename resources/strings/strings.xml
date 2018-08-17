@@ -15,4 +15,45 @@
     <string id="ColorRed">Red</string>
     <string id="ColorLimeGreen">LimeGreen</string>
 	<string id="ColorLime">Lime</string>
+	
+	<string id ="AlternateTimeZoneTitle">Alternate Time Zone</string>
+	<string id="Timem12">-12</string>
+	<string id="Timem11">-11 (American Samoa)</string>
+	<string id="Timem10">-10 (Hawaii)</string>
+	<string id="Timem93">-9:30 (Marquesas Islands)</string>
+	<string id="Timem9">-9 (Alaska)</string>
+	<string id="Timem8">-8 (PST, California)</string>
+	<string id="Timem7">-7 (Nevada, Arizona)</string>
+	<string id="Timem6">-6 (CST, Chicago, Florida)</string>
+	<string id="Timem5">-5 (EST, NewYork, New England)</string>
+	<string id="Timem4">-4 (Carribean)</string>
+	<string id="Timem33">-3:30 (Newfoundland)</string>
+	<string id="Timem3">-3 (Buenos Aries)</string>
+	<string id="Timem2">-2 </string>
+	<string id="Timem1">-1 (Greenland, Azores)</string>
+	<string id="Time0">UTC</string>
+	<string id="Timep1">+1 (CET, Berlin, Paris)</string>
+	<string id="Timep2">+2 (Athens, Cairo)</string>
+	<string id="Timep3">+3 (Moscow, Istanbul)</string>
+	<string id="Timep33">+3:30 (Iran)</string>
+	<string id="Timep4">+4 (Dubai)</string>
+	<string id="Timep43">+4:30 (Afghanistan)</string>
+	<string id="Timep5">+5 (Tashkent, Maldives)</string>
+	<string id="Timep53">+5:30 (India)</string>
+	<string id="Timep54">+5:45 (Nepal)</string>
+	<string id="Timep6">+6 (Bhutan, Bangladesh)</string>
+	<string id="Timep63">+6:30 (Myanmar)</string>
+	<string id="Timep7">+7 (Thailand, Vietnam)</string>
+	<string id="Timep8">+8 (Singapore, China)</string>
+	<string id="Timep84">+8:45 (Eucla)</string>
+	<string id="Timep9">+9 (Japan)</string>
+	<string id="Timep93">+9:30 (Adelaide)</string>
+	<string id="Timep10">+10 (Sydney)</string>
+	<string id="Timep103">+10:30 (New South Wales)</string>
+	<string id="Timep11">+11 (Papua New Guinea)</string>
+	<string id="Timep12">+12 (New Zealand)</string>
+	<string id="Timep124">+12:45 (Chatham Islands)</string>
+	<string id="Timep13">+13 (Samoa)</string>
+	<string id="Timep14">+14 (Line Islands)</string>
+	
 </strings>

@@ -11,6 +11,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 	hidden var _timeForegroundColor;
 	hidden var _dayForegroundColor;
 	hidden var _monthForegroundColor;
+	hidden var _alternateTimeZone;
+	hidden var _altTzTitle = { -28800 => "PST", -21600 => "CST", -18000 => "EST", 0 => "UTC", 3600 => "CET"};
 	 
     function initialize() {
         WatchFace.initialize();
@@ -37,6 +39,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 	 	_timeForegroundColor = App.getApp().getProperty("TimeForegroundColor");
 		_dayForegroundColor = App.getApp().getProperty("DayForegroundColor");
 		_monthForegroundColor = App.getApp().getProperty("MonthForegroundColor");
+		_alternateTimeZone = App.getApp().getProperty("AlternateTimeZone");
     }
     
     // calls every second for partial update
@@ -57,7 +60,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     //
     function onUpdate(dc) {
 
-        var timeNow = Gregorian.info(Time.now(), Time.FORMAT_LONG);
+		var timeNowValue = Time.now();
+        var timeNow = Gregorian.info(timeNowValue, Time.FORMAT_MEDIUM);
     	
     	var viewDivider = View.findDrawableById("divider");
         viewDivider.setLineColor(_timeForegroundColor);
@@ -89,6 +93,27 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         var viewDay = View.findDrawableById("TimeDayLabel");
         viewDay.setColor(_dayForegroundColor);
         viewDay.setText(timeNow.day.format("%02d"));
+        
+        // Update Alternate Time
+        //
+        var localTimeValue = Sys.getClockTime();
+        var localTz = new Time.Duration( - localTimeValue.timeZoneOffset + localTimeValue.dst);
+        var alternateTz = new Time.Duration(_alternateTimeZone);
+        var alternateTimeValue = timeNowValue.add(localTz).add(alternateTz);
+        var alternateTime = Gregorian.info(alternateTimeValue, Time.FORMAT_MEDIUM);
+
+        var viewAltTime = View.findDrawableById("OtherTimeLabel");
+        viewAltTime.setColor(_dayForegroundColor);
+        viewAltTime.setText(alternateTime.hour.format("%02d") + ":" + alternateTime.min.format("%02d"));
+
+        var viewAltTimeTitle = View.findDrawableById("OtherTimeTitleLabel");
+        viewAltTimeTitle.setColor(_monthForegroundColor);
+        var tzTitle =  _altTzTitle.get(_alternateTimeZone);
+        if (tzTitle == null)
+        {
+        	tzTitle = "[" + (_alternateTimeZone/3600).toString() + "]";
+        }
+        viewAltTimeTitle.setText(tzTitle);
 
         // Call the parent onUpdate function to redraw the layout
         //

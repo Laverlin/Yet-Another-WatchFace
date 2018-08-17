@@ -47,5 +47,48 @@
             <listEntry value="0x00FF00">@Strings.ColorLime</listEntry>
         </settingConfig>
     </setting>
+    
+    <setting propertyKey="@Properties.AlternateTimeZone" title="@Strings.AlternateTimeZoneTitle">
+        <settingConfig type="list">
+            <listEntry value="-43200">@Strings.Timem12</listEntry>
+            <listEntry value="-39600">@Strings.Timem11</listEntry>
+        	<listEntry value="-36000">@Strings.Timem10</listEntry>
+        	<listEntry value="-34200">@Strings.Timem93</listEntry>
+            <listEntry value="-32400">@Strings.Timem9</listEntry>
+            <listEntry value="-28800">@Strings.Timem8</listEntry>
+            <listEntry value="-25200">@Strings.Timem7</listEntry>
+            <listEntry value="-21600">@Strings.Timem6</listEntry>
+            <listEntry value="-18000">@Strings.Timem5</listEntry>
+            <listEntry value="-14400">@Strings.Timem4</listEntry>
+            <listEntry value="-10800">@Strings.Timem3</listEntry>
+            <listEntry value="-12600">@Strings.Timem33</listEntry>
+            <listEntry value="-7200">@Strings.Timem2</listEntry>
+            <listEntry value="-3600">@Strings.Timem1</listEntry>
+            <listEntry value="0">@Strings.Time0</listEntry>
+            <listEntry value="3600">@Strings.Timep1</listEntry>
+            <listEntry value="7200">@Strings.Timep2</listEntry>
+            <listEntry value="10800">@Strings.Timep3</listEntry>
+            <listEntry value="12600">@Strings.Timep33</listEntry>
+            <listEntry value="14400">@Strings.Timep4</listEntry>
+            <listEntry value="16200">@Strings.Timep43</listEntry>
+            <listEntry value="18000">@Strings.Timep5</listEntry>
+            <listEntry value="19800">@Strings.Timep53</listEntry>
+            <listEntry value="20700">@Strings.Timep54</listEntry>
+            <listEntry value="21600">@Strings.Timep6</listEntry>
+            <listEntry value="23400">@Strings.Timep63</listEntry>
+            <listEntry value="25200">@Strings.Timep7</listEntry>
+            <listEntry value="28800">@Strings.Timep8</listEntry>
+            <listEntry value="31500">@Strings.Timep84</listEntry>
+            <listEntry value="32400">@Strings.Timep9</listEntry>
+            <listEntry value="34200">@Strings.Timep93</listEntry>
+            <listEntry value="36000">@Strings.Timep10</listEntry>
+            <listEntry value="37800">@Strings.Timep103</listEntry>
+            <listEntry value="39600">@Strings.Timep11</listEntry>
+            <listEntry value="43200">@Strings.Timep12</listEntry>
+            <listEntry value="45900">@Strings.Timep124</listEntry>
+            <listEntry value="46800">@Strings.Timep13</listEntry>
+            <listEntry value="50400">@Strings.Timep14</listEntry>
+        </settingConfig>
+    </setting>
 
 </settings>

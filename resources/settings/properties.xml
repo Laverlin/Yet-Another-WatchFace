@@ -4,5 +4,7 @@
     <property id="TimeForegroundColor" type="number">0xFF0000</property>
     <property id="DayForegroundColor" type="number">0xFFFFFF</property>
     <property id="MonthForegroundColor" type="number">0xFFFFFF</property>
+    
+    <property id="AlternateTimeZone" type="number">0</property>
 
 </properties>

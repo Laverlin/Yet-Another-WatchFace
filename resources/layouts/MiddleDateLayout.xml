@@ -16,4 +16,14 @@
     <label id="TimeWeekDayLabel" x="50" y="104" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     <label id="TimeMonthLabel" x="88" y="104" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     <label id="TimeDayLabel" x="115" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    
+    <label id="WeatherLabel" x="125" y="48" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "23.1 [86%]"/>
+    <label id="WindLabel" x="125" y="72" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "05 kn, clear"/>
+    
+    <label id="OtherTimeLabel" x="125" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    <label id="OtherTimeTitleLabel" x="185" y="107" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    
+    <label id="PulseLabel" x="125" y="140" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "80 bpm"/>
+    <label id="DistLabel" x="125" y="164" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "2 km"/>
+     
  </layout>
