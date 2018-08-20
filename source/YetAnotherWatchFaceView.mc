@@ -12,7 +12,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 	hidden var _dayForegroundColor;
 	hidden var _monthForegroundColor;
 	hidden var _alternateTimeZone;
-	hidden var _altTzTitle = { -28800 => "PST", -21600 => "CST", -18000 => "EST", 0 => "UTC", 3600 => "CET"};
+	//hidden var _altTzTitle = { -28800 => "PST", -21600 => "CST", -18000 => "EST", 0 => "UTC", 3600 => "CET"};
+	hidden var _tzTitleDictionary; 
 	 
     function initialize() {
         WatchFace.initialize();
@@ -23,6 +24,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     function onLayout(dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
 		setLayout(Rez.Layouts.MiddleDateLayout(dc));
+		_tzTitleDictionary = Ui.loadResource(Rez.JsonData.tzTitleDictionary);
 		UpdateSetting();
     }
 
@@ -108,7 +110,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 
         var viewAltTimeTitle = View.findDrawableById("OtherTimeTitleLabel");
         viewAltTimeTitle.setColor(_monthForegroundColor);
-        var tzTitle =  _altTzTitle.get(_alternateTimeZone);
+        var tzTitle = _tzTitleDictionary[_alternateTimeZone.toString()]; //_altTzTitle.get(_alternateTimeZone);
         if (tzTitle == null)
         {
         	tzTitle = "[" + (_alternateTimeZone/3600).toString() + "]";

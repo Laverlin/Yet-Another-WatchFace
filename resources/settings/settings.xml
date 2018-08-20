@@ -60,9 +60,9 @@
             <listEntry value="-21600">@Strings.Timem6</listEntry>
             <listEntry value="-18000">@Strings.Timem5</listEntry>
             <listEntry value="-14400">@Strings.Timem4</listEntry>
-            <listEntry value="-10800">@Strings.Timem3</listEntry>
             <listEntry value="-12600">@Strings.Timem33</listEntry>
-            <listEntry value="-7200">@Strings.Timem2</listEntry>
+            <listEntry value="-10800">@Strings.Timem3</listEntry>
+	        <listEntry value="-7200">@Strings.Timem2</listEntry>
             <listEntry value="-3600">@Strings.Timem1</listEntry>
             <listEntry value="0">@Strings.Time0</listEntry>
             <listEntry value="3600">@Strings.Timep1</listEntry>
