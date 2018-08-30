@@ -1,5 +1,13 @@
 <settings>
 
+    <setting propertyKey="@Properties.AppVersion" title="@Strings.AppVersionTitle">
+        <settingConfig type="alphaNumeric" readonly="true" />
+    </setting>
+    
+   	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
+    	<settingConfig type="alphaNumeric"></settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
@@ -8,6 +16,8 @@
             <listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry>
         </settingConfig>
     </setting>
+    
+
 
     <setting propertyKey="@Properties.TimeForegroundColor" title="@Strings.TimeForegroundColorTitle">
         <settingConfig type="list">

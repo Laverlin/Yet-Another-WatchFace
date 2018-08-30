@@ -1,6 +1,8 @@
 <strings>
 
     <string id="AppName">Yet-Another-WatchFace</string>
+    <string id="AppVersionTitle">App Version</string>
+    <string id="WeatherApiKeyTitle">Weather API Key</string>
 
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="TimeForegroundColorTitle">Time Foreground Color</string>

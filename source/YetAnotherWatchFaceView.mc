@@ -5,6 +5,8 @@ using Toybox.Lang as Lang;
 using Toybox.Application as App;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Gregorian;
+using Toybox.ActivityMonitor as ActivityMonitor;
+using Toybox.Activity as Activity;
 
 class YetAnotherWatchFaceView extends Ui.WatchFace {
 
@@ -12,10 +14,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 	hidden var _dayForegroundColor;
 	hidden var _monthForegroundColor;
 	hidden var _alternateTimeZone;
-	//hidden var _altTzTitle = { -28800 => "PST", -21600 => "CST", -18000 => "EST", 0 => "UTC", 3600 => "CET"};
 	hidden var _tzTitleDictionary; 
-	 
-    function initialize() {
+	hidden var _weatherApiKey;
+	hidden var _weatherApiUrl;
+	
+	hidden var _weatherInfo = new WeatherInfo();
+	
+    function initialize() 
+    {
         WatchFace.initialize();
     }
 
@@ -26,14 +32,21 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 		setLayout(Rez.Layouts.MiddleDateLayout(dc));
 		_tzTitleDictionary = Ui.loadResource(Rez.JsonData.tzTitleDictionary);
 		UpdateSetting();
+		
     }
 
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     //
-    function onShow() {
+    function onShow() 
+    {
 
+    }
+    
+    function UpdateWeatherInfo(weatherInfo)
+    {
+    	_weatherInfo = weatherInfo;
     }
     
     function UpdateSetting()
@@ -42,6 +55,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 		_dayForegroundColor = App.getApp().getProperty("DayForegroundColor");
 		_monthForegroundColor = App.getApp().getProperty("MonthForegroundColor");
 		_alternateTimeZone = App.getApp().getProperty("AlternateTimeZone");
+		_weatherApiUrl = "https://api.darksky.net/forecast";
+		_weatherApiKey = App.getApp().getProperty("WeatherApiKey");
     }
     
     // calls every second for partial update
@@ -49,12 +64,20 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     function onPartialUpdate(dc)
     {
     	var clockTime = Sys.getClockTime();
-    	var viewSecond = View.findDrawableById("TimeSecondLabel");
     	
-    	viewSecond.setText(clockTime.sec.format("%02d"));
-
+    	var viewSecond = View.findDrawableById("TimeSecondLabel");
+     	viewSecond.setText(clockTime.sec.format("%02d"));
 		dc.setClip(viewSecond.locX - viewSecond.width, viewSecond.locY, viewSecond.width + 1, viewSecond.height);
-        View.onUpdate(dc);
+		View.onUpdate(dc);
+        
+		var chr = Activity.getActivityInfo().currentHeartRate;
+		if (chr != null)
+		{
+			var viewPulse = View.findDrawableById("PulseLabel");
+			viewPulse.setText(chr.toString());
+			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + viewPulse.width + 1, viewPulse.height);
+			View.onUpdate(dc);
+		}
         dc.clearClip();
     }
 
@@ -110,12 +133,34 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 
         var viewAltTimeTitle = View.findDrawableById("OtherTimeTitleLabel");
         viewAltTimeTitle.setColor(_monthForegroundColor);
-        var tzTitle = _tzTitleDictionary[_alternateTimeZone.toString()]; //_altTzTitle.get(_alternateTimeZone);
-        if (tzTitle == null)
-        {
-        	tzTitle = "[" + (_alternateTimeZone/3600).toString() + "]";
-        }
+        var tzTitle = _tzTitleDictionary[_alternateTimeZone.toString()]; 
+
         viewAltTimeTitle.setText(tzTitle);
+        
+        // get ActivityMonitor info
+        //
+		var info = ActivityMonitor.getInfo();
+		var distance = info.distance.toFloat()/10000;
+		
+        var viewDistance = View.findDrawableById("DistLabel");
+        viewDistance.setColor(_dayForegroundColor);
+        viewDistance.setText(distance.format("%2.1f"));
+        
+        var viewDistanceTitle = View.findDrawableById("DistTitleLabel");
+        viewDistanceTitle.setColor(_monthForegroundColor);
+        
+        var viewPulse = View.findDrawableById("PulseLabel");
+        viewPulse.setColor(_dayForegroundColor);
+        
+        var viewPulseTitle = View.findDrawableById("PulseTitleLabel");
+        viewPulseTitle.setColor(_monthForegroundColor);
+        
+        // Weather data
+        //
+		var viewWeather = View.findDrawableById("WeatherLabel");
+		viewWeather.setColor(_dayForegroundColor);
+		var weather = Lang.format("$1$ [$2$%]", [_weatherInfo.Temperature.format("%2.1f"), _weatherInfo.PerceptionProbability.format("%2d")]);
+		viewWeather.setText(weather);
 
         // Call the parent onUpdate function to redraw the layout
         //

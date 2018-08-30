@@ -1,5 +1,6 @@
 <properties>
-
+	<property id="AppVersion" type="string">0.1</property>
+	<property id="WeatherApiKey" type="string"></property>
     <property id="BackgroundColor" type="number">0x000000</property>
     <property id="TimeForegroundColor" type="number">0xFF0000</property>
     <property id="DayForegroundColor" type="number">0xFFFFFF</property>
