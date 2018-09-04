@@ -9,4 +9,20 @@
 			"36000":"AET", "37800":"LHST", "39600":"VUT", "43200":"NZST", "45900":"CHAST", "46800":"TOT", "50400":"LINT"
 		}
 	</jsonData>
+	<jsonData id="conditionIcons">
+	{
+		"clear-day":"A", 
+		"partly-cloudy-day":"B",		
+		"clear-night":"C",
+		"partly-cloudy-night":"D",		 
+		"rain":"E", 
+		"snow":"F", 
+		"sleet":"J", 
+		"wind":"H", 
+		"fog":"I", 
+		"cloudy":"J"
+	}
+	</jsonData>
+	<font id="msss16_font" filename="msss16Font.fnt" antialias="true" />
+	<font id="icon_font" filename="IconFont.fnt" antialias="true"/>
 </resources>

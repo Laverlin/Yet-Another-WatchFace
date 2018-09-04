@@ -17,16 +17,23 @@
     <label id="TimeMonthLabel" x="88" y="104" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     <label id="TimeDayLabel" x="115" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     
-    <label id="WeatherLabel" x="125" y="48" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "loading..."/>
-    <label id="WindLabel" x="125" y="72" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "05 kn, clear"/>
+    <label id="WeatherLabel" x="125" y="48" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+
+    <label id="WeatherLabelTitle" x="165" y="45" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "o"/>
+
+    <label id="PerceptionLabel" x="175" y="48" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    
+    <label id="WindLabel" x="125" y="72" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    <label id="WindTitle" x="165" y="78" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="kn"/>
+    <label id="ConditionLabel" x="190" y="74" font="@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" />
     
     <label id="OtherTimeLabel" x="125" y="107" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
-    <label id="OtherTimeTitleLabel" x="178" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    <label id="OtherTimeTitleLabel" x="178" y="114" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     
     <label id="PulseLabel" x="125" y="140" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="--"/>
-    <label id="PulseTitleLabel" x="178" y="140" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "bpm"/>
+    <label id="PulseTitleLabel" x="178" y="147" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "bpm"/>
     
     <label id="DistLabel" x="125" y="164" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
-    <label id="DistTitleLabel" x="178" y="164" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "km"/>
+    <label id="DistTitleLabel" x="178" y="171" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "km"/>
      
  </layout>

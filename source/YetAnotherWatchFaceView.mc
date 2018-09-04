@@ -10,6 +10,8 @@ using Toybox.Activity as Activity;
 
 class YetAnotherWatchFaceView extends Ui.WatchFace {
 
+	var MonthForegroundColor = Gfx.COLOR_BLUE;
+	
 	hidden var _timeForegroundColor;
 	hidden var _dayForegroundColor;
 	hidden var _monthForegroundColor;
@@ -17,6 +19,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 	hidden var _tzTitleDictionary; 
 	hidden var _weatherApiKey;
 	hidden var _weatherApiUrl;
+	hidden var _conditionIcons;
 	
 	hidden var _weatherInfo = new WeatherInfo();
 	
@@ -31,6 +34,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         //setLayout(Rez.Layouts.WatchFace(dc));
 		setLayout(Rez.Layouts.MiddleDateLayout(dc));
 		_tzTitleDictionary = Ui.loadResource(Rez.JsonData.tzTitleDictionary);
+		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 		UpdateSetting();
 		
     }
@@ -57,6 +61,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 		_alternateTimeZone = App.getApp().getProperty("AlternateTimeZone");
 		_weatherApiUrl = "https://api.darksky.net/forecast";
 		_weatherApiKey = App.getApp().getProperty("WeatherApiKey");
+		
+		MonthForegroundColor = _monthForegroundColor;
     }
     
     // calls every second for partial update
@@ -157,10 +163,36 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         
         // Weather data
         //
+		var weather = Lang.format("$1$", [_weatherInfo.Temperature.format("%2.1f")]);
+		var perception = Lang.format("$1$%", [_weatherInfo.PerceptionProbability.format("%2d")]);
+        
 		var viewWeather = View.findDrawableById("WeatherLabel");
 		viewWeather.setColor(_dayForegroundColor);
-		var weather = Lang.format("$1$ [$2$%]", [_weatherInfo.Temperature.format("%2.1f"), _weatherInfo.PerceptionProbability.format("%2d")]);
 		viewWeather.setText(weather);
+		var viewWeatherTitle = View.findDrawableById("WeatherLabelTitle");
+		viewWeatherTitle.setColor(_monthForegroundColor);
+		viewWeatherTitle.locX = viewWeather.locX + dc.getTextWidthInPixels(weather, Gfx.FONT_TINY) + 1;
+		
+		var viewPerception = View.findDrawableById("PerceptionLabel");
+		viewPerception.setColor(_dayForegroundColor);
+		viewPerception.setText(perception);
+		
+		var viewWind = View.findDrawableById("WindLabel");
+		viewWind.setColor(_dayForegroundColor);
+		var wind = Lang.format("$1$", [_weatherInfo.WindSpeed.format("%2.1f")]);
+		viewWind.setText(wind);		
+		
+		var viewWindTitle = View.findDrawableById("WindTitle");
+		viewWindTitle.setColor(_monthForegroundColor);
+		viewWindTitle.locX = viewWind.locX + dc.getTextWidthInPixels(wind, Gfx.FONT_TINY) + 1;
+
+		var viewCondition = View.findDrawableById("ConditionLabel");
+		viewCondition.setColor(_timeForegroundColor);
+		var icon = _conditionIcons[_weatherInfo.Condition];
+		if (icon != null)
+		{
+			viewCondition.setText(icon);
+		}
 
         // Call the parent onUpdate function to redraw the layout
         //
