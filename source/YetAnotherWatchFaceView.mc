@@ -194,6 +194,32 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 			viewCondition.setText(icon);
 		}
 
+		// watch status
+		//
+		var connectionState = Sys.getDeviceSettings().phoneConnected;
+		var viewBt = View.findDrawableById("BluetoothLabel");
+		viewBt.setColor(_monthForegroundColor);
+		viewBt.setText(connectionState ? "a" : "b");
+		
+		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
+		View.findDrawableById("BatteryLabel1").setText((batteryLevel % 10).format("%1d"));
+		batteryLevel = batteryLevel / 10;
+		if (batteryLevel == 10 )
+		{
+			View.findDrawableById("BatteryLabel3").setText("1");
+			View.findDrawableById("BatteryLabel2").setText("0");
+		}
+		else
+		{
+			View.findDrawableById("BatteryLabel3").setText("");
+			View.findDrawableById("BatteryLabel2").setText((batteryLevel % 10).format("%1d"));
+		}
+		for (var i=0; i < 4; i++)
+		{
+			View.findDrawableById("BatteryLabel" + i).setColor(_monthForegroundColor);
+		}
+		
+		
         // Call the parent onUpdate function to redraw the layout
         //
         View.onUpdate(dc);

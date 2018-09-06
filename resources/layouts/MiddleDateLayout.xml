@@ -28,12 +28,19 @@
     <label id="ConditionLabel" x="190" y="74" font="@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" />
     
     <label id="OtherTimeLabel" x="125" y="107" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
-    <label id="OtherTimeTitleLabel" x="178" y="114" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    <label id="OtherTimeTitleLabel" x="178" y="113" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     
     <label id="PulseLabel" x="125" y="140" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="--"/>
-    <label id="PulseTitleLabel" x="178" y="147" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "bpm"/>
+    <label id="PulseTitleLabel" x="178" y="146" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "bpm"/>
     
     <label id="DistLabel" x="125" y="164" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
-    <label id="DistTitleLabel" x="178" y="171" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "km"/>
+    <label id="DistTitleLabel" x="178" y="170" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "km"/>
+    
+    <label id="BatteryLabel0" x = "114" y = "53" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" text="%"/>
+    <label id="BatteryLabel1" x = "114" y = "62" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="BatteryLabel2" x = "114" y = "70" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="BatteryLabel3" x = "114" y = "78" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    
+    <label id="BluetoothLabel" x = "120" y = "137" font = "@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" text="a"/>
      
  </layout>

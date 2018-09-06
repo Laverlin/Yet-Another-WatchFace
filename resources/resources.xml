@@ -25,4 +25,5 @@
 	</jsonData>
 	<font id="msss16_font" filename="msss16Font.fnt" antialias="true" />
 	<font id="icon_font" filename="IconFont.fnt" antialias="true"/>
+	<font id="vertical_font" filename="Vertical12.fnt" antialias="true"/>
 </resources>

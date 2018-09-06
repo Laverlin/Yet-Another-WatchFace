@@ -26,7 +26,6 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 	
     function onTemporalEvent() 
     {
-    	Sys.println("on event");
 		RequestWeather();
     }
     
@@ -34,14 +33,14 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 	{
 		// get unix epoch 
 		//
-		var tz = new Time.Duration(Sys.getClockTime().timeZoneOffset*-1);
+		var tz = new Time.Duration(Sys.getClockTime().timeZoneOffset * -1);
 		var epoch = Time.now().add(tz);
 		
 		// get gps
 		//
-		var curLoc = Activity.getActivityInfo().currentLocation;
-		if (curLoc == null) {return;}
-		var location = curLoc.toDegrees();
+		var activityLocation = Activity.getActivityInfo().currentLocation;
+		if (activityLocation == null) {return;}
+		var location = activityLocation.toDegrees();
 
 		var url = Lang.format("$1$/$2$/$3$,$4$,$5$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
 			"https://api.darksky.net/forecast",
@@ -75,35 +74,4 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 		Background.exit(_weatherInfo.ToDictionary());
 	}
 
-}
-
-(:background)
-class WeatherInfo
-{
-	var Temperature = 0;
-	var WindSpeed = 0;
-	var PerceptionProbability = 0;
-	var Condition = "";
-	var Status = 0;
-	
-	function ToDictionary()
-	{
-		return
-		{
-			"Temperature" => Temperature, 
-			"WindSpeed" => WindSpeed, 
-			"PerceptionProbability" => PerceptionProbability, 
-			"Condition" => Condition, 
-			"Status" => Status 
-		};
-	}
-	
-	function FromDictionary(dictionary)
-	{
-		Temperature = dictionary["Temperature"];
-		WindSpeed = dictionary["WindSpeed"];
-		PerceptionProbability = dictionary["PerceptionProbability"];
-		Condition = dictionary["Condition"];
-		Status = dictionary["Status"];
-	}
 }
