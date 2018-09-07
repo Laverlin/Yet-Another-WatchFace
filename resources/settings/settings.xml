@@ -19,7 +19,7 @@
     
 
 
-    <setting propertyKey="@Properties.TimeForegroundColor" title="@Strings.TimeForegroundColorTitle">
+    <setting propertyKey="@Properties.TimeColor" title="@Strings.TimeColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
             <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
@@ -32,7 +32,7 @@
         </settingConfig>
     </setting>
     
-    <setting propertyKey="@Properties.DayForegroundColor" title="@Strings.DayForegroundColorTitle">
+    <setting propertyKey="@Properties.BrightColor" title="@Strings.BrightColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
             <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
@@ -45,7 +45,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.MonthForegroundColor" title="@Strings.MonthForegroundColorTitle">
+    <setting propertyKey="@Properties.DimColor" title="@Strings.DimColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
             <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
@@ -58,7 +58,7 @@
         </settingConfig>
     </setting>
     
-    <setting propertyKey="@Properties.AlternateTimeZone" title="@Strings.AlternateTimeZoneTitle">
+    <setting propertyKey="@Properties.ExtraTimeZone" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">
             <listEntry value="-43200">@Strings.Timem12</listEntry>
             <listEntry value="-39600">@Strings.Timem11</listEntry>

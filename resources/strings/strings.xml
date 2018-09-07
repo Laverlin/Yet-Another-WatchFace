@@ -5,9 +5,9 @@
     <string id="WeatherApiKeyTitle">Weather API Key</string>
 
     <string id="BackgroundColorTitle">Background Color</string>
-    <string id="TimeForegroundColorTitle">Time Foreground Color</string>
-    <string id="DayForegroundColorTitle">Day Foreground Color</string>
-    <string id="MonthForegroundColorTitle">Month Foreground Color</string>
+    <string id="TimeColorTitle">Time Color</string>
+    <string id="BrightColorTitle">Bright Color</string>
+    <string id="DimColorTitle">Dim Color</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>
@@ -18,7 +18,7 @@
     <string id="ColorLimeGreen">LimeGreen</string>
 	<string id="ColorLime">Lime</string>
 	
-	<string id ="AlternateTimeZoneTitle">Alternate Time Zone</string>
+	<string id ="ExtraTimeZoneTitle">Extra Time Zone</string>
 	<string id="Timem12">-12</string>
 	<string id="Timem11">-11 (American Samoa)</string>
 	<string id="Timem10">-10 (Hawaii)</string>

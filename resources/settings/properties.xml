@@ -2,10 +2,10 @@
 	<property id="AppVersion" type="string">0.1</property>
 	<property id="WeatherApiKey" type="string"></property>
     <property id="BackgroundColor" type="number">0x000000</property>
-    <property id="TimeForegroundColor" type="number">0xFF0000</property>
-    <property id="DayForegroundColor" type="number">0xFFFFFF</property>
-    <property id="MonthForegroundColor" type="number">0xFFFFFF</property>
+    <property id="TimeColor" type="number">0xFF0000</property>
+    <property id="BrightColor" type="number">0xFFFFFF</property>
+    <property id="DimColor" type="number">0xFFFFFF</property>
     
-    <property id="AlternateTimeZone" type="number">0</property>
+    <property id="ExtraTimeZone" type="number">0</property>
 
 </properties>
