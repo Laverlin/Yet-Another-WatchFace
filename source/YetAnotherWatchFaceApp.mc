@@ -28,7 +28,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     {
     	Background.registerForTemporalEvent(new Time.Duration(60 * 60));
     	_watchFaceView = new YetAnotherWatchFaceView();
-        return [ _watchFaceView ];
+        return [ _watchFaceView, new PowerBudgetDelegate() ];
     }
 
     // New app settings have been received so trigger a UI update
@@ -58,5 +58,4 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     {
         return [new BackgroundServiceDelegate()];
     }
-
 }

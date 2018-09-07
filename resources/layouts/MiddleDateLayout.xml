@@ -9,13 +9,13 @@
 		<param name="lineColor">Gfx.COLOR_YELLOW</param>
     </drawable>
     
-    <label id="TimeHourLabel" x="90" y="53" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="TimeMinuteLabel" x="90" y="133" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="TimeSecondLabel" x="115" y="164" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="HourLabel_time" x="90" y="53" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="MinuteLabel_time" x="90" y="133" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="SecondLabel_time_setbg" x="115" y="164" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
      
-    <label id="TimeWeekDayLabel" x="50" y="104" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="TimeMonthLabel" x="88" y="104" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="TimeDayLabel" x="115" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="WeekDayLabel_bright" x="50" y="104" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="MonthLabel_dim" x="88" y="104" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="DayLabel_bright" x="115" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     
     <label id="WeatherLabel" x="125" y="48" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
 
@@ -30,7 +30,7 @@
     <label id="OtherTimeLabel" x="125" y="107" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     <label id="OtherTimeTitleLabel" x="178" y="113" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     
-    <label id="PulseLabel" x="125" y="140" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="--"/>
+    <label id="PulseLabel_bright_setbg" x="125" y="140" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="--"/>
     <label id="PulseTitleLabel" x="178" y="146" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "bpm"/>
     
     <label id="DistLabel" x="125" y="164" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>

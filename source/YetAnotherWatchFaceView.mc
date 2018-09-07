@@ -10,7 +10,7 @@ using Toybox.Activity as Activity;
 
 class YetAnotherWatchFaceView extends Ui.WatchFace {
 
-	var MonthForegroundColor = Gfx.COLOR_BLUE;
+	hidden var _layout;
 	
 	hidden var _timeForegroundColor;
 	hidden var _dayForegroundColor;
@@ -20,6 +20,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 	hidden var _weatherApiKey;
 	hidden var _weatherApiUrl;
 	hidden var _conditionIcons;
+	hidden var _backgroundColor;
 	
 	hidden var _weatherInfo = new WeatherInfo();
 	
@@ -32,7 +33,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     //
     function onLayout(dc) {
         //setLayout(Rez.Layouts.WatchFace(dc));
-		setLayout(Rez.Layouts.MiddleDateLayout(dc));
+        _layout = Rez.Layouts.MiddleDateLayout(dc);
+		setLayout(_layout);
 		_tzTitleDictionary = Ui.loadResource(Rez.JsonData.tzTitleDictionary);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 		UpdateSetting();
@@ -45,7 +47,30 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     //
     function onShow() 
     {
-
+		SetColors();
+    }
+    
+    function SetColors()
+    {
+    	for(var i = 0; i < _layout.size(); i++)
+    	{
+    		if(_layout[i].identifier.find("_time") != null)
+    		{
+    			_layout[i].setColor(_timeForegroundColor);
+    		}
+    		if(_layout[i].identifier.find("_setbg") != null)
+    		{
+    			_layout[i].setBackgroundColor(_backgroundColor);
+    		}
+    		if(_layout[i].identifier.find("_bright") != null)
+    		{
+    			_layout[i].setColor(_dayForegroundColor);
+    		}
+    		if(_layout[i].identifier.find("_dim") != null)
+    		{
+    			_layout[i].setColor(_monthForegroundColor);
+    		}
+    	}
     }
     
     function UpdateWeatherInfo(weatherInfo)
@@ -61,8 +86,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 		_alternateTimeZone = App.getApp().getProperty("AlternateTimeZone");
 		_weatherApiUrl = "https://api.darksky.net/forecast";
 		_weatherApiKey = App.getApp().getProperty("WeatherApiKey");
+		_backgroundColor = App.getApp().getProperty("BackgroundColor");
 		
-		MonthForegroundColor = _monthForegroundColor;
+		SetColors();
     }
     
     // calls every second for partial update
@@ -71,19 +97,20 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     {
     	var clockTime = Sys.getClockTime();
     	
-    	var viewSecond = View.findDrawableById("TimeSecondLabel");
-     	viewSecond.setText(clockTime.sec.format("%02d"));
-		dc.setClip(viewSecond.locX - viewSecond.width, viewSecond.locY, viewSecond.width + 1, viewSecond.height);
-		View.onUpdate(dc);
-        
+    	var secondLabel = View.findDrawableById("SecondLabel_time_setbg");
+     	dc.setClip(secondLabel.locX - secondLabel.width, secondLabel.locY, secondLabel.width + 1, secondLabel.height);
+     	secondLabel.setText(clockTime.sec.format("%02d"));
+		secondLabel.draw(dc);
+
 		var chr = Activity.getActivityInfo().currentHeartRate;
 		if (chr != null)
 		{
-			var viewPulse = View.findDrawableById("PulseLabel");
-			viewPulse.setText(chr.toString());
+			var viewPulse = View.findDrawableById("PulseLabel_bright_setbg");
 			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + viewPulse.width + 1, viewPulse.height);
-			View.onUpdate(dc);
+			viewPulse.setText(chr.toString());
+			viewPulse.draw(dc);
 		}
+
         dc.clearClip();
     }
 
@@ -91,39 +118,35 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     //
     function onUpdate(dc) {
 
+
 		var timeNowValue = Time.now();
         var timeNow = Gregorian.info(timeNowValue, Time.FORMAT_MEDIUM);
     	
-    	var viewDivider = View.findDrawableById("divider");
-        viewDivider.setLineColor(_timeForegroundColor);
+    	var viewDivider = View.findDrawableById("divider")
+    		.setLineColor(_timeForegroundColor);
     	
         // Update Time
         //
-        var viewHour = View.findDrawableById("TimeHourLabel");
-        viewHour.setColor(_timeForegroundColor);
-        viewHour.setText(timeNow.hour.format("%02d"));
+        View.findDrawableById("HourLabel_time")
+        	.setText(timeNow.hour.format("%02d"));
         
-        var viewMinute = View.findDrawableById("TimeMinuteLabel");
-        viewMinute.setColor(_timeForegroundColor);
-        viewMinute.setText(timeNow.min.format("%02d"));
+        var viewMinute = View.findDrawableById("MinuteLabel_time")
+        	.setText(timeNow.min.format("%02d"));
         
-        var viewSecond = View.findDrawableById("TimeSecondLabel");
-        viewSecond.setColor(_timeForegroundColor);
-        viewSecond.setText(timeNow.sec.format("%02d"));        
+        View.findDrawableById("SecondLabel_time_setbg")
+        	.setText(timeNow.sec.format("%02d"));
+     
         
         // Update date
         //
-        var viewWeekDay = View.findDrawableById("TimeWeekDayLabel");
-        viewWeekDay.setColor(_dayForegroundColor);
-        viewWeekDay.setText(timeNow.day_of_week.toLower());
+        View.findDrawableById("WeekDayLabel_bright")
+        	.setText(timeNow.day_of_week.toLower());
         
-        var viewMonth = View.findDrawableById("TimeMonthLabel");
-        viewMonth.setColor(_monthForegroundColor);
-        viewMonth.setText(timeNow.month.toLower());
+        View.findDrawableById("MonthLabel_dim")
+        	.setText(timeNow.month.toLower());
         
-        var viewDay = View.findDrawableById("TimeDayLabel");
-        viewDay.setColor(_dayForegroundColor);
-        viewDay.setText(timeNow.day.format("%02d"));
+        View.findDrawableById("DayLabel_bright")
+        	.setText(timeNow.day.format("%02d"));
         
         // Update Alternate Time
         //
@@ -155,8 +178,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         var viewDistanceTitle = View.findDrawableById("DistTitleLabel");
         viewDistanceTitle.setColor(_monthForegroundColor);
         
-        var viewPulse = View.findDrawableById("PulseLabel");
-        viewPulse.setColor(_dayForegroundColor);
         
         var viewPulseTitle = View.findDrawableById("PulseTitleLabel");
         viewPulseTitle.setColor(_monthForegroundColor);
