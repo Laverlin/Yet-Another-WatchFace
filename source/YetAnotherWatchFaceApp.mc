@@ -26,8 +26,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     //
     function getInitialView() 
     {
-    	//Background.registerForTemporalEvent(Time.now());
-    	//Background.registerForTemporalEvent(new Time.Duration(60 * 60));
  		var FIVE_MINUTES = new Time.Duration(5 * 60);
 		var lastTime = Background.getLastTemporalEventTime();
 		if (lastTime != null) 
@@ -55,6 +53,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onBackgroundData(data) 
     {
     	Background.registerForTemporalEvent(new Time.Duration(60 * 60));
+    	
         Sys.println(data);
         var weatherInfo = new WeatherInfo();
         if (data != null)

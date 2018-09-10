@@ -123,10 +123,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		secondLabel.draw(dc);
 
 		var chr = Activity.getActivityInfo().currentHeartRate;
-		chr = (chr == null)?_chr:chr;
 		if (chr != null)
 		{
-			_chr = chr;
 			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
 			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + viewPulse.width + 1, viewPulse.height);
 			viewPulse.setText(chr.toString());
@@ -186,6 +184,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // Weather data
         //
+        if (_weatherInfo.Status != 1)
+        {
+        	var lastWeather = App.getApp().getProperty("WeatherInfo");
+			if (lastWeather != null)
+			{
+				_weatherInfo.FromDictionary(lastWeather);
+			}
+        }
+        
 		var temperature = Lang.format("$1$", [_weatherInfo.Temperature.format("%2.1f")]);
 		var perception = Lang.format("$1$%", [_weatherInfo.PerceptionProbability.format("%2d")]);
         

@@ -17,11 +17,6 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 	function initialize() 
 	{
 		Sys.ServiceDelegate.initialize();
-		var lastWeather = App.getApp().getProperty("WeatherInfo");
-		if (lastWeather != null)
-		{
-			_weatherInfo.FromDictionary(App.getApp().getProperty("WeatherInfo"));
-		}
 	}
 	
     function onTemporalEvent() 
@@ -39,7 +34,10 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 		// get gps
 		//
 		var activityLocation = Activity.getActivityInfo().currentLocation;
-		if (activityLocation == null) {return;}
+		if (activityLocation == null) 
+		{
+			return;
+		}
 		var location = activityLocation.toDegrees();
 
 		var url = Lang.format("$1$/$2$/$3$,$4$,$5$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
