@@ -73,5 +73,4 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 		}
 		Background.exit(_weatherInfo.ToDictionary());
 	}
-
 }

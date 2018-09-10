@@ -7,22 +7,27 @@ using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Gregorian;
 using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Activity as Activity;
+using Toybox.Background as Background;
 
-class YetAnotherWatchFaceView extends Ui.WatchFace {
-
+class YetAnotherWatchFaceView extends Ui.WatchFace 
+{
 	hidden var _layout;
 	
+	hidden var _backgroundColor;
 	hidden var _timeColor;
 	hidden var _brightColor;
 	hidden var _dimColor;
 	hidden var _extraTimeZone;
-	hidden var _tzTitleDictionary; 
+
 	hidden var _weatherApiKey;
 	hidden var _weatherApiUrl;
+	
+	hidden var _tzTitleDictionary;	
 	hidden var _conditionIcons;
-	hidden var _backgroundColor;
 	
 	hidden var _weatherInfo = new WeatherInfo();
+	
+	hidden var _chr;
 	
     function initialize() 
     {
@@ -31,14 +36,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 
     // Load your resources here
     //
-    function onLayout(dc) {
-
+    function onLayout(dc) 
+    {
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
 		_tzTitleDictionary = Ui.loadResource(Rez.JsonData.tzTitleDictionary);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 		UpdateSetting();
-		
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -48,8 +52,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     function onShow() 
     {
 		SetColors();
-    }
-    
+	}
+	
     function SetColors()
     {
     	for(var i = 0; i < _layout.size(); i++)
@@ -119,8 +123,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
 		secondLabel.draw(dc);
 
 		var chr = Activity.getActivityInfo().currentHeartRate;
+		chr = (chr == null)?_chr:chr;
 		if (chr != null)
 		{
+			_chr = chr;
 			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
 			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + viewPulse.width + 1, viewPulse.height);
 			viewPulse.setText(chr.toString());
@@ -134,7 +140,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
     //
     function onUpdate(dc) 
     {
-
 		var timeNow = Time.now();
         var gregorianTimeNow = Gregorian.info(timeNow, Time.FORMAT_MEDIUM);
     	
@@ -174,7 +179,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         // get ActivityMonitor info
         //
 		var info = ActivityMonitor.getInfo();
-		var distance = info.distance.toFloat()/10000;
+		var distance = info.distance.toFloat()/100000;
 		
         View.findDrawableById("Dist_bright")
         	.setText(distance.format("%2.1f"));
@@ -229,5 +234,4 @@ class YetAnotherWatchFaceView extends Ui.WatchFace {
         //
         View.onUpdate(dc);
     }
-
 }

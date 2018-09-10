@@ -26,20 +26,35 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     //
     function getInitialView() 
     {
-    	Background.registerForTemporalEvent(new Time.Duration(60 * 60));
+    	//Background.registerForTemporalEvent(Time.now());
+    	//Background.registerForTemporalEvent(new Time.Duration(60 * 60));
+ 		var FIVE_MINUTES = new Time.Duration(5 * 60);
+		var lastTime = Background.getLastTemporalEventTime();
+		if (lastTime != null) 
+		{
+    		var nextTime = lastTime.add(FIVE_MINUTES);
+    		Background.registerForTemporalEvent(nextTime);
+		} 
+		else 
+		{
+    		Background.registerForTemporalEvent(Time.now());
+		}   	
+    	
     	_watchFaceView = new YetAnotherWatchFaceView();
         return [ _watchFaceView, new PowerBudgetDelegate() ];
     }
 
     // New app settings have been received so trigger a UI update
     //
-    function onSettingsChanged() {
+    function onSettingsChanged() 
+    {
     	_watchFaceView.UpdateSetting();
         Ui.requestUpdate();
     }
     
     function onBackgroundData(data) 
     {
+    	Background.registerForTemporalEvent(new Time.Duration(60 * 60));
         Sys.println(data);
         var weatherInfo = new WeatherInfo();
         if (data != null)

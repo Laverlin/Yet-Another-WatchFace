@@ -21,10 +21,18 @@ class WeatherInfo
 	
 	function FromDictionary(dictionary)
 	{
-		Temperature = dictionary["Temperature"];
-		WindSpeed = dictionary["WindSpeed"];
-		PerceptionProbability = dictionary["PerceptionProbability"];
-		Condition = dictionary["Condition"];
-		Status = dictionary["Status"];
+		try
+		{
+			Temperature = dictionary["Temperature"];
+			WindSpeed = dictionary["WindSpeed"];
+			PerceptionProbability = dictionary["PerceptionProbability"];
+			Condition = dictionary["Condition"];
+			Status = dictionary["Status"];
+		}
+		catch(ex)
+		{
+			Sys.println("dictionary conversion error:" + ex.getErrorMessage());
+			Status = -1000;
+		}
 	}
 }
