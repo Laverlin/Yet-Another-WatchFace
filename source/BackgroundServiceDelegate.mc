@@ -4,6 +4,8 @@ using Toybox.Activity as Activity;
 using Toybox.Communications as Comm;
 using Toybox.Position as Position;
 using Toybox.Application as App;
+using Toybox.Time as Time;
+using Toybox.Time.Gregorian as Gregorian;
 
 // The Service Delegate is the main entry point for background processes
 // our onTemporalEvent() method will get run each time our periodic event
@@ -13,6 +15,8 @@ using Toybox.Application as App;
 class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate 
 {
 	var _weatherInfo = new WeatherInfo();
+	
+	var _time;
 			
 	function initialize() 
 	{
@@ -30,12 +34,15 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 		//
 		var tz = new Time.Duration(Sys.getClockTime().timeZoneOffset * -1);
 		var epoch = Time.now().add(tz);
+		var gTime = Gregorian.info(epoch, Time.FORMAT_MEDIUM);
+		_time = gTime.month + "." + gTime.day + " " + gTime.hour + ":" + gTime.min + ":" + gTime.sec;
 		
 		// get gps
 		//
 		var activityLocation = Activity.getActivityInfo().currentLocation;
 		if (activityLocation == null) 
 		{
+			Sys.println(_time + " :: location unknown");
 			return;
 		}
 		var location = activityLocation.toDegrees();
@@ -46,6 +53,8 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 			location[0],
 			location[1],
 			epoch.value()]);  
+			
+		Sys.println(_time + " :: request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -57,6 +66,8 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 	
 	function OnReceiveWeather(responseCode, data)
 	{
+	    Sys.println(_time + " :: response code: " + responseCode + ", data :: " + data);
+	    
 		if (responseCode == 200)
 		{
 			_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();

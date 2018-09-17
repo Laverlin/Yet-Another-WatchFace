@@ -21,7 +21,8 @@
 
     <label id="TemperatureTitle_dim" x="165" y="45" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "o"/>
 
-    <label id="Perception_bright" x="175" y="48" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
+    <label id="Perception_bright" x="207" y="48" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE"/>
+    <label id="PerceptionTitle_dim" x="221" y="55" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" text="%"/>
     
     <label id="Wind_bright" x="125" y="72" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     <label id="WindTitle_dim" x="165" y="78" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="kn"/>
@@ -38,8 +39,8 @@
     
     <label id="Battery0_dim" x = "114" y = "53" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" text="%"/>
     <label id="Battery1_dim" x = "114" y = "62" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="Battery2_dim" x = "114" y = "70" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="Battery3_dim" x = "114" y = "78" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="Battery2_dim" x = "114" y = "71" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="Battery3_dim" x = "114" y = "80" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     
     <label id="Bluetooth_dim" x = "120" y = "137" font = "@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
      

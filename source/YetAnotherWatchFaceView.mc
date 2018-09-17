@@ -25,6 +25,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _tzTitleDictionary;	
 	hidden var _conditionIcons;
 	
+	hidden var _pulseXClipPrev = 0;
+	hidden var _pulseXClip = 0;
+	
 	hidden var _weatherInfo = new WeatherInfo();
 	
 	hidden var _chr;
@@ -126,7 +129,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (chr != null)
 		{
 			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + viewPulse.width + 1, viewPulse.height);
+			_pulseXClip = viewPulse.locX + viewPulse.width + 1; // needs to clear clip area if pulse came from 3 digits to 2
+			dc.setClip(viewPulse.locX, viewPulse.locY, (_pulseXClip > _pulseXClipPrev) ? _pulseXClip : _pulseXClipPrev, viewPulse.height);
+			_pulseXClipPrev = _pulseXClip;
 			viewPulse.setText(chr.toString());
 			viewPulse.draw(dc);
 		}
@@ -194,12 +199,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
         
 		var temperature = Lang.format("$1$", [_weatherInfo.Temperature.format("%2.1f")]);
-		var perception = Lang.format("$1$%", [_weatherInfo.PerceptionProbability.format("%2d")]);
+		var perception = Lang.format("$1$", [_weatherInfo.PerceptionProbability.format("%2d")]);
         
 		var temperatureLabel = View.findDrawableById("Temperature_bright");
 		temperatureLabel.setText(temperature);
 		var temperatureTitleLabel = View.findDrawableById("TemperatureTitle_dim");
-		temperatureTitleLabel.locX = temperatureLabel.locX + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY) + 1;
+		temperatureTitleLabel.locX = temperatureLabel.locX + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY);
 		
 		View.findDrawableById("Perception_bright")
 			.setText(perception);
