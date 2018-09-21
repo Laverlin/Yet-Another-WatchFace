@@ -189,10 +189,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // Weather data
         //
-       
         if (App.getApp().getProperty("WeatherInfo") == null) // no weather
         {
-			View.findDrawableById("Temperature_bright").setText((App.getApp().getProperty("lastKnowLocation") == null)?"no GPS":"GPS ok");
+			View.findDrawableById("Temperature_bright")
+				.setText((App.getApp().getProperty("lastKnownLocation") == null)?"no GPS":"GPS ok");
 			View.findDrawableById("TemperatureTitle_dim").setText("");
 			View.findDrawableById("Perception_bright").setText("");
 			View.findDrawableById("PerceptionTitle_dim").setText("");

@@ -1,21 +1,15 @@
 using Toybox.Background;
 using Toybox.System as Sys;
-using Toybox.Activity as Activity;
 using Toybox.Communications as Comm;
-using Toybox.Position as Position;
 using Toybox.Application as App;
-using Toybox.Time as Time;
-using Toybox.Time.Gregorian as Gregorian;
 
 // The Service Delegate is the main entry point for background processes
 // our onTemporalEvent() method will get run each time our periodic event
 // is triggered by the system.
 //
 (:background)
-class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate 
+class BackgroundServiceDelegate extends Sys.ServiceDelegate 
 {
-	var _time;
-			
 	function initialize() 
 	{
 		Sys.ServiceDelegate.initialize();
@@ -28,30 +22,21 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
     
     function RequestWeather()
 	{
-		// get unix epoch 
-		//
-		var tz = new Time.Duration(Sys.getClockTime().timeZoneOffset * -1);
-		var epoch = Time.now().add(tz);
-		var gTime = Gregorian.info(epoch, Time.FORMAT_MEDIUM);
-		_time = gTime.month + "." + gTime.day + " " + gTime.hour + ":" + gTime.min + ":" + gTime.sec;
-		
 		// get gps
 		//
 		var location = App.getApp().getProperty("lastKnownLocation");
 		if (location == null)
 		{
-			Sys.println(_time + " :: location unknown");
 			return;
 		}
 		
-		var url = Lang.format("$1$/$2$/$3$,$4$,$5$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
+		var url = Lang.format("$1$/$2$/$3$,$4$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
 			"https://api.darksky.net/forecast",
 			App.getApp().getProperty("WeatherApiKey"),
 			location[0],
-			location[1],
-			epoch.value()]);  
+			location[1]]);  
 			
-		Sys.println(_time + " :: request " + url);
+		//Sys.println(" :: request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -63,8 +48,6 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 	
 	function OnReceiveWeather(responseCode, data)
 	{
-	   // Sys.println(_time + " :: response code: " + responseCode + ", data :: " + data);
-	    
 	    var weatherInfo = new WeatherInfo();
 		if (responseCode == 200)
 		{

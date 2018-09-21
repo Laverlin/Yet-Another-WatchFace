@@ -29,6 +29,8 @@
             <listEntry value="0xFF0000">@Strings.ColorRed</listEntry>
             <listEntry value="0x32CD32">@Strings.ColorLimeGreen</listEntry>
             <listEntry value="0x00FF00">@Strings.ColorLime</listEntry>
+            <listEntry value="0xD2FF0C">@Strings.ColorYellowGreen</listEntry>
+            <listEntry value="0xC8FFBF">@Strings.ColorPaleGreen</listEntry>
         </settingConfig>
     </setting>
     

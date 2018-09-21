@@ -16,6 +16,8 @@
     <string id="ColorBlue">Blue</string>
     <string id="ColorRed">Red</string>
     <string id="ColorLimeGreen">LimeGreen</string>
+    <string id="ColorYellowGreen">Yellow Green</string>
+    <string id="ColorPaleGreen">Pale Green</string>
 	<string id="ColorLime">Lime</string>
 	
 	<string id ="ExtraTimeZoneTitle">Extra Time Zone</string>

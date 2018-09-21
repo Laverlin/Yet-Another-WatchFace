@@ -40,9 +40,9 @@
     <label id="DistTitle_dim" x="178" y="170" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text = "km"/>
     
     <label id="Battery0_dim" x = "114" y = "53" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" text="%"/>
-    <label id="Battery1_dim" x = "114" y = "62" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="Battery2_dim" x = "114" y = "71" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="Battery3_dim" x = "114" y = "80" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="Battery1_dim" x = "114" y = "63" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="Battery2_dim" x = "114" y = "72" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="Battery3_dim" x = "114" y = "81" font = "@Fonts.vertical_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     
     <label id="Bluetooth_dim" x = "120" y = "137" font = "@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
      
