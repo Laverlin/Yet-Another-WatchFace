@@ -56,6 +56,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	
         Sys.println("weather data: " + data);
         var weatherInfo = new WeatherInfo();
+        
         if (data != null)
         {
         	weatherInfo.FromDictionary(data);
@@ -64,7 +65,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         		setProperty("WeatherInfo", data);
         	}
         }
-        _watchFaceView.UpdateWeatherInfo(weatherInfo);
+
         Ui.requestUpdate();
     }    
 

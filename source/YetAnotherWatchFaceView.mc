@@ -28,8 +28,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _pulseXClipPrev = 0;
 	hidden var _pulseXClip = 0;
 	
-	hidden var _weatherInfo = new WeatherInfo();
-	
 	hidden var _chr;
 	
     function initialize() 
@@ -83,11 +81,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		.setLineColor(_timeColor);
     }
     
-    function UpdateWeatherInfo(weatherInfo)
-    {
-    	_weatherInfo = weatherInfo;
-    }
-    
+  
     function UpdateSetting()
     {
 	 	_timeColor = App.getApp().getProperty("TimeColor");
@@ -105,7 +99,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     function GetTzTime(timeNow)
     {
-    	// Update Alternate Time
+    	// Update Time in extra timezone
         //
         var localTime = Sys.getClockTime();
         var localTz = new Time.Duration( - localTime.timeZoneOffset + localTime.dst);
@@ -129,7 +123,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (chr != null)
 		{
 			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-			_pulseXClip = viewPulse.locX + viewPulse.width + 1; // needs to clear clip area if pulse came from 3 digits to 2
+			_pulseXClip = viewPulse.locX + viewPulse.width + 1; // needs to clear clip area if pulse shrinks from 3 digits to 2
 			dc.setClip(viewPulse.locX, viewPulse.locY, (_pulseXClip > _pulseXClipPrev) ? _pulseXClip : _pulseXClipPrev, viewPulse.height);
 			_pulseXClipPrev = _pulseXClip;
 			viewPulse.setText(chr.toString());
@@ -143,6 +137,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc) 
     {
+    	var activityLocation = Activity.getActivityInfo().currentLocation;
+    	if (activityLocation != null)
+    	{
+    		App.getApp().setProperty("lastKnownLocation", activityLocation.toDegrees());
+    	}
+    	
 		var timeNow = Time.now();
         var gregorianTimeNow = Gregorian.info(timeNow, Time.FORMAT_MEDIUM);
     	
@@ -189,37 +189,50 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // Weather data
         //
-        if (_weatherInfo.Status != 1)
+       
+        if (App.getApp().getProperty("WeatherInfo") == null) // no weather
         {
-        	var lastWeather = App.getApp().getProperty("WeatherInfo");
-			if (lastWeather != null)
-			{
-				_weatherInfo.FromDictionary(lastWeather);
-			}
+			View.findDrawableById("Temperature_bright").setText((App.getApp().getProperty("lastKnowLocation") == null)?"no GPS":"GPS ok");
+			View.findDrawableById("TemperatureTitle_dim").setText("");
+			View.findDrawableById("Perception_bright").setText("");
+			View.findDrawableById("PerceptionTitle_dim").setText("");
+			View.findDrawableById("Wind_bright").setText("");
+			View.findDrawableById("WindTitle_dim").setText("");
         }
-        
-		var temperature = Lang.format("$1$", [_weatherInfo.Temperature.format("%2.1f")]);
-		var perception = Lang.format("$1$", [_weatherInfo.PerceptionProbability.format("%2d")]);
-        
-		var temperatureLabel = View.findDrawableById("Temperature_bright");
-		temperatureLabel.setText(temperature);
-		var temperatureTitleLabel = View.findDrawableById("TemperatureTitle_dim");
-		temperatureTitleLabel.locX = temperatureLabel.locX + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY);
-		
-		View.findDrawableById("Perception_bright")
-			.setText(perception);
-		
-		var windLabel = View.findDrawableById("Wind_bright");
-		var wind = _weatherInfo.WindSpeed.format("%2.1f");
-		windLabel.setText(wind);		
-		var windTitleLabel = View.findDrawableById("WindTitle_dim");
-		windTitleLabel.locX = windLabel.locX + dc.getTextWidthInPixels(wind, Gfx.FONT_TINY) + 1;
-
-		var icon = _conditionIcons[_weatherInfo.Condition];
-		if (icon != null)
-		{
-			View.findDrawableById("Condition_time")
-				.setText(icon);
+        else
+        {
+        	var weatherInfo = new WeatherInfo();
+        	weatherInfo.FromDictionary(App.getApp().getProperty("WeatherInfo"));
+        	
+			var temperature = Lang.format("$1$", [weatherInfo.Temperature.format("%2.1f")]);
+			var perception = Lang.format("$1$", [weatherInfo.PerceptionProbability.format("%2d")]);
+	        
+			var temperatureLabel = View.findDrawableById("Temperature_bright");
+			temperatureLabel.setText(temperature);
+			var temperatureTitleLabel = View.findDrawableById("TemperatureTitle_dim");
+			temperatureTitleLabel.locX = temperatureLabel.locX + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY);
+			temperatureTitleLabel.setText("o");
+			
+			View.findDrawableById("Perception_bright").setText(perception);
+			View.findDrawableById("PerceptionTitle_dim").setText("%");
+			
+			var windLabel = View.findDrawableById("Wind_bright");
+			var wind = weatherInfo.WindSpeed.format("%2.1f");
+			windLabel.setText(wind);		
+			var windTitleLabel = View.findDrawableById("WindTitle_dim");
+			windTitleLabel.locX = windLabel.locX + dc.getTextWidthInPixels(wind, Gfx.FONT_TINY) + 1;
+			windTitleLabel.setText("kn");
+	
+			var icon = _conditionIcons[weatherInfo.Condition];
+			if (icon != null)
+			{
+				View.findDrawableById("Condition_time").setText(icon);
+			}
+			
+			if (weatherInfo.City != null)
+			{
+				View.findDrawableById("City_dim").setText(weatherInfo.City);
+			}
 		}
 
 		// watch status

@@ -14,8 +14,6 @@ using Toybox.Time.Gregorian as Gregorian;
 (:background)
 class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate 
 {
-	var _weatherInfo = new WeatherInfo();
-	
 	var _time;
 			
 	function initialize() 
@@ -39,14 +37,13 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 		
 		// get gps
 		//
-		var activityLocation = Activity.getActivityInfo().currentLocation;
-		if (activityLocation == null) 
+		var location = App.getApp().getProperty("lastKnownLocation");
+		if (location == null)
 		{
 			Sys.println(_time + " :: location unknown");
 			return;
 		}
-		var location = activityLocation.toDegrees();
-
+		
 		var url = Lang.format("$1$/$2$/$3$,$4$,$5$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
 			"https://api.darksky.net/forecast",
 			App.getApp().getProperty("WeatherApiKey"),
@@ -66,20 +63,30 @@ class BackgroundServiceDelegate extends Toybox.System.ServiceDelegate
 	
 	function OnReceiveWeather(responseCode, data)
 	{
-	    Sys.println(_time + " :: response code: " + responseCode + ", data :: " + data);
+	   // Sys.println(_time + " :: response code: " + responseCode + ", data :: " + data);
 	    
+	    var weatherInfo = new WeatherInfo();
 		if (responseCode == 200)
 		{
-			_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
-			_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat() * 1.94384;
-			_weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
-			_weatherInfo.Condition = data["currently"]["icon"];
-			_weatherInfo.Status = 1;
+			weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
+			weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat() * 1.94384;
+			weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
+			weatherInfo.Condition = data["currently"]["icon"];
+			weatherInfo.City = parseCity(data["timezone"]);
+			weatherInfo.Status = 1; //OK
 		}
 		else
 		{
-			_weatherInfo.Status = responseCode;
+			weatherInfo.Status = responseCode;
 		}
-		Background.exit(_weatherInfo.ToDictionary());
+		Background.exit(weatherInfo.ToDictionary());
+	}
+	
+	hidden function parseCity(city)
+	{
+		var dindex = city.find("/");
+		return (dindex == 0) 
+			? city
+			: city.substring(dindex + 1, city.length());
 	}
 }

@@ -5,7 +5,9 @@ class WeatherInfo
 	var WindSpeed = 0;
 	var PerceptionProbability = 0;
 	var Condition = "";
-	var Status = 0;
+	var Status = 0; // unknown
+	var Location;
+	var City = "";
 	
 	function ToDictionary()
 	{
@@ -15,7 +17,8 @@ class WeatherInfo
 			"WindSpeed" => WindSpeed, 
 			"PerceptionProbability" => PerceptionProbability, 
 			"Condition" => Condition, 
-			"Status" => Status 
+			"Status" => Status,
+			"City" => City
 		};
 	}
 	
@@ -28,6 +31,7 @@ class WeatherInfo
 			PerceptionProbability = dictionary["PerceptionProbability"];
 			Condition = dictionary["Condition"];
 			Status = dictionary["Status"];
+			City = dictionary["City"];
 		}
 		catch(ex)
 		{

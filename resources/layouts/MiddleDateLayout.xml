@@ -27,6 +27,8 @@
     <label id="Wind_bright" x="125" y="72" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     <label id="WindTitle_dim" x="165" y="78" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" text="kn"/>
     <label id="Condition_time" x="190" y="74" font="@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" />
+    <label id="City_dim" x="35" y="33" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+    
     
     <label id="TzTime_bright" x="125" y="107" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
     <label id="TzTimeTitle_dim" x="178" y="113" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
