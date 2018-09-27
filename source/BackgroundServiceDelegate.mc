@@ -62,14 +62,27 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			weatherInfo.Status = responseCode;
 		}
+		
 		Background.exit(weatherInfo.ToDictionary());
 	}
 	
 	hidden function parseCity(city)
 	{
+		// remove country name
+		//
 		var dindex = city.find("/");
-		return (dindex == 0) 
+		var cityName =  (dindex == null) 
 			? city
 			: city.substring(dindex + 1, city.length());
+		
+		// replace underscore to space
+		//
+		dindex = cityName.find("_");
+		if (dindex != null)
+		{
+			cityName = cityName.substring(0, dindex) + " " + cityName.substring(dindex + 1, cityName.length());
+		}
+		
+		return cityName;
 	}
 }

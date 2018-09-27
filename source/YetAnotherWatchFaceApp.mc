@@ -54,7 +54,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     {
     	Background.registerForTemporalEvent(new Time.Duration(60 * 60));
     	
-        Sys.println("weather data: " + data);
+        //Sys.println("weather data: " + data);
         var weatherInfo = new WeatherInfo();
         
         if (data != null)

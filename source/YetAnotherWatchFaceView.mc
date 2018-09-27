@@ -9,6 +9,12 @@ using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Activity as Activity;
 using Toybox.Background as Background;
 
+// Main WatchFaace view
+// ToDo:: 1. Create Wrapper around ObjectStore 
+//        2. Move UI logic to functions
+//        -- 3. Fix Timezone Issue 
+//		  4. Add option to show city name
+//
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
 	hidden var _layout;
@@ -22,13 +28,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _weatherApiKey;
 	hidden var _weatherApiUrl;
 	
-	hidden var _tzTitleDictionary;	
 	hidden var _conditionIcons;
-	
-	hidden var _pulseXClipPrev = 0;
-	hidden var _pulseXClip = 0;
-	
-	hidden var _chr;
 	
     function initialize() 
     {
@@ -41,8 +41,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     {
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
-		_tzTitleDictionary = Ui.loadResource(Rez.JsonData.tzTitleDictionary);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
+		
 		UpdateSetting();
     }
 
@@ -93,19 +93,52 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
 		_weatherApiUrl = "https://api.darksky.net/forecast";
 		_weatherApiKey = App.getApp().getProperty("WeatherApiKey");
+		
+		var tzData = Ui.loadResource(Rez.JsonData.tzData);
+        for (var i=0; i < tzData.size(); i++ )
+        {
+        	if (tzData[i]["Id"] == _extraTimeZone)
+        	{
+        		App.getApp().setProperty("etz", tzData[i]);
+        		break;
+        	}
+        }
+		tzData = null;
 
 		SetColors();
     }
     
+    // Return time and abbreviation of extra time-zone
+    //
     function GetTzTime(timeNow)
     {
-    	// Update Time in extra timezone
-        //
         var localTime = Sys.getClockTime();
-        var localTz = new Time.Duration( - localTime.timeZoneOffset + localTime.dst);
-        var extraTz = new Time.Duration(_extraTimeZone);
-        var extraTime = timeNow.add(localTz).add(extraTz);
-        return Gregorian.info(extraTime, Time.FORMAT_MEDIUM);
+        var utcTime = timeNow.add(
+        	new Time.Duration( - localTime.timeZoneOffset + localTime.dst));
+        
+        // by dfault return UTC time
+        //
+       	var newTz = App.getApp().getProperty("etz");
+		if (newTz == null)
+		{
+			return [Gregorian.info(utcTime, Time.FORMAT_MEDIUM), "UTC"];
+		}
+ 
+ 		// find right time interval
+ 		//
+        var index = 0;
+        for (var i = 0; i < newTz["Untils"].size(); i++)
+        {
+        	if (newTz["Untils"][i] != null && newTz["Untils"][i] > utcTime.value())
+        	{
+        		index = i;
+        		break;
+        	}
+        }
+        
+        var extraTime = utcTime.add(new Time.Duration(newTz["Offsets"][index] * -60));        
+      
+        return [Gregorian.info(extraTime, Time.FORMAT_MEDIUM), newTz["Abbrs"][index]];
     }
     
     // calls every second for partial update
@@ -123,14 +156,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (chr != null)
 		{
 			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-			_pulseXClip = viewPulse.locX + viewPulse.width + 1; // needs to clear clip area if pulse shrinks from 3 digits to 2
-			dc.setClip(viewPulse.locX, viewPulse.locY, (_pulseXClip > _pulseXClipPrev) ? _pulseXClip : _pulseXClipPrev, viewPulse.height);
-			_pulseXClipPrev = _pulseXClip;
+			var width = dc.getTextWidthInPixels(chr.toString(), Gfx.FONT_TINY);
+			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + width, viewPulse.height);
 			viewPulse.setText(chr.toString());
 			viewPulse.draw(dc);
 		}
 
         dc.clearClip();
+        View.onUpdate(dc);
     }
 
     // Update the view
@@ -171,13 +204,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // Update time in diff TZ
         //
-		var gregorianTzTime = GetTzTime(timeNow);
-		var tzTitle = _tzTitleDictionary[_extraTimeZone.toString()]; 
+		var tzInfo = GetTzTime(timeNow);
+
         View.findDrawableById("TzTime_bright")
-        	.setText(gregorianTzTime.hour.format("%02d") + ":" + gregorianTzTime.min.format("%02d"));
+        	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
 
         View.findDrawableById("TzTimeTitle_dim")
-        	.setText(tzTitle);
+        	.setText(tzInfo[1]);
         
         // get ActivityMonitor info
         //
