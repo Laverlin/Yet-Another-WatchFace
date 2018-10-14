@@ -5,38 +5,43 @@ class WeatherInfo
 	var WindSpeed = 0;
 	var PerceptionProbability = 0;
 	var Condition = "";
-	var Status = 0; // unknown
+	var WeatherStatus = 0; // unknown
+	var CityStatus = 0; // unknown
 	var Location;
 	var City = "";
 	
-	function ToDictionary()
+	static function ToDictionary(weatherInfo)
 	{
 		return
 		{
-			"Temperature" => Temperature, 
-			"WindSpeed" => WindSpeed, 
-			"PerceptionProbability" => PerceptionProbability, 
-			"Condition" => Condition, 
-			"Status" => Status,
-			"City" => City
+			"Temperature" => weatherInfo.Temperature, 
+			"WindSpeed" => weatherInfo.WindSpeed, 
+			"PerceptionProbability" => weatherInfo.PerceptionProbability, 
+			"Condition" => weatherInfo.Condition, 
+			"City" => weatherInfo.City,
+			"WeatherStatus" => weatherInfo.WeatherStatus,
+			"CityStatus" => weatherInfo.CityStatus
 		};
 	}
 	
-	function FromDictionary(dictionary)
+	static function FromDictionary(dictionary)
 	{
+		var weatherInfo = new WeatherInfo();
 		try
 		{
-			Temperature = dictionary["Temperature"];
-			WindSpeed = dictionary["WindSpeed"];
-			PerceptionProbability = dictionary["PerceptionProbability"];
-			Condition = dictionary["Condition"];
-			Status = dictionary["Status"];
-			City = dictionary["City"];
+			weatherInfo.Temperature = dictionary["Temperature"];
+			weatherInfo.WindSpeed = dictionary["WindSpeed"];
+			weatherInfo.PerceptionProbability = dictionary["PerceptionProbability"];
+			weatherInfo.Condition = dictionary["Condition"];
+			weatherInfo.City = dictionary["City"];
+			weatherInfo.WeatherStatus = dictionary["WeatherStatus"];
+			weatherInfo.CityStatus = dictionary["CityStatus"];
 		}
 		catch(ex)
 		{
 			Sys.println("dictionary conversion error:" + ex.getErrorMessage());
-			Status = -1000;
+			weatherInfo.Status = -1000;
 		}
+		return weatherInfo;
 	}
 }

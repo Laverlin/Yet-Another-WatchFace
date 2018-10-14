@@ -6,6 +6,6 @@
     <property id="BrightColor" type="number">0xFFFFFF</property>
     <property id="DimColor" type="number">0xFFFFFF</property>
     
-    <property id="ExtraTimeZone" type="number">16</property>
+    <property id="etzId" type="number">16</property>
 
 </properties>

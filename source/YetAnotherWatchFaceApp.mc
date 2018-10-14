@@ -53,16 +53,13 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onBackgroundData(data) 
     {
     	Background.registerForTemporalEvent(new Time.Duration(60 * 60));
-    	
-        //Sys.println("weather data: " + data);
-        var weatherInfo = new WeatherInfo();
-        
+  
         if (data != null)
         {
-        	weatherInfo.FromDictionary(data);
-        	if (weatherInfo.Status == 1)
+        	var weatherInfo = WeatherInfo.FromDictionary(data);
+        	if (weatherInfo.WeatherStatus == 1 || weatherInfo.CityStatus == 1)
         	{
-        		setProperty("WeatherInfo", data);
+        		Setting.SetWeatherInfo(data);
         	}
         }
 

@@ -10,6 +10,9 @@ using Toybox.Application as App;
 (:background)
 class BackgroundServiceDelegate extends Sys.ServiceDelegate 
 {
+	hidden var _weatherInfo = new WeatherInfo();
+	hidden var _syncCounter = 0;
+	 
 	function initialize() 
 	{
 		Sys.ServiceDelegate.initialize();
@@ -17,26 +20,36 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
     function onTemporalEvent() 
     {
-		RequestWeather();
+    	var location = Setting.GetLastKnownLocation();
+    	var apiKey = Setting.GetWeatherApiKey();
+    	
+    	if (location == null)
+    	{
+    		return;
+    	}
+    	
+    	if (apiKey == null || apiKey.length() == 0)
+    	{
+    		_syncCounter = 1;
+			RequestLocation(location);
+		}
+		else
+		{
+    		_syncCounter = 0;
+			RequestWeather(apiKey, location);
+			RequestLocation(location);
+		}
     }
     
-    function RequestWeather()
+    function RequestWeather(apiKey, location)
 	{
-		// get gps
-		//
-		var location = App.getApp().getProperty("lastKnownLocation");
-		if (location == null)
-		{
-			return;
-		}
-		
 		var url = Lang.format("$1$/$2$/$3$,$4$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
-			"https://api.darksky.net/forecast",
-			App.getApp().getProperty("WeatherApiKey"),
+			Setting.GetWeatherApiUrl(),
+			apiKey,
 			location[0],
 			location[1]]);  
 			
-		//Sys.println(" :: request " + url);
+		Sys.println(" :: request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -48,41 +61,57 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveWeather(responseCode, data)
 	{
-	    var weatherInfo = new WeatherInfo();
 		if (responseCode == 200)
 		{
-			weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
-			weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat() * 1.94384;
-			weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
-			weatherInfo.Condition = data["currently"]["icon"];
-			weatherInfo.City = parseCity(data["timezone"]);
-			weatherInfo.Status = 1; //OK
+			_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
+			_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat() * 1.94384;
+			_weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
+			_weatherInfo.Condition = data["currently"]["icon"];
+			_weatherInfo.WeatherStatus = 1; //OK
 		}
 		else
 		{
-			weatherInfo.Status = responseCode;
+			_weatherInfo.Status = responseCode;
 		}
 		
-		Background.exit(weatherInfo.ToDictionary());
+		_syncCounter = _syncCounter + 1;
+		if (_syncCounter == 2)
+		{
+			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
+		}
 	}
 	
-	hidden function parseCity(city)
+	function RequestLocation(location)
 	{
-		// remove country name
-		//
-		var dindex = city.find("/");
-		var cityName =  (dindex == null) 
-			? city
-			: city.substring(dindex + 1, city.length());
-		
-		// replace underscore to space
-		//
-		dindex = cityName.find("_");
-		if (dindex != null)
+		var url = Lang.format("https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
+			location[0],
+			location[1],
+			Setting.GetLocationApiKey()]);  
+			
+		//Sys.println(" :: request2 " + url);	
+			
+        var options = {
+          :method => Comm.HTTP_REQUEST_METHOD_GET,
+          :responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
+        };
+
+       Comm.makeWebRequest(url, {}, options, method(:OnReceiveLocation));	
+	}
+	
+	function OnReceiveLocation(responseCode, data)
+	{
+		if (responseCode == 200)
 		{
-			cityName = cityName.substring(0, dindex) + " " + cityName.substring(dindex + 1, cityName.length());
+			var location = data["resourceSets"][0]["resources"][0]["name"];
+			_weatherInfo.City = location;
+			_weatherInfo.CityStatus = 1; //OK
 		}
 		
-		return cityName;
+		_syncCounter = _syncCounter + 1;
+		if (_syncCounter == 2)
+		{
+			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
+		}
 	}
+
 }

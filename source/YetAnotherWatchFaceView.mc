@@ -18,16 +18,6 @@ using Toybox.Background as Background;
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
 	hidden var _layout;
-	
-	hidden var _backgroundColor;
-	hidden var _timeColor;
-	hidden var _brightColor;
-	hidden var _dimColor;
-	hidden var _extraTimeZone;
-
-	hidden var _weatherApiKey;
-	hidden var _weatherApiUrl;
-	
 	hidden var _conditionIcons;
 	
     function initialize() 
@@ -55,51 +45,44 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		SetColors();
 	}
 	
+	// Set colors according to property name and app setting
+	// 
     function SetColors()
     {
     	for(var i = 0; i < _layout.size(); i++)
     	{
     		if(_layout[i].identifier.find("_time") != null)
     		{
-    			_layout[i].setColor(_timeColor);
+    			_layout[i].setColor(Setting.GetTimeColor());
     		}
     		if(_layout[i].identifier.find("_setbg") != null)
     		{
-    			_layout[i].setBackgroundColor(_backgroundColor);
+    			_layout[i].setBackgroundColor(Setting.GetBackgroundColor());
     		}
     		if(_layout[i].identifier.find("_bright") != null)
     		{
-    			_layout[i].setColor(_brightColor);
+    			_layout[i].setColor(Setting.GetBrightColor());
     		}
     		if(_layout[i].identifier.find("_dim") != null)
     		{
-    			_layout[i].setColor(_dimColor);
+    			_layout[i].setColor(Setting.GetDimColor());
     		}
     	}
     	
+    	
     	View.findDrawableById("divider")
-    		.setLineColor(_timeColor);
+    		.setLineColor(Setting.GetTimeColor());
     }
     
   
     function UpdateSetting()
     {
-	 	_timeColor = App.getApp().getProperty("TimeColor");
-	 	_backgroundColor = App.getApp().getProperty("BackgroundColor");
-		_brightColor = App.getApp().getProperty("BrightColor");
-		_dimColor = App.getApp().getProperty("DimColor");
-		
-		_extraTimeZone = App.getApp().getProperty("ExtraTimeZone");
-		
-		_weatherApiUrl = "https://api.darksky.net/forecast";
-		_weatherApiKey = App.getApp().getProperty("WeatherApiKey");
-		
 		var tzData = Ui.loadResource(Rez.JsonData.tzData);
         for (var i=0; i < tzData.size(); i++ )
         {
-        	if (tzData[i]["Id"] == _extraTimeZone)
+        	if (tzData[i]["Id"] == Setting.GetEtzId())
         	{
-        		App.getApp().setProperty("etz", tzData[i]);
+        		Setting.SetExtraTimeZone(tzData[i]);
         		break;
         	}
         }
@@ -118,7 +101,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // by dfault return UTC time
         //
-       	var newTz = App.getApp().getProperty("etz");
+       	var newTz = Setting.GetExtraTimeZone();
 		if (newTz == null)
 		{
 			return [Gregorian.info(utcTime, Time.FORMAT_MEDIUM), "UTC"];
@@ -156,14 +139,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (chr != null)
 		{
 			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-			var width = dc.getTextWidthInPixels(chr.toString(), Gfx.FONT_TINY);
-			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + width, viewPulse.height);
-			viewPulse.setText(chr.toString());
+			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
+			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
 			viewPulse.draw(dc);
 		}
 
         dc.clearClip();
-        View.onUpdate(dc);
     }
 
     // Update the view
@@ -173,7 +154,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
-    		App.getApp().setProperty("lastKnownLocation", activityLocation.toDegrees());
+    		Setting.SetLastKnownLocation(activityLocation.toDegrees());
     	}
     	
 		var timeNow = Time.now();
@@ -189,8 +170,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         View.findDrawableById("Second_time_setbg")
         	.setText(gregorianTimeNow.sec.format("%02d"));
-     
-        
+         
         // Update date
         //
         View.findDrawableById("WeekDay_bright")
@@ -222,10 +202,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // Weather data
         //
-        if (App.getApp().getProperty("WeatherInfo") == null) // no weather
+        var weatherInfo = null;
+        if (Setting.GetWeatherInfo() != null)
+        {
+        	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
+        }
+        if (weatherInfo == null || weatherInfo.WeatherStatus != 1) // no weather
         {
 			View.findDrawableById("Temperature_bright")
-				.setText((App.getApp().getProperty("lastKnownLocation") == null)?"no GPS":"GPS ok");
+				.setText((Setting.GetLastKnownLocation() == null) ? "no GPS" : "GPS ok");
 			View.findDrawableById("TemperatureTitle_dim").setText("");
 			View.findDrawableById("Perception_bright").setText("");
 			View.findDrawableById("PerceptionTitle_dim").setText("");
@@ -234,9 +219,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
         else
         {
-        	var weatherInfo = new WeatherInfo();
-        	weatherInfo.FromDictionary(App.getApp().getProperty("WeatherInfo"));
-        	
 			var temperature = Lang.format("$1$", [weatherInfo.Temperature.format("%2.1f")]);
 			var perception = Lang.format("$1$", [weatherInfo.PerceptionProbability.format("%2d")]);
 	        
@@ -261,11 +243,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			{
 				View.findDrawableById("Condition_time").setText(icon);
 			}
-			
-			if (weatherInfo.City != null)
-			{
-				View.findDrawableById("City_dim").setText(weatherInfo.City);
-			}
+		}
+		
+		if (weatherInfo!= null && weatherInfo.City != null && weatherInfo.CityStatus == 1)
+		{
+			View.findDrawableById("City_dim").setText(weatherInfo.City);
 		}
 
 		// watch status
@@ -285,9 +267,16 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		else
 		{
 			View.findDrawableById("Battery3_dim").setText("");
-			View.findDrawableById("Battery2_dim").setText((batteryLevel % 10).format("%1d"));
+			if (batteryLevel > 0)
+			{
+				View.findDrawableById("Battery2_dim").setText((batteryLevel % 10).format("%1d"));
+			}
+			else
+			{
+				View.findDrawableById("Battery2_dim").setText("");
+			}
 		}
-		
+
         // Call the parent onUpdate function to redraw the layout
         //
         View.onUpdate(dc);

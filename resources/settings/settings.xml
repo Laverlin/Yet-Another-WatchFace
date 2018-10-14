@@ -60,7 +60,7 @@
         </settingConfig>
     </setting>
     
-    <setting propertyKey="@Properties.ExtraTimeZone" title="@Strings.ExtraTimeZoneTitle">
+    <setting propertyKey="@Properties.etzId" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">
 			<listEntry value="1">@Strings.id1</listEntry>
 			<listEntry value="2">@Strings.id2</listEntry>
