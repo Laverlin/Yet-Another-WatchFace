@@ -78,4 +78,10 @@ class Setting
 	{
 		return "AnktcjcJZim7taMic5TNx7rovRDXAVyof_wvXxCWYJDU-c7MgON9bu6KHmHpi0Tv";
 	}
+	
+	public static function GetIsShowCity()
+	{
+		return App.getApp().getProperty("IsShowCity");
+	}
+	
 }

@@ -49,7 +49,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[0],
 			location[1]]);  
 			
-		Sys.println(" :: request " + url);
+		//Sys.println(" :: request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
