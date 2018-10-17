@@ -61,7 +61,7 @@ class Setting
 	
 	public static function GetWeatherInfo()
 	{
-		App.getApp().getProperty(_weatherInfo);
+		return App.getApp().getProperty(_weatherInfo);
 	}
 	
 	public static function SetWeatherInfo(weatherInfo)

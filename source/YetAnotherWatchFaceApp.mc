@@ -57,6 +57,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         if (data != null)
         {
         	var weatherInfo = WeatherInfo.FromDictionary(data);
+        	
         	if (weatherInfo.WeatherStatus == 1 || weatherInfo.CityStatus == 1)
         	{
         		Setting.SetWeatherInfo(data);

@@ -246,9 +246,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
 		
-		if (weatherInfo!= null && weatherInfo.City != null && weatherInfo.CityStatus == 1)
+		if (weatherInfo != null && weatherInfo.City != null 
+			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
 		{
 			View.findDrawableById("City_dim").setText(weatherInfo.City);
+		}
+		else
+		{
+			View.findDrawableById("City_dim").setText("");
 		}
 
 		// watch status

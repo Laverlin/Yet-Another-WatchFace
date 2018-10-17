@@ -28,15 +28,13 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     		return;
     	}
     	
-    	if (apiKey == null || apiKey.length() == 0)
+    	if (apiKey != null && apiKey.length() > 0)
     	{
-    		_syncCounter = 1;
-			RequestLocation(location);
-		}
-		else
-		{
-    		_syncCounter = 0;
 			RequestWeather(apiKey, location);
+		}
+		
+		if (Setting.GetIsShowCity())
+		{
 			RequestLocation(location);
 		}
     }
@@ -56,7 +54,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
           :responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
         };
 
-       Comm.makeWebRequest(url, {}, options, method(:OnReceiveWeather));
+		_syncCounter = _syncCounter + 1;
+    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveWeather));
 	}  
 	
 	function OnReceiveWeather(responseCode, data)
@@ -71,11 +70,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		}
 		else
 		{
-			_weatherInfo.Status = responseCode;
+			_weatherInfo.WeatherStatus = responseCode;
 		}
 		
-		_syncCounter = _syncCounter + 1;
-		if (_syncCounter == 2)
+		_syncCounter = _syncCounter - 1;
+		if (_syncCounter == 0)
 		{
 			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
 		}
@@ -95,7 +94,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
           :responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
         };
 
-       Comm.makeWebRequest(url, {}, options, method(:OnReceiveLocation));	
+		_syncCounter = _syncCounter + 1;
+    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveLocation));	
 	}
 	
 	function OnReceiveLocation(responseCode, data)
@@ -107,8 +107,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			_weatherInfo.CityStatus = 1; //OK
 		}
 		
-		_syncCounter = _syncCounter + 1;
-		if (_syncCounter == 2)
+		_syncCounter = _syncCounter - 1;
+		if (_syncCounter == 0)
 		{
 			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
 		}
