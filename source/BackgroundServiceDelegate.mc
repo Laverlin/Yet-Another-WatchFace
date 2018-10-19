@@ -28,6 +28,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     		return;
     	}
     	
+    	_weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
+    	
     	if (apiKey != null && apiKey.length() > 0)
     	{
 			RequestWeather(apiKey, location);
@@ -47,7 +49,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[0],
 			location[1]]);  
 			
-		//Sys.println(" :: request " + url);
+		Sys.println(" :: request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -82,12 +84,22 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
-		var url = Lang.format("https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
+		Sys.println(" l: " + location[0] + ", w:" + ((_weatherInfo.Location != null) ? _weatherInfo.Location[0] : "0"));	
+		// avoid unnecessary web requests (location name does not change if location the same)
+		// 
+		if(_weatherInfo.Location != null && location[0] == _weatherInfo.Location[0] && location[1] == _weatherInfo.Location[1])
+		{
+			return;
+		}
+		_weatherInfo.Location = location;
+		
+		var url = Lang.format(
+			"https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
 			location[0],
 			location[1],
 			Setting.GetLocationApiKey()]);  
 			
-		//Sys.println(" :: request2 " + url);	
+		Sys.println(" :: request2 " + url);	
 			
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,

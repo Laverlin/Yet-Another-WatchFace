@@ -20,7 +20,8 @@ class WeatherInfo
 			"Condition" => weatherInfo.Condition, 
 			"City" => weatherInfo.City,
 			"WeatherStatus" => weatherInfo.WeatherStatus,
-			"CityStatus" => weatherInfo.CityStatus
+			"CityStatus" => weatherInfo.CityStatus,
+			"Location" => weatherInfo.Location
 		};
 	}
 	
@@ -36,6 +37,7 @@ class WeatherInfo
 			weatherInfo.City = dictionary["City"];
 			weatherInfo.WeatherStatus = dictionary["WeatherStatus"];
 			weatherInfo.CityStatus = dictionary["CityStatus"];
+			weatherInfo.Location = dictionary["Location"];
 		}
 		catch(ex)
 		{

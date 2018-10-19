@@ -14,7 +14,7 @@ using Toybox.Background as Background;
 //        -- 1. Create Wrapper around ObjectStore 
 //        2. Move UI logic to functions
 //        -- 3. Fix Timezone Issue 
-//		  4. Add option to show city name
+//		  -- 4. Add option to show city name
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
@@ -146,6 +146,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		}
 
         dc.clearClip();
+    }
+    
+    function TrackBatteryDegradation()
+    {
+    	
+    	var savedLevel = Setting.GetBatteryLevel();
+    	var currentLevel = (Sys.getSystemStats().battery).toNumber();
+    	if (savedLevel[0] != currentLevel)
+    	{
+    		var timeNowValue = Time.now().value();
+    		var diff = timeNowValue - savedLevel[1];
+    		Setting.SetBatteryLevel([currentLevel, timeNowValue]);
+    	}
     }
 
     // Update the view
