@@ -1,1 +1,4 @@
-<strings><string id="AppVersionValue">0.9.26</string></strings>
+<resources>
+	<string id="AppVersionValue">v0.9.26</string>
+	<string id="LocationApiKeyValue">AnktcjcJZim7taMic5TNx7rovRDXAVyof_wvXxCWYJDU-c7MgON9bu6KHmHpi0Tv</string>
+</resources>

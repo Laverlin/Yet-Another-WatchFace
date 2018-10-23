@@ -8,7 +8,9 @@ class Setting
 	static hidden var _lastKnownLocation = "lastKnownLocation";
 	static hidden var _weatherInfo = "WeatherInfo";
 	static hidden var _etz = "etz";
-	
+
+    static hidden var _locationApiKey = "location-api-key";
+
 	public static function GetTimeColor()
 	{
 		return App.getApp().getProperty("TimeColor");
@@ -76,7 +78,17 @@ class Setting
 	
 	public static function GetLocationApiKey()
 	{
-		return "AnktcjcJZim7taMic5TNx7rovRDXAVyof_wvXxCWYJDU-c7MgON9bu6KHmHpi0Tv";
+		return App.getApp().getProperty(_locationApiKey); 
+	}
+	
+	public static function SetLocationApiKey(apiKeyValue)
+	{
+		return App.getApp().setProperty(_locationApiKey, apiKeyValue); 
+	}
+	
+	public static function SetAppVersion(appVersionValue)
+	{
+		return App.getApp().setProperty("AppVersion", appVersionValue); 
 	}
 	
 	public static function GetIsShowCity()

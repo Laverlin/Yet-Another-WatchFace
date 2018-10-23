@@ -1,9 +1,9 @@
 <settings>
 
     <setting propertyKey="@Properties.AppVersion" title="@Strings.AppVersionTitle">
-        <settingConfig type="alphaNumeric" readonly="true" />
+        <settingConfig type="alphaNumeric" readonly="true" /> 
     </setting>
-    
+   
    	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
     	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>

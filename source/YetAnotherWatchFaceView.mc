@@ -24,6 +24,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     function initialize() 
     {
         WatchFace.initialize();
+        Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
+		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
     }
 
     // Load your resources here
@@ -33,6 +35,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
+
+
 		
 		UpdateSetting();
     }
@@ -296,6 +300,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
 
+		View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
+		
         // Call the parent onUpdate function to redraw the layout
         //
         View.onUpdate(dc);

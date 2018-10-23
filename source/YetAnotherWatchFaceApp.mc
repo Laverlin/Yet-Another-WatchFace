@@ -10,6 +10,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 	
     function initialize() {
         AppBase.initialize();
+  
     }
 
     // onStart() is called on application start up

@@ -95,7 +95,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[1],
 			Setting.GetLocationApiKey()]);  
 			
-		//Sys.println(" :: request2 " + url);	
+		Sys.println(" :: request2 " + url);	
 			
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,

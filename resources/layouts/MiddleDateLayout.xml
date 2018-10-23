@@ -46,6 +46,6 @@
     
     <label id="Bluetooth_dim" x = "120" y = "137" font = "@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     
-    <label id="debug_version" x = "120" y = "220" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_LT_GRAY" text="@Strings.AppVersionValue" />
+    <label id="debug_version" x = "120" y = "220" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_LT_GRAY"/>
      
  </layout>
