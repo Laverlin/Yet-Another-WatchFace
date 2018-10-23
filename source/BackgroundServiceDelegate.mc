@@ -49,7 +49,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[0],
 			location[1]]);  
 			
-		Sys.println(" :: request " + url);
+		//Sys.println(" :: request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -70,10 +70,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			_weatherInfo.Condition = data["currently"]["icon"];
 			_weatherInfo.WeatherStatus = 1; //OK
 		}
-		else
-		{
-			_weatherInfo.WeatherStatus = responseCode;
-		}
 		
 		_syncCounter = _syncCounter - 1;
 		if (_syncCounter == 0)
@@ -84,7 +80,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
-		Sys.println(" l: " + location[0] + ", w:" + ((_weatherInfo.Location != null) ? _weatherInfo.Location[0] : "0"));	
+		//Sys.println(" l: " + location[0] + ", w:" + ((_weatherInfo.Location != null) ? _weatherInfo.Location[0] : "0"));	
 		// avoid unnecessary web requests (location name does not change if location the same)
 		// 
 		if(_weatherInfo.Location != null && location[0] == _weatherInfo.Location[0] && location[1] == _weatherInfo.Location[1])
@@ -99,7 +95,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[1],
 			Setting.GetLocationApiKey()]);  
 			
-		Sys.println(" :: request2 " + url);	
+		//Sys.println(" :: request2 " + url);	
 			
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,

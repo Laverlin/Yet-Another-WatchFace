@@ -1,1 +1,2 @@
 project.manifest = manifest.xml
+base.sourcePath = source/**.mc
