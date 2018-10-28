@@ -10,7 +10,7 @@ using Toybox.Application as App;
 (:background)
 class BackgroundServiceDelegate extends Sys.ServiceDelegate 
 {
-	hidden var _weatherInfo = new WeatherInfo();
+	hidden var _weatherInfo;
 	hidden var _syncCounter = 0;
 	 
 	function initialize() 
@@ -28,7 +28,15 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     		return;
     	}
     	
-    	_weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
+    	var weatherData = Setting.GetWeatherInfo();
+    	if (weatherData != null)
+    	{
+    		_weatherInfo = WeatherInfo.FromDictionary(weatherData);
+    	}
+    	else
+    	{
+    		_weatherInfo = new WeatherInfo();
+    	}
     	
     	if (apiKey != null && apiKey.length() > 0)
     	{
@@ -95,7 +103,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[1],
 			Setting.GetLocationApiKey()]);  
 			
-		Sys.println(" :: request2 " + url);	
+		//Sys.println(" :: request2 " + url);	
 			
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,

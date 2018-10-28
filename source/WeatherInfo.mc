@@ -1,3 +1,5 @@
+using Toybox.System as Sys;
+
 (:background)
 class WeatherInfo
 {
@@ -42,7 +44,6 @@ class WeatherInfo
 		catch(ex)
 		{
 			Sys.println("dictionary conversion error:" + ex.getErrorMessage());
-			weatherInfo.Status = -1000;
 		}
 		return weatherInfo;
 	}

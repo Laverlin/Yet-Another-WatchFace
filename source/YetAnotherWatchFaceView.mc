@@ -155,7 +155,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     function TrackBatteryDegradation()
     {
     	
-    	var savedLevel = Setting.GetBatteryLevel();
+/*    	var savedLevel = Setting.GetBatteryLevel();
     	var currentLevel = (Sys.getSystemStats().battery).toNumber();
     	if (savedLevel[0] != currentLevel)
     	{
@@ -163,6 +163,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		var diff = timeNowValue - savedLevel[1];
     		Setting.SetBatteryLevel([currentLevel, timeNowValue]);
     	}
+    	*/
     }
 
     // Update the view
