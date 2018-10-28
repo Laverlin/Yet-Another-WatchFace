@@ -251,11 +251,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			View.findDrawableById("PerceptionTitle_dim").setText("%");
 			
 			var windLabel = View.findDrawableById("Wind_bright");
-			var wind = weatherInfo.WindSpeed.format("%2.1f");
+			var wind = (weatherInfo.WindSpeed * (Setting.GetWindSystem() == 1 ? 1.94384 : 1)).format("%2.1f");
 			windLabel.setText(wind);		
 			var windTitleLabel = View.findDrawableById("WindTitle_dim");
 			windTitleLabel.locX = windLabel.locX + dc.getTextWidthInPixels(wind, Gfx.FONT_TINY) + 1;
-			windTitleLabel.setText("kn");
+			windTitleLabel.setText(Setting.GetWindSystem() == 1 ? "kn" : "m/s");
 	
 			var icon = _conditionIcons[weatherInfo.Condition];
 			if (icon != null)

@@ -1,12 +1,13 @@
 <properties>
 	<property id="AppVersion" type="string"></property>
 	<property id="WeatherApiKey" type="string"></property>
+	
     <property id="BackgroundColor" type="number">0x000000</property>
     <property id="TimeColor" type="number">0xFF0000</property>
     <property id="BrightColor" type="number">0xFFFFFF</property>
     <property id="DimColor" type="number">0xFFFFFF</property>
-    
     <property id="IsShowCity" type ="boolean">true</property>
-    
     <property id="etzId" type="number">16</property>
+    <property id="tempSystem" type="number">1</property>
+    <property id="windSystem" type="number">1</property>
 </properties>

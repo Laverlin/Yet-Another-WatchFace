@@ -3,6 +3,14 @@
     <string id="AppName">Yet-Another-WatchFace</string>
     <string id="AppVersionTitle">App Version</string>
     <string id="WeatherApiKeyTitle">Weather API Key</string>
+    
+    <string id="TempSystemTitle">Temperature</string>
+    <string id="Celsius">Celsius</string>
+    <string id="Farenheit">Farenheit</string>
+    
+    <string id="WindSystemTitle">Wind</string>
+    <string id="Knots">Knots</string>
+    <string id="Meters">m/s</string>
 
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="TimeColorTitle">Time Color</string>

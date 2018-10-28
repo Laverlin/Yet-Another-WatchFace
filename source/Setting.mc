@@ -96,4 +96,9 @@ class Setting
 		return App.getApp().getProperty("IsShowCity");
 	}
 	
+	public static function GetWindSystem()
+	{
+		return App.getApp().getProperty("windSystem");
+	}
+	
 }

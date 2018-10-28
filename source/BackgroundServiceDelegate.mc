@@ -73,7 +73,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		if (responseCode == 200)
 		{
 			_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
-			_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat() * 1.94384;
+			_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat();
 			_weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
 			_weatherInfo.Condition = data["currently"]["icon"];
 			_weatherInfo.WeatherStatus = 1; //OK
