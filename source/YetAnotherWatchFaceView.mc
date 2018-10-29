@@ -235,17 +235,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			View.findDrawableById("PerceptionTitle_dim").setText("");
 			View.findDrawableById("Wind_bright").setText("");
 			View.findDrawableById("WindTitle_dim").setText("");
+			View.findDrawableById("Condition_time").setText("");
         }
         else
         {
-			var temperature = Lang.format("$1$", [weatherInfo.Temperature.format("%2.1f")]);
-			var perception = Lang.format("$1$", [weatherInfo.PerceptionProbability.format("%2d")]);
+			var temperature = (Setting.GetTempSystem() == 1 ? weatherInfo.Temperature : weatherInfo.Temperature * 1.8 + 32)
+				.format(weatherInfo.PerceptionProbability > 99 ? "%2d" : "%2.1f");
+			var perception = weatherInfo.PerceptionProbability.format("%2d");
 	        
 			var temperatureLabel = View.findDrawableById("Temperature_bright");
 			temperatureLabel.setText(temperature);
 			var temperatureTitleLabel = View.findDrawableById("TemperatureTitle_dim");
-			temperatureTitleLabel.locX = temperatureLabel.locX + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY);
-			temperatureTitleLabel.setText("o");
+			temperatureTitleLabel.locX = temperatureLabel.locX + 1 + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY);
+			temperatureTitleLabel.setText(Setting.GetTempSystem() == 1 ? "c" : "f");
 			
 			View.findDrawableById("Perception_bright").setText(perception);
 			View.findDrawableById("PerceptionTitle_dim").setText("%");

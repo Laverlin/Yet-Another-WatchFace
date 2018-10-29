@@ -100,5 +100,9 @@ class Setting
 	{
 		return App.getApp().getProperty("windSystem");
 	}
+	public static function GetTempSystem()
+	{
+		return App.getApp().getProperty("tempSystem");
+	}
 	
 }
