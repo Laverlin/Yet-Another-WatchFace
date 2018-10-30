@@ -26,7 +26,11 @@
     <string id="ColorLimeGreen">LimeGreen</string>
     <string id="ColorYellowGreen">Yellow Green</string>
     <string id="ColorPaleGreen">Pale Green</string>
+    <string id="ColorPaleBlue">Pale Blue</string>
 	<string id="ColorLime">Lime</string>
+	<string id="ColorPink">Pink</string>
+	<string id="ColorAqua">Aqua</string>
+	<string id="ColorYellow">Yellow</string>
 	
 	<string id="IsShowCityTitle">Show Current City</string>
 	
