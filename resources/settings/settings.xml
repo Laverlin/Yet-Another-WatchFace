@@ -71,6 +71,14 @@
     	</settingConfig>
     </setting>
     
+    <setting propertyKey="@Properties.distSystem" title="@Strings.DistSystemTitle">
+    	<settingConfig type="list">
+    		<listEntry value="0">@Strings.Kilometers</listEntry>
+    		<listEntry value="1">@Strings.Miles</listEntry>
+    		<listEntry value="2">@Strings.Steps</listEntry>
+    	</settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.etzId" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">
 			<listEntry value="1">@Strings.id1</listEntry>

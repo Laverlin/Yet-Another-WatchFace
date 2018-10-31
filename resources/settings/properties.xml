@@ -10,4 +10,5 @@
     <property id="etzId" type="number">16</property>
     <property id="tempSystem" type="number">1</property>
     <property id="windSystem" type="number">1</property>
+    <property id="distSystem" type="number">0</property>
 </properties>

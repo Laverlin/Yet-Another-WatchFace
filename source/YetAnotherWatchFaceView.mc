@@ -213,10 +213,21 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         // get ActivityMonitor info
         //
 		var info = ActivityMonitor.getInfo();
-		var distance = info.distance.toFloat()/100000;
+		
+		var distanceValues = 
+			[(info.distance.toFloat()/100000).format("%2.1f"), 
+			(info.distance.toFloat()/160934.4).format("%2.1f"), 
+			info.steps.format("%02d")];
+		var distanceTitles = ["km", "mi", "st."];
 		
         View.findDrawableById("Dist_bright")
-        	.setText(distance.format("%2.1f"));
+        	.setText(distanceValues[Setting.GetDistSystem()]);
+        
+        View.findDrawableById("DistTitle_dim")
+        	.setText(distanceTitles[Setting.GetDistSystem()]);
+        	
+        distanceValues = null;
+        distanceTitles = null;
         
         // Weather data
         //
