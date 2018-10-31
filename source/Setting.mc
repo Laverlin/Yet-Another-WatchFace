@@ -8,6 +8,7 @@ class Setting
 	static hidden var _lastKnownLocation = "lastKnownLocation";
 	static hidden var _weatherInfo = "WeatherInfo";
 	static hidden var _etz = "etz";
+	static hidden var _isTest = "isTest";
 
     static hidden var _locationApiKey = "location-api-key";
 
@@ -109,6 +110,15 @@ class Setting
 	public static function GetDistSystem()
 	{
 		return App.getApp().getProperty("distSystem");
+	}
+	
+	public static function GetIsTest()
+	{
+		return App.getApp().getProperty(_isTest);
+	}
+	public static function SetIsTest(isTest)
+	{
+		return App.getApp().setProperty(_isTest, isTest);
 	}
 	
 }

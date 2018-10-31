@@ -26,6 +26,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         WatchFace.initialize();
         Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
+		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
     }
 
     // Load your resources here
@@ -313,8 +314,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
 
-		View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
-		
+		if (Setting.GetIsTest())
+		{
+			View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
+		}
         // Call the parent onUpdate function to redraw the layout
         //
         View.onUpdate(dc);
