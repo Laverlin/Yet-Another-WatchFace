@@ -219,7 +219,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			[(info.distance.toFloat()/100000).format("%2.1f"), 
 			(info.distance.toFloat()/160934.4).format("%2.1f"), 
 			info.steps.format("%02d")];
-		var distanceTitles = ["km", "mi", "st."];
+		var distanceTitles = ["km", "mi", ""];
 		
         View.findDrawableById("Dist_bright")
         	.setText(distanceValues[Setting.GetDistSystem()]);
@@ -318,6 +318,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		{
 			View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
 		}
+		
         // Call the parent onUpdate function to redraw the layout
         //
         View.onUpdate(dc);
