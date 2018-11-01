@@ -116,9 +116,15 @@ class Setting
 	{
 		return App.getApp().getProperty(_isTest);
 	}
+	
 	public static function SetIsTest(isTest)
 	{
 		return App.getApp().setProperty(_isTest, isTest);
+	}
+	
+	public static function GetIsShowCurrency()
+	{
+		return App.getApp().getProperty("isShowCurrency");
 	}
 	
 }

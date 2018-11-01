@@ -57,6 +57,10 @@
     	<settingConfig type="boolean"></settingConfig>
     </setting>
     
+   	<setting propertyKey="@Properties.isShowCurrency" title="@Strings.isShowCurrencyTitle">
+    	<settingConfig type="boolean"></settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.tempSystem" title="@Strings.TempSystemTitle">
     	<settingConfig type="list">
     		<listEntry value="1">@Strings.Celsius</listEntry>

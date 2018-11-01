@@ -38,6 +38,7 @@
 	<string id="ColorYellow">Yellow</string>
 	
 	<string id="IsShowCityTitle">Show Current City</string>
+	<string id="isShowCurrencyTitle">Show Exchange Rate (instead of pulse)</string>
 	
 	<string id ="ExtraTimeZoneTitle">Extra Time Zone</string>
 	<string id="id1"> [-12] (+12, Etc/GMT-12) </string>

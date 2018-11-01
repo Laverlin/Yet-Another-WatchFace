@@ -11,4 +11,5 @@
     <property id="tempSystem" type="number">1</property>
     <property id="windSystem" type="number">1</property>
     <property id="distSystem" type="number">0</property>
+    <property id="isShowCurrency" type="boolean">0</property>
 </properties>

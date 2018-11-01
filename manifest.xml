@@ -3,6 +3,8 @@
         <iq:products>
             <iq:product id="fenix5"/>
             <iq:product id="fenix5plus"/>
+            <iq:product id="fenix5x"/>
+            <iq:product id="fenix5xplus"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="Background"/>

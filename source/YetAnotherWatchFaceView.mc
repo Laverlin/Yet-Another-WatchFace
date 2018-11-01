@@ -20,6 +20,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 {
 	hidden var _layout;
 	hidden var _conditionIcons;
+	hidden var _isShowCurrency;
 	
     function initialize() 
     {
@@ -36,9 +37,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
+		_isShowCurrency = Setting.GetIsShowCurrency();
 
-
-		
 		UpdateSetting();
     }
 
@@ -140,13 +140,16 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
      	secondLabel.setText(clockTime.sec.format("%02d"));
 		secondLabel.draw(dc);
 
-		var chr = Activity.getActivityInfo().currentHeartRate;
-		if (chr != null)
+		if (!_isShowCurrency)
 		{
-			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-			dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
-			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
-			viewPulse.draw(dc);
+			var chr = Activity.getActivityInfo().currentHeartRate;
+			if (chr != null)
+			{
+				var viewPulse = View.findDrawableById("Pulse_bright_setbg");
+				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
+				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
+				viewPulse.draw(dc);
+			}
 		}
 
         dc.clearClip();
