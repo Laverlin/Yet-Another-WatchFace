@@ -12,4 +12,6 @@
     <property id="windSystem" type="number">1</property>
     <property id="distSystem" type="number">0</property>
     <property id="isShowCurrency" type="boolean">0</property>
+    <property id = "base-currency-id" type = "number">1</property>
+    <property id = "target-currency-id" type = "number">2</property>
 </properties>

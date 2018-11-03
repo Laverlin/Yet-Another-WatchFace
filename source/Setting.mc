@@ -9,6 +9,9 @@ class Setting
 	static hidden var _weatherInfo = "WeatherInfo";
 	static hidden var _etz = "etz";
 	static hidden var _isTest = "isTest";
+	
+	static hidden var _baseCurrency = "base-currency";
+	static hidden var _targetCurrency = "target-currency";
 
     static hidden var _locationApiKey = "location-api-key";
 
@@ -129,12 +132,31 @@ class Setting
 	
 	public static function GetBaseCurrency()
 	{
-		return "USD";
+		return App.getApp().getProperty(_baseCurrency);
 	}
 	
 	public static function GetTargetCurrency()
 	{
-		return "RUB";
+		return App.getApp().getProperty(_targetCurrency);
+	}
+	
+	public static function SetBaseCurrency(baseCurrency)
+	{
+		App.getApp().setProperty(_baseCurrency, baseCurrency);
+	}
+	public static function SetTargetCurrency(targetCurrency)
+	{
+		App.getApp().setProperty(_targetCurrency, targetCurrency);
+	}
+	
+	public static function GetBaseCurrencyId()
+	{
+		return App.getApp().getProperty("base-currency-id");
+	}
+	
+	public static function GetTargetCurrencyId()
+	{
+		return App.getApp().getProperty("target-currency-id");
 	}
 	
 }

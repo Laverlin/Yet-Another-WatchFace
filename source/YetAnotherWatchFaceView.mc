@@ -92,6 +92,17 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
 		tzData = null;
 		
+		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
+		
+		Sys.println("base currency : " + symbols["symbols"][Setting.GetBaseCurrencyId() - 1]);
+		Sys.println("target currency : " + symbols["symbols"][Setting.GetTargetCurrencyId() - 1]);
+		
+		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId() - 1]);
+		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId() - 1]);
+		symbols = null;
+		
+		
+		
 		_isShowCurrency = Setting.GetIsShowCurrency();
 		
 		SetColors();
@@ -287,8 +298,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		{
 			var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
 				? 0.0 : weatherInfo.ExchangeRate; 
+			var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";	
 			View.findDrawableById("Pulse_bright_setbg")
-				.setText(currencyValue.format("%2.2f"));
+				.setText(currencyValue.format(format));
 			View.findDrawableById("PulseTitle_dim")
 				.setText(Setting.GetBaseCurrency().toLower() + "/" + Setting.GetTargetCurrency().toLower());
 		}

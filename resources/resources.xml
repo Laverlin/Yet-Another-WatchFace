@@ -60,4 +60,13 @@
 		{"Id":39,"Offsets":[-780],"Abbrs":["+13"],"Untils":[null]},
 		{"Id":40,"Offsets":[-840],"Abbrs":["+14"],"Untils":[null]}]
 	</jsonData>
+	
+	<jsonData id="currencySymbols">
+		{"symbols":["EUR", "USD", "HUF", "AUD", "NZD", "OMR", "SEK", "AMD", "CNY",
+			"CZK", "INR", "KRW", "ANG", "QAR", "DKK", "IDR", "ILS", "PAB",
+    		"PHP", "SGD", "ZAR", "ARS", "BGN", "CAD", "CLP", "DOP",
+    		"JPY", "LVL", "CHF", "SCR", "THB", "TRY", "AED", "BRL", "KHR",
+    		"HRK", "EGP", "HKD", "MXN", "NOK", "PLN", "RUB", "VND", "UAH",
+    		"GBP", "BTC", "BYN"]}
+	</jsonData>
 </resources>
