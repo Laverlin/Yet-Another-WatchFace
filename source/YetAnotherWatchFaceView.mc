@@ -37,7 +37,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
-		_isShowCurrency = Setting.GetIsShowCurrency();
 
 		UpdateSetting();
     }
@@ -92,7 +91,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         	}
         }
 		tzData = null;
-
+		
+		_isShowCurrency = Setting.GetIsShowCurrency();
+		
 		SetColors();
     }
     
@@ -280,6 +281,24 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
 		
+        // Show Currency
+        //
+       	if (_isShowCurrency)
+		{
+			var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
+				? 0.0 : weatherInfo.ExchangeRate; 
+			View.findDrawableById("Pulse_bright_setbg")
+				.setText(currencyValue.format("%2.2f"));
+			View.findDrawableById("PulseTitle_dim")
+				.setText(Setting.GetBaseCurrency().toLower() + "/" + Setting.GetTargetCurrency().toLower());
+		}
+		else
+		{
+			View.findDrawableById("PulseTitle_dim").setText("bpm");
+		}		
+		
+		// location
+		//
 		if (weatherInfo != null && weatherInfo.City != null 
 			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
 		{

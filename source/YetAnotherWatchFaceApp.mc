@@ -59,10 +59,10 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         {
         	var weatherInfo = WeatherInfo.FromDictionary(data);
         	
-        	if (weatherInfo.WeatherStatus == 1 || weatherInfo.CityStatus == 1)
-        	{
+     //   	if (weatherInfo.WeatherStatus == 1 || weatherInfo.CityStatus == 1)
+     //   	{
         		Setting.SetWeatherInfo(data);
-        	}
+      //  	}
         }
 
         Ui.requestUpdate();

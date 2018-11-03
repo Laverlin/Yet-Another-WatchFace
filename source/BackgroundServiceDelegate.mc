@@ -47,6 +47,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			RequestLocation(location);
 		}
+		
+		if (Setting.GetIsShowCurrency())
+		{
+			RequestExchangeRate();
+		}
     }
     
     function RequestWeather(apiKey, location)
@@ -121,6 +126,42 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			var location = data["resourceSets"][0]["resources"][0]["name"];
 			_weatherInfo.City = location;
 			_weatherInfo.CityStatus = 1; //OK
+		}
+		
+		_syncCounter = _syncCounter - 1;
+		if (_syncCounter == 0)
+		{
+			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
+		}
+	}
+	
+	function RequestExchangeRate()
+	{
+		var url = Lang.format("http://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y", [
+			Setting.GetBaseCurrency(), 
+			Setting.GetTargetCurrency()]
+		);
+		 
+		Sys.println(" :: request3 " + url);
+		
+		var options = {
+        	:method => Comm.HTTP_REQUEST_METHOD_GET,
+          	:responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
+		};
+		
+		_syncCounter = _syncCounter + 1;
+    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveExchangeRate));
+	}
+	
+	function OnReceiveExchangeRate(responseCode, data)
+	{
+		//	Sys.println(" data = " + data);
+
+		if (responseCode == 200)
+		{
+			_weatherInfo.ExchangeRate = 
+				data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"];
+				Sys.println(" rate = " + _weatherInfo.ExchangeRate);
 		}
 		
 		_syncCounter = _syncCounter - 1;

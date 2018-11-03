@@ -127,4 +127,14 @@ class Setting
 		return App.getApp().getProperty("isShowCurrency");
 	}
 	
+	public static function GetBaseCurrency()
+	{
+		return "USD";
+	}
+	
+	public static function GetTargetCurrency()
+	{
+		return "RUB";
+	}
+	
 }
