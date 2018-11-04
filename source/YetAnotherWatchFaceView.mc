@@ -2,12 +2,10 @@ using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
 using Toybox.Lang as Lang;
-using Toybox.Application as App;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Gregorian;
 using Toybox.ActivityMonitor as ActivityMonitor;
 using Toybox.Activity as Activity;
-using Toybox.Background as Background;
 
 // Main WatchFaace view
 // ToDo:: 
@@ -17,7 +15,8 @@ using Toybox.Background as Background;
 //		  -- 4. Add option to show city name
 //		  -- 5. Adjust exchange rate output
 //        6. Refactor backround process (error handling)
-//        7. Option to Show weather
+//        -- 7. Option to Show weather
+//        8. Refactor resources, name conventions, etc..
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
@@ -81,9 +80,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		.setLineColor(Setting.GetTimeColor());
     }
     
-  
+  	// Implement updated setting from mobile app
+  	//
     function UpdateSetting()
     {
+    	// Find timezone DST data and save it in object store
+    	//
 		var tzData = Ui.loadResource(Rez.JsonData.tzData);
         for (var i=0; i < tzData.size(); i++ )
         {
@@ -95,8 +97,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
 		tzData = null;
 		
+		// load actual currency symbols and save it in object store
+		//
 		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
 		
+		// need to erase current exchange rate, since it not actual anymore
+		//
 		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
 			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
 		{
@@ -107,6 +113,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         		Setting.SetWeatherInfo(weatherInfo);
         	}			
 		}
+		
+		// save new symbols in OS
+		//
 		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
 		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
 		symbols = null;

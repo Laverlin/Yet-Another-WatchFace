@@ -142,7 +142,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			Setting.GetTargetCurrency()]
 		);
 		 
-		Sys.println(" :: request3 " + url);
+		//Sys.println(" :: request3 " + url);
 		
 		var options = {
         	:method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -161,7 +161,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			_weatherInfo.ExchangeRate = 
 				data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"];
-				Sys.println(" rate = " + _weatherInfo.ExchangeRate);
 		}
 		
 		_syncCounter = _syncCounter - 1;

@@ -4,13 +4,6 @@
         <settingConfig type="alphaNumeric" readonly="true" /> 
     </setting>
    
-    <setting propertyKey="@Properties.is-show-weather" title="@Strings.isShowWeatherTitle">
-    	<settingConfig type="boolean"></settingConfig>
-    </setting>
-   	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
-    	<settingConfig type="alphaNumeric"></settingConfig>
-    </setting>
-    
     <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
@@ -56,12 +49,12 @@
         </settingConfig>
     </setting>
     
-   	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
+    <setting propertyKey="@Properties.is-show-weather" title="@Strings.isShowWeatherTitle">
     	<settingConfig type="boolean"></settingConfig>
     </setting>
     
-   	<setting propertyKey="@Properties.isShowCurrency" title="@Strings.isShowCurrencyTitle">
-    	<settingConfig type="boolean"></settingConfig>
+   	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
+    	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>
     
     <setting propertyKey="@Properties.tempSystem" title="@Strings.TempSystemTitle">
@@ -76,16 +69,12 @@
     		<listEntry value="1">@Strings.Knots</listEntry>
     		<listEntry value="2">@Strings.Meters</listEntry>
     	</settingConfig>
-    </setting>
+    </setting>        
     
-    <setting propertyKey="@Properties.distSystem" title="@Strings.DistSystemTitle">
-    	<settingConfig type="list">
-    		<listEntry value="0">@Strings.Kilometers</listEntry>
-    		<listEntry value="1">@Strings.Miles</listEntry>
-    		<listEntry value="2">@Strings.Steps</listEntry>
-    	</settingConfig>
+   	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
+    	<settingConfig type="boolean"></settingConfig>
     </setting>
-    
+  
     <setting propertyKey="@Properties.etzId" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">
 			<listEntry value="1">@Strings.id1</listEntry>
@@ -129,6 +118,10 @@
 			<listEntry value="39">@Strings.id39</listEntry>
 			<listEntry value="40">@Strings.id40</listEntry>
         </settingConfig>
+    </setting>
+  
+    <setting propertyKey="@Properties.isShowCurrency" title="@Strings.isShowCurrencyTitle">
+    	<settingConfig type="boolean"></settingConfig>
     </setting>
     
     <setting propertyKey="@Properties.base-currency-id" title="@Strings.BaseCurrencyTitle">
@@ -234,5 +227,13 @@
 			<listEntry value = "46">@Strings.cur_BYN</listEntry>
 		</settingConfig>
 	</setting>
+
+    <setting propertyKey="@Properties.distSystem" title="@Strings.DistSystemTitle">
+    	<settingConfig type="list">
+    		<listEntry value="0">@Strings.Kilometers</listEntry>
+    		<listEntry value="1">@Strings.Miles</listEntry>
+    		<listEntry value="2">@Strings.Steps</listEntry>
+    	</settingConfig>
+    </setting>
 
 </settings>
