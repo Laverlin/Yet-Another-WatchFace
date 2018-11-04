@@ -37,6 +37,7 @@
 	<string id="ColorAqua">Aqua</string>
 	<string id="ColorYellow">Yellow</string>
 	
+	<string id="isShowWeatherTitle">Show Weather (you must provide http://darksky.net API key)</string>
 	<string id="IsShowCityTitle">Show Current City</string>
 	<string id="isShowCurrencyTitle">Show Exchange Rate (instead of pulse)</string>
 	

@@ -159,4 +159,9 @@ class Setting
 		return App.getApp().getProperty("target-currency-id");
 	}
 	
+	public static function GetIsShowWeather()
+	{
+		return App.getApp().getProperty("is-show-weather");
+	}
+	
 }

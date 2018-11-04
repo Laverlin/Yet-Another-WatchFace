@@ -15,8 +15,9 @@ using Toybox.Background as Background;
 //        2. Move UI logic to functions
 //        -- 3. Fix Timezone Issue 
 //		  -- 4. Add option to show city name
-//		  5. Adjust exchange rate output
+//		  -- 5. Adjust exchange rate output
 //        6. Refactor backround process (error handling)
+//        7. Option to Show weather
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
@@ -245,10 +246,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         {
         	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
         }
-        if (weatherInfo == null || weatherInfo.WeatherStatus != 1) // no weather
+        if (weatherInfo == null || weatherInfo.WeatherStatus != 1 || !Setting.GetIsShowWeather()) // no weather
         {
 			View.findDrawableById("Temperature_bright")
-				.setText((Setting.GetLastKnownLocation() == null) ? "no GPS" : "GPS ok");
+				.setText(
+					!Setting.GetIsShowWeather() ? "" :
+						(Setting.GetLastKnownLocation() == null) ? "no GPS" : "GPS ok");
 			View.findDrawableById("TemperatureTitle_dim").setText("");
 			View.findDrawableById("Perception_bright").setText("");
 			View.findDrawableById("PerceptionTitle_dim").setText("");

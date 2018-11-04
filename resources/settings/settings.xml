@@ -4,6 +4,9 @@
         <settingConfig type="alphaNumeric" readonly="true" /> 
     </setting>
    
+    <setting propertyKey="@Properties.is-show-weather" title="@Strings.isShowWeatherTitle">
+    	<settingConfig type="boolean"></settingConfig>
+    </setting>
    	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
     	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>
