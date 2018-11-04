@@ -15,6 +15,8 @@ using Toybox.Background as Background;
 //        2. Move UI logic to functions
 //        -- 3. Fix Timezone Issue 
 //		  -- 4. Add option to show city name
+//		  5. Adjust exchange rate output
+//        6. Refactor backround process (error handling)
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
@@ -94,9 +96,16 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
 		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
 		
-		Sys.println("base currency : " + symbols["symbols"][Setting.GetBaseCurrencyId() - 1]);
-		Sys.println("target currency : " + symbols["symbols"][Setting.GetTargetCurrencyId() - 1]);
-		
+		if (!symbols["symbols"][Setting.GetBaseCurrencyId() - 1].equals(Setting.GetBaseCurrency()) ||
+			!symbols["symbols"][Setting.GetTargetCurrencyId() - 1].equals(Setting.GetTargetCurrency()))
+		{
+			var weatherInfo = Setting.GetWeatherInfo();
+        	if (weatherInfo != null)
+        	{
+        		weatherInfo["ExchangeRate"] = 0;
+        		Setting.SetWeatherInfo(weatherInfo);
+        	}			
+		}
 		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId() - 1]);
 		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId() - 1]);
 		symbols = null;
@@ -167,20 +176,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         dc.clearClip();
     }
     
-    function TrackBatteryDegradation()
-    {
-    	
-/*    	var savedLevel = Setting.GetBatteryLevel();
-    	var currentLevel = (Sys.getSystemStats().battery).toNumber();
-    	if (savedLevel[0] != currentLevel)
-    	{
-    		var timeNowValue = Time.now().value();
-    		var diff = timeNowValue - savedLevel[1];
-    		Setting.SetBatteryLevel([currentLevel, timeNowValue]);
-    	}
-    	*/
-    }
-
     // Update the view
     //
     function onUpdate(dc) 
@@ -297,12 +292,21 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
        	if (_isShowCurrency)
 		{
 			var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
-				? 0.0 : weatherInfo.ExchangeRate; 
-			var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";	
-			View.findDrawableById("Pulse_bright_setbg")
-				.setText(currencyValue.format(format));
-			View.findDrawableById("PulseTitle_dim")
-				.setText(Setting.GetBaseCurrency().toLower() + "/" + Setting.GetTargetCurrency().toLower());
+				? 0 : weatherInfo.ExchangeRate; 
+			if (currencyValue == 0)
+			{
+				View.findDrawableById("Pulse_bright_setbg")
+					.setText("loading...");
+				View.findDrawableById("PulseTitle_dim").setText("");					
+			}		
+			else 
+			{
+				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";	
+				View.findDrawableById("Pulse_bright_setbg")
+					.setText(currencyValue.format(format));
+				View.findDrawableById("PulseTitle_dim")
+					.setText(Setting.GetBaseCurrency().toLower() + "/" + Setting.GetTargetCurrency().toLower());
+			}
 		}
 		else
 		{

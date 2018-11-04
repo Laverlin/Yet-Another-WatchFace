@@ -27,18 +27,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     //
     function getInitialView() 
     {
- 		var FIVE_MINUTES = new Toybox.Time.Duration(5 * 60);
-		var lastTime = Background.getLastTemporalEventTime();
-		if (lastTime != null) 
-		{
-    		var nextTime = lastTime.add(FIVE_MINUTES);
-    		Background.registerForTemporalEvent(nextTime);
-		} 
-		else 
-		{
-    		Background.registerForTemporalEvent(Time.now());
-		}   	
-    	
+    	InitBackgroundEvents();
     	_watchFaceView = new YetAnotherWatchFaceView();
         return [ _watchFaceView, new PowerBudgetDelegate() ];
     }
@@ -48,6 +37,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onSettingsChanged() 
     {
     	_watchFaceView.UpdateSetting();
+    	
+    	InitBackgroundEvents();
+    	
         Ui.requestUpdate();
     }
     
@@ -57,7 +49,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
   
         if (data != null)
         {
-        	var weatherInfo = WeatherInfo.FromDictionary(data);
        		Setting.SetWeatherInfo(data);
         }
 
@@ -67,5 +58,20 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function getServiceDelegate()
     {
         return [new BackgroundServiceDelegate()];
+    }
+    
+    function InitBackgroundEvents()
+    {
+    	var FIVE_MINUTES = new Toybox.Time.Duration(5 * 60);
+		var lastTime = Background.getLastTemporalEventTime();
+		if (lastTime != null) 
+		{
+    		var nextTime = lastTime.add(FIVE_MINUTES);
+    		Background.registerForTemporalEvent(nextTime);
+		} 
+		else 
+		{
+    		Background.registerForTemporalEvent(Time.now());
+		}
     }
 }
