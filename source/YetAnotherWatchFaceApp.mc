@@ -46,7 +46,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onBackgroundData(data) 
     {
     	Background.registerForTemporalEvent(new Toybox.Time.Duration(60 * 60));
-  
         if (data != null)
         {
        		Setting.SetWeatherInfo(data);

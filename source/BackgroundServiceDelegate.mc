@@ -20,14 +20,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
     function onTemporalEvent() 
     {
-    	var location = Setting.GetLastKnownLocation();
-    	var apiKey = Setting.GetWeatherApiKey();
-    	
-    	if (location == null)
-    	{
-    		return;
-    	}
-    	
+    	// init WeatherInfo object which will stor and pass data to the main app
+    	//
     	var weatherData = Setting.GetWeatherInfo();
     	if (weatherData != null)
     	{
@@ -37,21 +31,35 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     	{
     		_weatherInfo = new WeatherInfo();
     	}
+    	    
+    	// Request Currency
+    	//
+    	if (Setting.GetIsShowCurrency())
+		{
+			RequestExchangeRate();
+		}
+    
+    	var location = Setting.GetLastKnownLocation();
+    	var apiKey = Setting.GetWeatherApiKey();
     	
+    	if (location == null)
+    	{
+    		return;
+    	}
+    	
+		// Request Weather
+		//
     	if (apiKey != null && apiKey.length() > 0)
     	{
 			RequestWeather(apiKey, location);
 		}
 		
+		// Request Location
+		//
 		if (Setting.GetIsShowCity())
 		{
 			RequestLocation(location);
-		}
-		
-		if (Setting.GetIsShowCurrency())
-		{
-			RequestExchangeRate();
-		}
+		}		
     }
     
     function RequestWeather(apiKey, location)
