@@ -1,7 +1,7 @@
 # Yet-Another-WatchFace
 Watch Face application for Garmin Fenix 5[X][Plus] smartwatch
 
-#Description
+# Description
 Please, leave your comments, bug reports and ideas on Garmin Forum:
 
 This simple configurable digital face has:
