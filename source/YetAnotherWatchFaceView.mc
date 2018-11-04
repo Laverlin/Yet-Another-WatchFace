@@ -96,8 +96,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
 		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
 		
-		if (!symbols["symbols"][Setting.GetBaseCurrencyId() - 1].equals(Setting.GetBaseCurrency()) ||
-			!symbols["symbols"][Setting.GetTargetCurrencyId() - 1].equals(Setting.GetTargetCurrency()))
+		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
+			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
 		{
 			var weatherInfo = Setting.GetWeatherInfo();
         	if (weatherInfo != null)
@@ -106,12 +106,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         		Setting.SetWeatherInfo(weatherInfo);
         	}			
 		}
-		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId() - 1]);
-		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId() - 1]);
+		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
+		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
 		symbols = null;
-		
-		
-		
+
 		_isShowCurrency = Setting.GetIsShowCurrency();
 		
 		SetColors();
@@ -301,11 +299,25 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}		
 			else 
 			{
-				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";	
-				View.findDrawableById("Pulse_bright_setbg")
-					.setText(currencyValue.format(format));
-				View.findDrawableById("PulseTitle_dim")
-					.setText(Setting.GetBaseCurrency().toLower() + "/" + Setting.GetTargetCurrency().toLower());
+				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";
+				format = (currencyValue < 0.01) ? "%.4f" : format;
+				format = (currencyValue < 0.001) ? "%.5f" : format;
+				format = (currencyValue < 0.0001) ? "%.6f" : format;
+					
+				var rateString = currencyValue.format(format);	
+				var exchangeLabel = View.findDrawableById("Pulse_bright_setbg");
+				exchangeLabel.setText(rateString);
+				
+				var currencyLabel = View.findDrawableById("PulseTitle_dim");
+				if (rateString.length() > 5)
+				{
+					currencyLabel.locX = exchangeLabel.locX + dc.getTextWidthInPixels(rateString, Gfx.FONT_TINY) + 3;
+				}
+				else
+				{
+					currencyLabel.locX = View.findDrawableById("DistTitle_dim").locX;
+				}
+				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
 			}
 		}
 		else
