@@ -12,6 +12,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 {
 	hidden var _weatherInfo;
 	hidden var _syncCounter = 0;
+	hidden var _location;
 	 
 	function initialize() 
 	{
@@ -39,10 +40,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			RequestExchangeRate();
 		}
     
-    	var location = Setting.GetLastKnownLocation();
+    	_location = Setting.GetLastKnownLocation();
     	var apiKey = Setting.GetWeatherApiKey();
     	
-    	if (location == null)
+    	if (_location == null)
     	{
     		return;
     	}
@@ -51,14 +52,14 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		//
     	if (apiKey != null && apiKey.length() > 0)
     	{
-			RequestWeather(apiKey, location);
+			RequestWeather(apiKey, _location);
 		}
 		
 		// Request Location
 		//
 		if (Setting.GetIsShowCity())
 		{
-			RequestLocation(location);
+			RequestLocation(_location);
 		}		
     }
     
@@ -108,7 +109,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			return;
 		}
-		_weatherInfo.Location = location;
 		
 		var url = Lang.format(
 			"https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
@@ -129,10 +129,12 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveLocation(responseCode, data)
 	{
+		//Sys.println("loc data" + data);
 		if (responseCode == 200)
 		{
-			var location = data["resourceSets"][0]["resources"][0]["name"];
-			_weatherInfo.City = location;
+			var cityName = data["resourceSets"][0]["resources"][0]["name"];
+			_weatherInfo.City = cityName;
+			_weatherInfo.Location = _location;
 			_weatherInfo.CityStatus = 1; //OK
 		}
 		
@@ -177,5 +179,4 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
 		}
 	}
-
 }

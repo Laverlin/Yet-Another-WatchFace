@@ -163,5 +163,4 @@ class Setting
 	{
 		return App.getApp().getProperty("is-show-weather");
 	}
-	
 }
