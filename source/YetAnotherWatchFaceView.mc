@@ -198,13 +198,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
     	}
     	
+    	var is24Hour = Sys.getDeviceSettings().is24Hour;
 		var timeNow = Time.now();
         var gregorianTimeNow = Gregorian.info(timeNow, Time.FORMAT_MEDIUM);
     	
         // Update Time
         //
         View.findDrawableById("Hour_time")
-        	.setText(gregorianTimeNow.hour.format("%02d"));
+        	.setText(is24Hour 
+        		? gregorianTimeNow.hour.format("%02d") 
+        		: (gregorianTimeNow.hour % 12 == 0 ? 12 : gregorianTimeNow.hour % 12).format("%02d"));
+        	
+        View.findDrawableById("DaySign_time_setbg")
+        	.setText(is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
         
         View.findDrawableById("Minute_time")
         	.setText(gregorianTimeNow.min.format("%02d"));
