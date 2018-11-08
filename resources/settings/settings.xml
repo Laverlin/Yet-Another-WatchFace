@@ -4,6 +4,10 @@
         <settingConfig type="alphaNumeric" readonly="true" /> 
     </setting>
    
+    <setting propertyKey="@Properties.is-show-seconds" title="@Strings.isShowSecondsTitle">
+    	<settingConfig type="boolean"></settingConfig>
+    </setting>
+   
     <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>

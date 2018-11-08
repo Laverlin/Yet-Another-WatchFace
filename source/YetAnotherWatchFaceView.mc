@@ -162,13 +162,17 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onPartialUpdate(dc)
     {
-    	var clockTime = Sys.getClockTime();
-    	
-    	var secondLabel = View.findDrawableById("Second_time_setbg");
-     	dc.setClip(secondLabel.locX - secondLabel.width, secondLabel.locY, secondLabel.width + 1, secondLabel.height);
-     	secondLabel.setText(clockTime.sec.format("%02d"));
-		secondLabel.draw(dc);
-
+    
+    	if (Setting.GetIsShowSeconds())
+    	{
+	    	var clockTime = Sys.getClockTime();
+	    	
+	    	var secondLabel = View.findDrawableById("Second_time_setbg");
+	     	dc.setClip(secondLabel.locX - secondLabel.width, secondLabel.locY, secondLabel.width + 1, secondLabel.height);
+	     	secondLabel.setText(clockTime.sec.format("%02d"));
+			secondLabel.draw(dc);
+		}
+		
 		if (!_isShowCurrency)
 		{
 			var chr = Activity.getActivityInfo().currentHeartRate;
@@ -202,11 +206,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         View.findDrawableById("Hour_time")
         	.setText(gregorianTimeNow.hour.format("%02d"));
         
-        var viewMinute = View.findDrawableById("Minute_time")
+        View.findDrawableById("Minute_time")
         	.setText(gregorianTimeNow.min.format("%02d"));
         
-        View.findDrawableById("Second_time_setbg")
-        	.setText(gregorianTimeNow.sec.format("%02d"));
+       	View.findDrawableById("Second_time_setbg")
+        		.setText(Setting.GetIsShowSeconds() ? gregorianTimeNow.sec.format("%02d") : "");
          
         // Update date
         //

@@ -163,4 +163,9 @@ class Setting
 	{
 		return App.getApp().getProperty("is-show-weather");
 	}
+	
+	public static function GetIsShowSeconds()
+	{
+		return App.getApp().getProperty("is-show-seconds");
+	}
 }
