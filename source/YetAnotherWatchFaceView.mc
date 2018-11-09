@@ -23,6 +23,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _isShowCurrency;
+	hidden var _heartRate = 0;
 	
     function initialize() 
     {
@@ -30,6 +31,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
+		
+		//Setting.SetLastKnownLocation([13.764073, 100.577436]);
     }
 
     // Load your resources here
@@ -162,22 +165,28 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onPartialUpdate(dc)
     {
-    	var clockTime = Sys.getClockTime();
-    	
-    	var secondLabel = View.findDrawableById("Second_time_setbg");
-     	dc.setClip(secondLabel.locX - secondLabel.width, secondLabel.locY, secondLabel.width + 1, secondLabel.height);
-     	secondLabel.setText(clockTime.sec.format("%02d"));
-		secondLabel.draw(dc);
-
+    
+    	if (Setting.GetIsShowSeconds())
+    	{
+	    	var clockTime = Sys.getClockTime();
+	    	
+	    	var secondLabel = View.findDrawableById("Second_time_setbg");
+	     	dc.setClip(secondLabel.locX - secondLabel.width, secondLabel.locY, secondLabel.width + 1, secondLabel.height);
+	     	secondLabel.setText(clockTime.sec.format("%02d"));
+			secondLabel.draw(dc);
+		}
+		
 		if (!_isShowCurrency)
 		{
 			var chr = Activity.getActivityInfo().currentHeartRate;
-			if (chr != null)
+			if (chr != null && _heartRate != chr)
 			{
+				_heartRate = chr;
 				var viewPulse = View.findDrawableById("Pulse_bright_setbg");
 				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
 				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
 				viewPulse.draw(dc);
+				Sys.println("update");
 			}
 		}
 
@@ -194,19 +203,25 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
     	}
     	
+    	var is24Hour = Sys.getDeviceSettings().is24Hour;
 		var timeNow = Time.now();
         var gregorianTimeNow = Gregorian.info(timeNow, Time.FORMAT_MEDIUM);
     	
         // Update Time
         //
         View.findDrawableById("Hour_time")
-        	.setText(gregorianTimeNow.hour.format("%02d"));
+        	.setText(is24Hour 
+        		? gregorianTimeNow.hour.format("%02d") 
+        		: (gregorianTimeNow.hour % 12 == 0 ? 12 : gregorianTimeNow.hour % 12).format("%02d"));
+        	
+        View.findDrawableById("DaySign_time_setbg")
+        	.setText(is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
         
-        var viewMinute = View.findDrawableById("Minute_time")
+        View.findDrawableById("Minute_time")
         	.setText(gregorianTimeNow.min.format("%02d"));
         
-        View.findDrawableById("Second_time_setbg")
-        	.setText(gregorianTimeNow.sec.format("%02d"));
+       	View.findDrawableById("Second_time_setbg")
+        		.setText(Setting.GetIsShowSeconds() ? gregorianTimeNow.sec.format("%02d") : "");
          
         // Update date
         //
@@ -342,7 +357,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (weatherInfo != null && weatherInfo.City != null 
 			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
 		{
-			View.findDrawableById("City_dim").setText(weatherInfo.City);
+			// short <city, country> length if it's too long.
+			// first cut country, if it's still not fit - cut and add dots.
+			//
+			var city = weatherInfo.City;
+			if (city.length() > 23)
+			{
+				var dindex = city.find(",");
+				city = (dindex == 0) 
+					? city
+					: city.substring(0, dindex);
+				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
+			}
+			View.findDrawableById("City_dim").setText(city);
 		}
 		else
 		{

@@ -4,6 +4,10 @@
         <settingConfig type="alphaNumeric" readonly="true" /> 
     </setting>
    
+    <setting propertyKey="@Properties.is-show-seconds" title="@Strings.isShowSecondsTitle">
+    	<settingConfig type="boolean"></settingConfig>
+    </setting>
+   
     <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
@@ -158,21 +162,22 @@
 			<listEntry value = "29">@Strings.cur_SCR</listEntry>
 			<listEntry value = "30">@Strings.cur_THB</listEntry>
 			<listEntry value = "31">@Strings.cur_TRY</listEntry>
-			<listEntry value = "32">@Strings.cur_AED</listEntry>
-			<listEntry value = "33">@Strings.cur_BRL</listEntry>
-			<listEntry value = "34">@Strings.cur_KHR</listEntry>
-			<listEntry value = "35">@Strings.cur_HRK</listEntry>
-			<listEntry value = "36">@Strings.cur_EGP</listEntry>
-			<listEntry value = "37">@Strings.cur_HKD</listEntry>
-			<listEntry value = "38">@Strings.cur_MXN</listEntry>
-			<listEntry value = "39">@Strings.cur_NOK</listEntry>
-			<listEntry value = "40">@Strings.cur_PLN</listEntry>
-			<listEntry value = "41">@Strings.cur_RUB</listEntry>
-			<listEntry value = "42">@Strings.cur_VND</listEntry>
-			<listEntry value = "43">@Strings.cur_UAH</listEntry>
-			<listEntry value = "44">@Strings.cur_GBP</listEntry>
-			<listEntry value = "45">@Strings.cur_BTC</listEntry>
-			<listEntry value = "46">@Strings.cur_BYN</listEntry>
+			<listEntry value = "32">@Strings.cur_TWD</listEntry>
+			<listEntry value = "33">@Strings.cur_AED</listEntry>
+			<listEntry value = "34">@Strings.cur_BRL</listEntry>
+			<listEntry value = "35">@Strings.cur_KHR</listEntry>
+			<listEntry value = "36">@Strings.cur_HRK</listEntry>
+			<listEntry value = "37">@Strings.cur_EGP</listEntry>
+			<listEntry value = "38">@Strings.cur_HKD</listEntry>
+			<listEntry value = "39">@Strings.cur_MXN</listEntry>
+			<listEntry value = "40">@Strings.cur_NOK</listEntry>
+			<listEntry value = "41">@Strings.cur_PLN</listEntry>
+			<listEntry value = "42">@Strings.cur_RUB</listEntry>
+			<listEntry value = "43">@Strings.cur_VND</listEntry>
+			<listEntry value = "44">@Strings.cur_UAH</listEntry>
+			<listEntry value = "45">@Strings.cur_GBP</listEntry>
+			<listEntry value = "46">@Strings.cur_BTC</listEntry>
+			<listEntry value = "47">@Strings.cur_BYN</listEntry>
 		</settingConfig>
 	</setting>
 	
@@ -210,21 +215,22 @@
 			<listEntry value = "29">@Strings.cur_SCR</listEntry>
 			<listEntry value = "30">@Strings.cur_THB</listEntry>
 			<listEntry value = "31">@Strings.cur_TRY</listEntry>
-			<listEntry value = "32">@Strings.cur_AED</listEntry>
-			<listEntry value = "33">@Strings.cur_BRL</listEntry>
-			<listEntry value = "34">@Strings.cur_KHR</listEntry>
-			<listEntry value = "35">@Strings.cur_HRK</listEntry>
-			<listEntry value = "36">@Strings.cur_EGP</listEntry>
-			<listEntry value = "37">@Strings.cur_HKD</listEntry>
-			<listEntry value = "38">@Strings.cur_MXN</listEntry>
-			<listEntry value = "39">@Strings.cur_NOK</listEntry>
-			<listEntry value = "40">@Strings.cur_PLN</listEntry>
-			<listEntry value = "41">@Strings.cur_RUB</listEntry>
-			<listEntry value = "42">@Strings.cur_VND</listEntry>
-			<listEntry value = "43">@Strings.cur_UAH</listEntry>
-			<listEntry value = "44">@Strings.cur_GBP</listEntry>
-			<listEntry value = "45">@Strings.cur_BTC</listEntry>
-			<listEntry value = "46">@Strings.cur_BYN</listEntry>
+			<listEntry value = "32">@Strings.cur_TWD</listEntry>
+			<listEntry value = "33">@Strings.cur_AED</listEntry>
+			<listEntry value = "34">@Strings.cur_BRL</listEntry>
+			<listEntry value = "35">@Strings.cur_KHR</listEntry>
+			<listEntry value = "36">@Strings.cur_HRK</listEntry>
+			<listEntry value = "37">@Strings.cur_EGP</listEntry>
+			<listEntry value = "38">@Strings.cur_HKD</listEntry>
+			<listEntry value = "39">@Strings.cur_MXN</listEntry>
+			<listEntry value = "40">@Strings.cur_NOK</listEntry>
+			<listEntry value = "41">@Strings.cur_PLN</listEntry>
+			<listEntry value = "42">@Strings.cur_RUB</listEntry>
+			<listEntry value = "43">@Strings.cur_VND</listEntry>
+			<listEntry value = "44">@Strings.cur_UAH</listEntry>
+			<listEntry value = "45">@Strings.cur_GBP</listEntry>
+			<listEntry value = "46">@Strings.cur_BTC</listEntry>
+			<listEntry value = "47">@Strings.cur_BYN</listEntry>
 		</settingConfig>
 	</setting>
 

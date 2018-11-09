@@ -40,6 +40,7 @@
 	<string id="isShowWeatherTitle">Show Weather (you must provide http://darksky.net API key)</string>
 	<string id="IsShowCityTitle">Show Current City</string>
 	<string id="isShowCurrencyTitle">Show Exchange Rate (instead of pulse)</string>
+	<string id="isShowSecondsTitle">Display Seconds</string>
 	
 	<string id ="ExtraTimeZoneTitle">Extra Time Zone</string>
 	<string id="id1"> [-12] (+12, Etc/GMT-12) </string>
@@ -85,6 +86,7 @@
 	
 	<string id = "BaseCurrencyTitle">Base Currency</string>
 	<string id = "TargetCurrencyTitle">Target Currency</string>
+	
 	<string id = "cur_EUR">Euro</string>
 	<string id = "cur_USD">United States Dollar</string>
 	<string id = "cur_HUF">Hungarian Forint</string>
@@ -117,6 +119,7 @@
 	<string id = "cur_SCR">Seychellois Rupee</string>
 	<string id = "cur_THB">Thai Baht</string>
 	<string id = "cur_TRY">Turkish New Lira</string>
+	<string id = "cur_TWD">New Taiwan Dollar</string>
 	<string id = "cur_AED">UAE Dirham</string>
 	<string id = "cur_BRL">Brazilian Real</string>
 	<string id = "cur_KHR">Cambodian Riel</string>
