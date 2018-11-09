@@ -352,7 +352,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (weatherInfo != null && weatherInfo.City != null 
 			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
 		{
-			View.findDrawableById("City_dim").setText(weatherInfo.City);
+			// short <city, country> length if it's too long.
+			// first cut country, if it's still not fit - cut and add dots.
+			//
+			var city = weatherInfo.City;
+			if (city.length() > 23)
+			{
+				var dindex = city.find(",");
+				city = (dindex == 0) 
+					? city
+					: city.substring(0, dindex);
+				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
+			}
+			View.findDrawableById("City_dim").setText(city);
 		}
 		else
 		{
