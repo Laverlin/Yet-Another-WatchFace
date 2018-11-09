@@ -65,7 +65,7 @@
 		{"symbols":["EUR", "USD", "HUF", "AUD", "NZD", "OMR", "SEK", "AMD", "CNY",
 			"CZK", "INR", "KRW", "ANG", "QAR", "DKK", "IDR", "ILS", "PAB",
     		"PHP", "SGD", "ZAR", "ARS", "BGN", "CAD", "CLP", "DOP",
-    		"JPY", "LVL", "CHF", "SCR", "THB", "TRY", "AED", "BRL", "KHR",
+    		"JPY", "LVL", "CHF", "SCR", "THB", "TRY", "TWD", "AED", "BRL", "KHR",
     		"HRK", "EGP", "HKD", "MXN", "NOK", "PLN", "RUB", "VND", "UAH",
     		"GBP", "BTC", "BYN"]}
 	</jsonData>

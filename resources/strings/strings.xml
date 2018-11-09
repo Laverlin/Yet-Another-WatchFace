@@ -86,6 +86,7 @@
 	
 	<string id = "BaseCurrencyTitle">Base Currency</string>
 	<string id = "TargetCurrencyTitle">Target Currency</string>
+	
 	<string id = "cur_EUR">Euro</string>
 	<string id = "cur_USD">United States Dollar</string>
 	<string id = "cur_HUF">Hungarian Forint</string>
@@ -118,6 +119,7 @@
 	<string id = "cur_SCR">Seychellois Rupee</string>
 	<string id = "cur_THB">Thai Baht</string>
 	<string id = "cur_TRY">Turkish New Lira</string>
+	<string id = "cur_TWD">New Taiwan Dollar</string>
 	<string id = "cur_AED">UAE Dirham</string>
 	<string id = "cur_BRL">Brazilian Real</string>
 	<string id = "cur_KHR">Cambodian Riel</string>
