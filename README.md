@@ -6,7 +6,7 @@ Please, leave your comments, bug reports and ideas on Garmin Forum:
 
 This simple configurable digital face has:
 
-- Time, 24hr (not configurable yet)
+- Time (this is a watchface, after all)
 - Current City Name, based on GPS. You have to get GPS coordinates to update the city if location has been changed
 - Current Date and Week Day
 - Battery Level
@@ -20,3 +20,13 @@ There is not much options to configure yet, work in progress...
 
 Configure all the watch face options via the Garmin Connect mobile app:
 Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect IQ Apps, Watch Faces, (select YA-WatchFace), Settings.
+
+
+# Changelog
+
+### version 0.9.61 
+- Option to disable display seconds has been added
+- AM/PM has support has been added
+- Too long city/country name issue fixed
+- TWD currency has been added
+- battery consumption when pulse is displayed has been optimized 
