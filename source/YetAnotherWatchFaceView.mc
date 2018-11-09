@@ -23,6 +23,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _isShowCurrency;
+	hidden var _heartRate = 0;
 	
     function initialize() 
     {
@@ -176,12 +177,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (!_isShowCurrency)
 		{
 			var chr = Activity.getActivityInfo().currentHeartRate;
-			if (chr != null)
+			if (chr != null && _heartRate != chr)
 			{
+				_heartRate = chr;
 				var viewPulse = View.findDrawableById("Pulse_bright_setbg");
 				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
 				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
 				viewPulse.draw(dc);
+				Sys.println("update");
 			}
 		}
 
