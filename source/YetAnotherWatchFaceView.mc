@@ -127,40 +127,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
 		SetColors();
     }
-    
-    // Return time and abbreviation of extra time-zone
-    //
-    function GetTzTime(timeNow)
-    {
-        var localTime = Sys.getClockTime();
-        var utcTime = timeNow.add(
-        	new Time.Duration( - localTime.timeZoneOffset + localTime.dst));
-        
-        // by dfault return UTC time
-        //
-       	var newTz = Setting.GetExtraTimeZone();
-		if (newTz == null)
-		{
-			return [Gregorian.info(utcTime, Time.FORMAT_MEDIUM), "UTC"];
-		}
- 
- 		// find right time interval
- 		//
-        var index = 0;
-        for (var i = 0; i < newTz["Untils"].size(); i++)
-        {
-        	if (newTz["Untils"][i] != null && newTz["Untils"][i] > utcTime.value())
-        	{
-        		index = i;
-        		break;
-        	}
-        }
-        
-        var extraTime = utcTime.add(new Time.Duration(newTz["Offsets"][index] * -60));        
-      
-        return [Gregorian.info(extraTime, Time.FORMAT_MEDIUM), newTz["Abbrs"][index]];
-    }
-    
+     
     // calls every second for partial update
     //
     function onPartialUpdate(dc)
@@ -186,7 +153,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
 				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
 				viewPulse.draw(dc);
-				Sys.println("update");
 			}
 		}
 
@@ -236,7 +202,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         // Update time in diff TZ
         //
-		var tzInfo = GetTzTime(timeNow);
+		var tzInfo = WatchData.GetTzTime(timeNow, Setting.GetExtraTimeZone());
 
         View.findDrawableById("TzTime_bright")
         	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
