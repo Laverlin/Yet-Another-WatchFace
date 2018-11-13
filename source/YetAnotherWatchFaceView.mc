@@ -22,7 +22,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 {
 	hidden var _layout;
 	hidden var _conditionIcons;
-	hidden var _isShowCurrency;
 	hidden var _heartRate = 0;
 	
     function initialize() 
@@ -43,7 +42,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 
-		UpdateSetting();
+		//UpdateSetting();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -123,8 +122,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
 		symbols = null;
 
-		_isShowCurrency = Setting.GetIsShowCurrency();
-		
 		SetColors();
     }
      
@@ -143,7 +140,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			secondLabel.draw(dc);
 		}
 		
-		if (!_isShowCurrency)
+		if (!Setting.GetIsShowCurrency())
 		{
 			var chr = Activity.getActivityInfo().currentHeartRate;
 			if (chr != null && _heartRate != chr)
@@ -280,7 +277,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
         // Show Currency
         //
-       	if (_isShowCurrency)
+       	if (Setting.GetIsShowCurrency())
 		{
 			var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
 				? 0 : weatherInfo.ExchangeRate; 
