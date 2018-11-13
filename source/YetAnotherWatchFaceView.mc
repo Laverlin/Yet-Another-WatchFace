@@ -30,7 +30,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
-		
+
 		//Setting.SetLastKnownLocation([13.764073, 100.577436]);
     }
 
@@ -41,8 +41,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
-
-		//UpdateSetting();
+		
+		UpdateSetting();
     }
 
     // Called when this View is brought to the foreground. Restore
