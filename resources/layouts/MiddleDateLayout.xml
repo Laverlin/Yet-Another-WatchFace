@@ -15,8 +15,8 @@
      
     <label id="DaySign_time_setbg" x="115" y="90" font="@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
      
-    <label id="WeekDay_bright" x="50" y="104" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
-    <label id="Month_dim" x="88" y="104" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="WeekDay_bright" x="50" y="105" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
+    <label id="Month_dim" x="88" y="105" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     <label id="Day_bright" x="115" y="107" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_BLUE" />
     
     <label id="Temperature_bright" x="125" y="48" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE"/>
