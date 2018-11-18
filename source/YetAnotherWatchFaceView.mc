@@ -188,14 +188,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
          
         // Update date
         //
-        View.findDrawableById("WeekDay_bright")
-        	.setText(gregorianTimeNow.day_of_week.toLower());
+        var dayText = gregorianTimeNow.day.format("%02d");
+        var dayLabel = View.findDrawableById("Day_bright");
+        dayLabel.setText(dayText);
+        	
+        var monthText = gregorianTimeNow.month.toLower();
+        var monthLabel = findDrawableById("Month_dim");
+        monthLabel.locX = dayLabel.locX - dc.getTextWidthInPixels(dayText, Gfx.FONT_XTINY) - 5;
+        monthLabel.setText(monthText);	
         
-        View.findDrawableById("Month_dim")
-        	.setText(gregorianTimeNow.month.toLower());
+        var dowLabel = View.findDrawableById("WeekDay_bright");
+        dowLabel.locX = monthLabel.locX - dc.getTextWidthInPixels(monthText, Gfx.FONT_TINY) - 7;
+        dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
         
-        View.findDrawableById("Day_bright")
-        	.setText(gregorianTimeNow.day.format("%02d"));
         
         // Update time in diff TZ
         //
