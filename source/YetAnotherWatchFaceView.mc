@@ -42,7 +42,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 		
-		UpdateSetting();
+		//UpdateSetting();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -82,48 +82,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		.setLineColor(Setting.GetTimeColor());
     }
     
-  	// Implement updated setting from mobile app
-  	//
-    function UpdateSetting()
-    {
-    	// Find timezone DST data and save it in object store
-    	//
-		var tzData = Ui.loadResource(Rez.JsonData.tzData);
-        for (var i=0; i < tzData.size(); i++ )
-        {
-        	if (tzData[i]["Id"] == Setting.GetEtzId())
-        	{
-        		Setting.SetExtraTimeZone(tzData[i]);
-        		break;
-        	}
-        }
-		tzData = null;
-		
-		// load actual currency symbols and save it in object store
-		//
-		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
-		
-		// need to erase current exchange rate, since it not actual anymore
-		//
-		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
-			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
-		{
-			var weatherInfo = Setting.GetWeatherInfo();
-        	if (weatherInfo != null)
-        	{
-        		weatherInfo["ExchangeRate"] = 0;
-        		Setting.SetWeatherInfo(weatherInfo);
-        	}			
-		}
-		
-		// save new symbols in OS
-		//
-		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
-		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
-		symbols = null;
-
-		SetColors();
-    }
      
     // calls every second for partial update
     //
@@ -185,7 +143,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
        	View.findDrawableById("Second_time_setbg")
         		.setText(Setting.GetIsShowSeconds() ? gregorianTimeNow.sec.format("%02d") : "");
-         
+        
         // Update date
         //
         var dayText = gregorianTimeNow.day.format("%02d");

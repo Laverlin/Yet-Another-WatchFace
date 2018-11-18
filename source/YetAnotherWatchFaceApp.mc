@@ -25,10 +25,47 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     //
     function onSettingsChanged() 
     {
-    	_watchFaceView.UpdateSetting();
+    	//_watchFaceView.UpdateSetting();
+    	
+    	// Find timezone DST data and save it in object store
+    	//
+		var tzData = Ui.loadResource(Rez.JsonData.tzData);
+        for (var i=0; i < tzData.size(); i++ )
+        {
+        	if (tzData[i]["Id"] == Setting.GetEtzId())
+        	{
+        		Setting.SetExtraTimeZone(tzData[i]);
+        		break;
+        	}
+        }
+		tzData = null;
+		
+		// load actual currency symbols and save it in object store
+		//
+		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
+		
+		// need to erase current exchange rate, since it not actual anymore
+		//
+		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
+			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
+		{
+			var weatherInfo = Setting.GetWeatherInfo();
+        	if (weatherInfo != null)
+        	{
+        		weatherInfo["ExchangeRate"] = 0;
+        		Setting.SetWeatherInfo(weatherInfo);
+        	}			
+		}
+		
+		// save new symbols in OS
+		//
+		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
+		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
+		symbols = null;    	
     	
     	InitBackgroundEvents();
     	
+    	_watchFaceView.SetColors();
         Ui.requestUpdate();
     }
     
