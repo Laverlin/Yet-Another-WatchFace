@@ -22,7 +22,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 {
 	hidden var _layout;
 	hidden var _conditionIcons;
-	hidden var _isShowCurrency;
 	hidden var _heartRate = 0;
 	
     function initialize() 
@@ -31,7 +30,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
-		
+
 		//Setting.SetLastKnownLocation([13.764073, 100.577436]);
     }
 
@@ -42,8 +41,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         _layout = Rez.Layouts.MiddleDateLayout(dc);
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
-
-		UpdateSetting();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -83,89 +80,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		.setLineColor(Setting.GetTimeColor());
     }
     
-  	// Implement updated setting from mobile app
-  	//
-    function UpdateSetting()
-    {
-    	// Find timezone DST data and save it in object store
-    	//
-		var tzData = Ui.loadResource(Rez.JsonData.tzData);
-        for (var i=0; i < tzData.size(); i++ )
-        {
-        	if (tzData[i]["Id"] == Setting.GetEtzId())
-        	{
-        		Setting.SetExtraTimeZone(tzData[i]);
-        		break;
-        	}
-        }
-		tzData = null;
-		
-		// load actual currency symbols and save it in object store
-		//
-		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
-		
-		// need to erase current exchange rate, since it not actual anymore
-		//
-		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
-			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
-		{
-			var weatherInfo = Setting.GetWeatherInfo();
-        	if (weatherInfo != null)
-        	{
-        		weatherInfo["ExchangeRate"] = 0;
-        		Setting.SetWeatherInfo(weatherInfo);
-        	}			
-		}
-		
-		// save new symbols in OS
-		//
-		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
-		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
-		symbols = null;
-
-		_isShowCurrency = Setting.GetIsShowCurrency();
-		
-		SetColors();
-    }
-    
-    // Return time and abbreviation of extra time-zone
-    //
-    function GetTzTime(timeNow)
-    {
-        var localTime = Sys.getClockTime();
-        var utcTime = timeNow.add(
-        	new Time.Duration( - localTime.timeZoneOffset + localTime.dst));
-        
-        // by dfault return UTC time
-        //
-       	var newTz = Setting.GetExtraTimeZone();
-		if (newTz == null)
-		{
-			return [Gregorian.info(utcTime, Time.FORMAT_MEDIUM), "UTC"];
-		}
- 
- 		// find right time interval
- 		//
-        var index = 0;
-        for (var i = 0; i < newTz["Untils"].size(); i++)
-        {
-        	if (newTz["Untils"][i] != null && newTz["Untils"][i] > utcTime.value())
-        	{
-        		index = i;
-        		break;
-        	}
-        }
-        
-        var extraTime = utcTime.add(new Time.Duration(newTz["Offsets"][index] * -60));        
-      
-        return [Gregorian.info(extraTime, Time.FORMAT_MEDIUM), newTz["Abbrs"][index]];
-    }
-    
+     
     // calls every second for partial update
     //
     function onPartialUpdate(dc)
     {
-    
     	if (Setting.GetIsShowSeconds())
     	{
 	    	var clockTime = Sys.getClockTime();
@@ -176,7 +95,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			secondLabel.draw(dc);
 		}
 		
-		if (!_isShowCurrency)
+		if (!Setting.GetIsShowCurrency())
 		{
 			var chr = Activity.getActivityInfo().currentHeartRate;
 			if (chr != null && _heartRate != chr)
@@ -186,43 +105,96 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
 				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
 				viewPulse.draw(dc);
-				Sys.println("update");
 			}
 		}
-
-        dc.clearClip();
     }
     
     // Update the view
     //
     function onUpdate(dc) 
     {
-    	var activityLocation = Activity.getActivityInfo().currentLocation;
+    	var watchInfo = WatchData.GetWatchInfo();
+    	
+    	var activityLocation = watchInfo.CurrentLocation;
     	if (activityLocation != null)
     	{
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
     	}
-    	
-    	var is24Hour = Sys.getDeviceSettings().is24Hour;
-		var timeNow = Time.now();
-        var gregorianTimeNow = Gregorian.info(timeNow, Time.FORMAT_MEDIUM);
+
+		DisplayTimeNDate(dc, watchInfo);
+          
+        // Update time in diff TZ
+        //
+		var tzInfo = WatchData.GetTzTime(watchInfo.Time, Setting.GetExtraTimeZone());
+		DisplayExtraTz(tzInfo);
+        
+        // get ActivityMonitor info
+        //
+		DisplayActivity(watchInfo);
+       
+        // Weather data
+        //
+        var weatherInfo = null;
+        if (Setting.GetWeatherInfo() != null)
+        {
+        	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
+        }
+		DisplayWeather(dc, weatherInfo);
+		
+        // Show Currency
+        //
+       	if (Setting.GetIsShowCurrency())
+		{
+			DisplayCurrency(dc, weatherInfo);
+		}
+		else
+		{
+			View.findDrawableById("PulseTitle_dim").setText("bpm");
+		}		
+		
+		// location
+		//
+		DisplayLocation(weatherInfo);
+
+		// watch status
+		//
+		DisplayWatchStatus(watchInfo);
+
+		if (Setting.GetIsTest())
+		{
+			View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
+		}
+		
+        // Call the parent onUpdate function to redraw the layout
+        //
+        weatherInfo = null;
+        watchInfo = null;
+        dc.clearClip();
+        View.onUpdate(dc);
+    }
+    
+    // Display current time and date
+    //
+    function DisplayTimeNDate(dc, watchInfo)
+    {
+    	var gregorianTimeNow = Gregorian.info(watchInfo.Time, Time.FORMAT_MEDIUM);
     	
         // Update Time
         //
         View.findDrawableById("Hour_time")
-        	.setText(is24Hour 
+        	.setText(watchInfo.Is24Hour 
         		? gregorianTimeNow.hour.format("%02d") 
         		: (gregorianTimeNow.hour % 12 == 0 ? 12 : gregorianTimeNow.hour % 12).format("%02d"));
         	
         View.findDrawableById("DaySign_time_setbg")
-        	.setText(is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
+        	.setText(watchInfo.Is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
         
         View.findDrawableById("Minute_time")
         	.setText(gregorianTimeNow.min.format("%02d"));
         
        	View.findDrawableById("Second_time_setbg")
         		.setText(Setting.GetIsShowSeconds() ? gregorianTimeNow.sec.format("%02d") : "");
-         
+        
         // Update date
         //
         var dayText = gregorianTimeNow.day.format("%02d");
@@ -237,26 +209,26 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         var dowLabel = View.findDrawableById("WeekDay_bright");
         dowLabel.locX = monthLabel.locX - dc.getTextWidthInPixels(monthText, Gfx.FONT_TINY) - 7;
         dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
-        
-        
-        // Update time in diff TZ
-        //
-		var tzInfo = GetTzTime(timeNow);
-
+    }
+    
+    function DisplayExtraTz(tzInfo)
+    {
+    	
         View.findDrawableById("TzTime_bright")
         	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
 
         View.findDrawableById("TzTimeTitle_dim")
         	.setText(tzInfo[1]);
-        
-        // get ActivityMonitor info
-        //
-		var info = ActivityMonitor.getInfo();
-		
-		var distanceValues = 
-			[(info.distance.toFloat()/100000).format("%2.1f"), 
-			(info.distance.toFloat()/160934.4).format("%2.1f"), 
-			info.steps.format("%02d")];
+    }
+    
+    // Display activity (distance)
+    //
+    function DisplayActivity(watchInfo)
+    {
+    	var distanceValues = 
+			[watchInfo.DistanceKm.format("%2.1f"), 
+			watchInfo.DistanceMi.format("%2.1f"), 
+			watchInfo.DistanceSteps.format("%02d")];
 		var distanceTitles = ["km", "mi", ""];
 		
         View.findDrawableById("Dist_bright")
@@ -267,15 +239,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         	
         distanceValues = null;
         distanceTitles = null;
-        
-        // Weather data
-        //
-        var weatherInfo = null;
-        if (Setting.GetWeatherInfo() != null)
-        {
-        	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
-        }
-        if (weatherInfo == null || weatherInfo.WeatherStatus != 1 || !Setting.GetIsShowWeather()) // no weather
+    }
+    
+    
+    // Show weather
+    //
+    function DisplayWeather(dc, weatherInfo)
+    {
+    	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 || !Setting.GetIsShowWeather()) // no weather
         {
 			View.findDrawableById("Temperature_bright")
 				.setText(
@@ -316,12 +287,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				View.findDrawableById("Condition_time").setText(icon);
 			}
 		}
-		
-        // Show Currency
-        //
-       	if (_isShowCurrency)
-		{
-			var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
+    }
+    
+    // Display exchange rate
+    //
+    function DisplayCurrency(dc, weatherInfo)
+    {
+    		var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
 				? 0 : weatherInfo.ExchangeRate; 
 			if (currencyValue == 0)
 			{
@@ -351,15 +323,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				}
 				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
 			}
-		}
-		else
-		{
-			View.findDrawableById("PulseTitle_dim").setText("bpm");
-		}		
-		
-		// location
-		//
-		if (weatherInfo != null && weatherInfo.City != null 
+    }
+    
+    // Display current city name based on known GPS location 
+    //
+    function DisplayLocation(weatherInfo)
+    {
+    	if (weatherInfo != null && weatherInfo.City != null 
 			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
 		{
 			// short <city, country> length if it's too long.
@@ -375,21 +345,23 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
 			}
 			View.findDrawableById("City_dim").setText(city);
+			city = null;
 		}
 		else
 		{
 			View.findDrawableById("City_dim").setText("");
 		}
-
-		// watch status
-		//
-		var connectionState = Sys.getDeviceSettings().phoneConnected;
-		var viewBt = View.findDrawableById("Bluetooth_dim")
-			.setText(connectionState ? "a" : "b");
+    }
+    
+    // Display battery and connection status
+    //
+    function DisplayWatchStatus(watchInfo)
+    {
+    	var viewBt = View.findDrawableById("Bluetooth_dim")
+			.setText(watchInfo.ConnectionState ? "a" : "b");
 		
-		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
-		View.findDrawableById("Battery1_dim").setText((batteryLevel % 10).format("%1d"));
-		batteryLevel = batteryLevel / 10;
+		View.findDrawableById("Battery1_dim").setText((watchInfo.BatteryLevel % 10).format("%1d"));
+		var batteryLevel = watchInfo.BatteryLevel / 10;
 		if (batteryLevel == 10 )
 		{
 			View.findDrawableById("Battery3_dim").setText("1");
@@ -407,14 +379,5 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				View.findDrawableById("Battery2_dim").setText("");
 			}
 		}
-
-		if (Setting.GetIsTest())
-		{
-			View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
-		}
-		
-        // Call the parent onUpdate function to redraw the layout
-        //
-        View.onUpdate(dc);
     }
 }
