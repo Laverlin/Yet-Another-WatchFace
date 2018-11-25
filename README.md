@@ -1,8 +1,9 @@
 # Yet-Another-WatchFace
-Watch Face application for Garmin Fenix 5[X][Plus] smartwatch
+Watch Face application for Garmin Fenix 5[X][Plus] & Forerunner 935 smartwatch
 
 # Description
 Please, leave your comments, bug reports and ideas on Garmin Forum:
+https://forums.garmin.com/forum/developers/connect-iq/connect-iq-showcase/1422058-watchface-yet-another-watchface
 
 This simple configurable digital face has:
 
@@ -23,6 +24,12 @@ Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect I
 
 
 # Changelog
+
+### version 0.9.76
+- add support Forerunner 935 
+
+### version 0.9.65
+- Optimization data displaying
 
 ### version 0.9.61 
 - Option to disable display seconds has been added
