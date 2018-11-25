@@ -10,11 +10,11 @@ using Toybox.Activity as Activity;
 // Main WatchFaace view
 // ToDo:: 
 //        -- 1. Create Wrapper around ObjectStore 
-//        2. Move UI logic to functions
+//        -- 2. Move UI logic to functions
 //        -- 3. Fix Timezone Issue 
 //		  -- 4. Add option to show city name
 //		  -- 5. Adjust exchange rate output
-//        6. Refactor backround process (error handling)
+//        -- 6. Refactor backround process (error handling)
 //        -- 7. Option to Show weather
 //        8. Refactor resources, name conventions, etc..
 //

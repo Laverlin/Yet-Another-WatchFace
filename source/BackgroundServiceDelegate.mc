@@ -59,6 +59,14 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		//
 		if (Setting.GetIsShowCity())
 		{
+			// avoid unnecessary web requests (location name does not change if location the same)
+			// 
+			if(_weatherInfo.Location != null && 
+				_location[0] == _weatherInfo.Location[0] && 
+				_location[1] == _weatherInfo.Location[1])
+			{
+				return;
+			}
 			RequestLocation(_location);
 		}		
     }
@@ -84,13 +92,20 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveWeather(responseCode, data)
 	{
-		if (responseCode == 200)
+		try
 		{
-			_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
-			_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat();
-			_weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
-			_weatherInfo.Condition = data["currently"]["icon"];
-			_weatherInfo.WeatherStatus = 1; //OK
+			if (responseCode == 200)
+			{
+				_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
+				_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat();
+				_weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
+				_weatherInfo.Condition = data["currently"]["icon"];
+				_weatherInfo.WeatherStatus = 1; //OK
+			}
+		}
+		catch(ex)
+		{
+			Sys.println("get weather error : " + ex.getErrorMessage());
 		}
 		
 		_syncCounter = _syncCounter - 1;
@@ -102,14 +117,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
-		//Sys.println(" l: " + location[0] + ", w:" + ((_weatherInfo.Location != null) ? _weatherInfo.Location[0] : "0"));	
-		// avoid unnecessary web requests (location name does not change if location the same)
-		// 
-		if(_weatherInfo.Location != null && location[0] == _weatherInfo.Location[0] && location[1] == _weatherInfo.Location[1])
-		{
-			return;
-		}
-		
 		var url = Lang.format(
 			"https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
 			location[0],
@@ -130,14 +137,21 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	function OnReceiveLocation(responseCode, data)
 	{
 		//Sys.println("loc data" + data);
-		if (responseCode == 200)
+		try
 		{
-			var cityName = data["resourceSets"][0]["resources"][0]["name"];
-			_weatherInfo.City = cityName;
-			_weatherInfo.Location = _location;
-			_weatherInfo.CityStatus = 1; //OK
+			if (responseCode == 200)
+			{
+				var cityName = data["resourceSets"][0]["resources"][0]["name"];
+				_weatherInfo.City = cityName;
+				_weatherInfo.Location = _location;
+				_weatherInfo.CityStatus = 1; //OK
+			}
 		}
-		
+		catch (ex)
+		{
+			Sys.println("get location error : " + ex.getErrorMessage());
+		}
+				
 		_syncCounter = _syncCounter - 1;
 		if (_syncCounter == 0)
 		{
@@ -166,11 +180,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	function OnReceiveExchangeRate(responseCode, data)
 	{
 		//	Sys.println(" data = " + data);
-
-		if (responseCode == 200)
+		try
 		{
-			_weatherInfo.ExchangeRate = 
-				data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"];
+			if (responseCode == 200)
+			{
+				_weatherInfo.ExchangeRate = 
+					data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"];
+			}
+		}
+		catch(ex)
+		{
+			Sys.println("get ex rate error : " + ex.getErrorMessage());
 		}
 		
 		_syncCounter = _syncCounter - 1;
