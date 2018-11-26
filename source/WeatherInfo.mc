@@ -12,7 +12,6 @@ class WeatherInfo
 	var Location;
 	var City = "";
 	var ExchangeRate = 0;
-	var RateStatus = 0;
 	
 	static function ToDictionary(weatherInfo)
 	{
@@ -26,8 +25,7 @@ class WeatherInfo
 			"WeatherStatus" => weatherInfo.WeatherStatus,
 			"CityStatus" => weatherInfo.CityStatus,
 			"Location" => weatherInfo.Location,
-			"ExchangeRate" => weatherInfo.ExchangeRate,
-			"RateStatus" => weatherInfo.RateStatus
+			"ExchangeRate" => weatherInfo.ExchangeRate
 		};
 	}
 	
@@ -45,7 +43,6 @@ class WeatherInfo
 			weatherInfo.CityStatus = dictionary["CityStatus"];
 			weatherInfo.Location = dictionary["Location"];
 			weatherInfo.ExchangeRate = dictionary["ExchangeRate"];
-			weatherInfo.RateStatus = dictionary["RateStatus"];
 		}
 		catch(ex)
 		{

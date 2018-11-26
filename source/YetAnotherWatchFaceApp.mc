@@ -52,8 +52,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 			var weatherInfo = Setting.GetWeatherInfo();
         	if (weatherInfo != null)
         	{
-        		weatherInfo["ExchangeRate"] = 0;
-        		Setting.SetWeatherInfo(weatherInfo);
+        		Setting.SetExchangeRate(0);
         	}			
 		}
 		
@@ -75,6 +74,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         if (data != null)
         {
        		Setting.SetWeatherInfo(data);
+       		Setting.SetExchangeRate(data["ExchangeRate"]);
         }
 
         Ui.requestUpdate();

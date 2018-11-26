@@ -23,6 +23,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
+	hidden var _methods = [:DisplayExtraTz, :DisplayDistance];
 	
     function initialize() 
     {
@@ -122,16 +123,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	}
 
 		DisplayTimeNDate(dc, watchInfo);
-          
-        // Update time in diff TZ
-        //
-		var tzInfo = WatchData.GetTzTime(watchInfo.Time, Setting.GetExtraTimeZone());
-		DisplayExtraTz(tzInfo);
-        
-        // get ActivityMonitor info
-        //
-		DisplayActivity(watchInfo);
-       
+		
         // Weather data
         //
         var weatherInfo = null;
@@ -139,13 +131,23 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         {
         	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
         }
-		DisplayWeather(dc, weatherInfo);
-		
+		DisplayWeather(dc, weatherInfo);		
+          
+        // Update time in diff TZ
+        //
+        new Lang.Method(self, _methods[0]).invoke();
+		//DisplayExtraTz();
+        
+        // get ActivityMonitor info
+        //
+        new Lang.Method(self, _methods[1]).invoke();
+		//DisplayActivity(watchInfo);
+       
         // Show Currency
         //
        	if (Setting.GetIsShowCurrency())
 		{
-			DisplayCurrency(dc, weatherInfo);
+			DisplayCurrency(dc);
 		}
 		else
 		{
@@ -211,8 +213,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
     }
     
-    function DisplayExtraTz(tzInfo)
+    function DisplayExtraTz()
     {
+    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
     	
         View.findDrawableById("TzTime_bright")
         	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
@@ -223,12 +226,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     // Display activity (distance)
     //
-    function DisplayActivity(watchInfo)
+    function DisplayDistance()
     {
+        var info = ActivityMonitor.getInfo();
     	var distanceValues = 
-			[watchInfo.DistanceKm.format("%2.1f"), 
-			watchInfo.DistanceMi.format("%2.1f"), 
-			watchInfo.DistanceSteps.format("%02d")];
+			[(info.distance.toFloat()/100000).format("%2.1f"), 
+			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
+			 info.steps.format("%02d")];
 		var distanceTitles = ["km", "mi", ""];
 		
         View.findDrawableById("Dist_bright")
@@ -291,11 +295,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     // Display exchange rate
     //
-    function DisplayCurrency(dc, weatherInfo)
+    function DisplayCurrency(dc)
     {
-    		var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
-				? 0 : weatherInfo.ExchangeRate; 
-			if (currencyValue == 0)
+    		var currencyValue = Setting.GetExchangeRate(); 
+			if (currencyValue == null || currencyValue == 0)
 			{
 				View.findDrawableById("Pulse_bright_setbg")
 					.setText("loading...");

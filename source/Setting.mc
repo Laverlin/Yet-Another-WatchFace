@@ -12,8 +12,8 @@ class Setting
 	
 	static hidden var _baseCurrency = "base-currency";
 	static hidden var _targetCurrency = "target-currency";
-
     static hidden var _locationApiKey = "location-api-key";
+    static hidden var _exchangeRate = "exchange-rate";
 
 	public static function GetTimeColor()
 	{
@@ -168,4 +168,15 @@ class Setting
 	{
 		return App.getApp().getProperty("is-show-seconds");
 	}
+	
+	public static function SetExchangeRate(rate)
+	{
+		App.getApp().setProperty(_exchangeRate, rate);
+	}
+	
+	public static function GetExchangeRate()
+	{
+		return App.getApp().getProperty(_exchangeRate);
+	}
+	
 }

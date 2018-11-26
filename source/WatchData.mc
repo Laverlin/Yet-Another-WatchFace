@@ -52,11 +52,7 @@ class WatchData
     	var deviceSetting = Sys.getDeviceSettings();
     	watchInfo.Is24Hour = deviceSetting.is24Hour;
     	watchInfo.ConnectionState = deviceSetting.phoneConnected;
-    	
-    	var info = ActivityMonitor.getInfo();
-    	watchInfo.DistanceKm = info.distance.toFloat()/100000;
-    	watchInfo.DistanceMi = info.distance.toFloat()/160934.4;
-    	watchInfo.DistanceSteps = info.steps;
+
     	watchInfo.BatteryLevel = (Sys.getSystemStats().battery).toNumber();
     	
     	return watchInfo;
@@ -69,9 +65,6 @@ class WatchInfo
 	var Time;
 	var Is24Hour;
 	var CurrentLocation;
-	var DistanceKm;
-	var DistanceMi;
-	var DistanceSteps;
 	var ConnectionState;
 	var BatteryLevel;
 }

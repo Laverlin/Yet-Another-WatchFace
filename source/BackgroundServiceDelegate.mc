@@ -27,6 +27,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     	if (weatherData != null)
     	{
     		_weatherInfo = WeatherInfo.FromDictionary(weatherData);
+    		_weatherInfo.ExchangeRate = Setting.GetExchangeRate();
     	}
     	else
     	{
@@ -185,7 +186,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			if (responseCode == 200)
 			{
 				_weatherInfo.ExchangeRate = 
-					data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"];
+					data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"]
+					.toFloat();
 			}
 		}
 		catch(ex)
