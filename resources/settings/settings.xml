@@ -61,6 +61,37 @@
     	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>
     
+   	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
+    	<settingConfig type="boolean"></settingConfig>
+    </setting>
+       
+    <setting propertyKey = "@Properties.field-3" title = "@Strings.field_3_title">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.DisplayExtraTz</listEntry>
+    		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
+    		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
+    		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    	</settingConfig>
+    </setting>
+    
+    <setting propertyKey = "@Properties.field-4" title = "@Strings.field_4_title">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.DisplayExtraTz</listEntry>
+    		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
+    		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
+    		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    	</settingConfig>
+    </setting>
+    
+    <setting propertyKey = "@Properties.field-5" title = "@Strings.field_5_title">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.DisplayExtraTz</listEntry>
+    		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
+    		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
+    		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    	</settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.tempSystem" title="@Strings.TempSystemTitle">
     	<settingConfig type="list">
     		<listEntry value="1">@Strings.Celsius</listEntry>
@@ -75,10 +106,6 @@
     	</settingConfig>
     </setting>        
     
-   	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
-    	<settingConfig type="boolean"></settingConfig>
-    </setting>
-  
     <setting propertyKey="@Properties.etzId" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">
 			<listEntry value="1">@Strings.id1</listEntry>
@@ -124,10 +151,6 @@
         </settingConfig>
     </setting>
   
-    <setting propertyKey="@Properties.isShowCurrency" title="@Strings.isShowCurrencyTitle">
-    	<settingConfig type="boolean"></settingConfig>
-    </setting>
-    
     <setting propertyKey="@Properties.base-currency-id" title="@Strings.BaseCurrencyTitle">
 		<settingConfig type="list">
 			<listEntry value = "0">@Strings.cur_EUR</listEntry>

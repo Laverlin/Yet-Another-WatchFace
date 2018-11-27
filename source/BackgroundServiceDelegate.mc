@@ -36,7 +36,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     	    
     	// Request Currency
     	//
-    	if (Setting.GetIsShowCurrency())
+    	if (Setting.GetIsShowExchangeRate())
 		{
 			RequestExchangeRate();
 		}

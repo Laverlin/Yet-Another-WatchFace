@@ -4,6 +4,14 @@
     <string id="AppVersionTitle">App Version</string>
     <string id="WeatherApiKeyTitle">Weather API Key</string>
     
+    <string id = "field_3_title">Show in field 3</string>
+    <string id = "field_4_title">Show in field 4</string>
+    <string id = "field_5_title">Show in field 5</string>
+    <string id = "DisplayExtraTz">Second Time-Zone</string>
+    <string id = "DisplayExchangeRate">Exchange Rate</string>
+    <string id = "DisplayDistance">Distance</string>
+    <string id = "DisplayPulse">Pulse</string>
+    
     <string id="TempSystemTitle">Temperature</string>
     <string id="Celsius">Celsius</string>
     <string id="Farenheit">Farenheit</string>
@@ -39,10 +47,9 @@
 	
 	<string id="isShowWeatherTitle">Show Weather (you must provide http://darksky.net API key)</string>
 	<string id="IsShowCityTitle">Show Current City</string>
-	<string id="isShowCurrencyTitle">Show Exchange Rate (instead of pulse)</string>
 	<string id="isShowSecondsTitle">Display Seconds</string>
 	
-	<string id ="ExtraTimeZoneTitle">Extra Time Zone</string>
+	<string id ="ExtraTimeZoneTitle">Second Time Zone</string>
 	<string id="id1"> [-12] (+12, Etc/GMT-12) </string>
 	<string id="id2"> [-11] (SST, US/Samoa) </string>
 	<string id="id3"> [-10] (HST, US/Hawaii) </string>

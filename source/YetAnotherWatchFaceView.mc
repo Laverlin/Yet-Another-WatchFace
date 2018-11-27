@@ -23,7 +23,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
-	hidden var _methods = [:DisplayExtraTz, :DisplayCurrency, :DisplayDistance];
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse];
+	
 	
     function initialize() 
     {
@@ -96,9 +97,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			secondLabel.draw(dc);
 		}
 		
-		if (!Setting.GetIsShowCurrency())
+		if (Setting.GetPulseField() != 0)
 		{
-			DisplayPulseFull(dc, false);
+			DisplayPulseFull(dc, Setting.GetPulseField(), false);
 		}
     }
     
@@ -125,27 +126,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
 		DisplayWeather(dc, weatherInfo);		
           
-        // Update time in diff TZ
-        //
-        new Lang.Method(self, _methods[0]).invoke(dc);
-		//DisplayExtraTz();
-        
-        // get ActivityMonitor info
-        //
-        new Lang.Method(self, _methods[2]).invoke(dc);
-		//DisplayActivity(watchInfo);
-       
-        // Show Currency
-        //
-       	if (Setting.GetIsShowCurrency())
-		{
-			new Lang.Method(self, _methods[1]).invoke(dc);
-		}
-		else
-		{
-			DisplayPulse(dc);
-		}		
-		
+        for (var i = 3; i < 6; i++)
+        {
+        	var displayField = Setting.GetField(i);
+        	new Lang.Method(self, _methods[displayField]).invoke(dc, i);
+        }  
+	
 		// location
 		//
 		DisplayLocation(weatherInfo);
@@ -205,70 +191,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
     }
     
-    function DisplayExtraTz(dc)
-    {
-    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
-    	
-        View.findDrawableById("TzTime_bright")
-        	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
-
-        View.findDrawableById("TzTimeTitle_dim")
-        	.setText(tzInfo[1]);
-    }
-    
-    // call from main update as a callback function
-    //
-    function DisplayPulse(dc)
-    {
-    	DisplayPulseFull(dc, true);
-    }
-    
-    // display current pulse
-    //
-    function DisplayPulseFull(dc, isFullUpdate)
-    {
-    	if (isFullUpdate)
-		{	
-			View.findDrawableById("Pulse_bright_setbg").setText("--    ");
-			View.findDrawableById("PulseTitle_dim").setText("bpm");
-		}
-    
-		var chr = Activity.getActivityInfo().currentHeartRate;
-		if (chr != null && _heartRate != chr)
-		{
-			_heartRate = chr;
-			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
-			if (!isFullUpdate)
-			{
-				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
-				viewPulse.draw(dc);
-			}
-		}
-    }
-    
-    // Display activity (distance)
-    //
-    function DisplayDistance(dc)
-    {
-        var info = ActivityMonitor.getInfo();
-    	var distanceValues = 
-			[(info.distance.toFloat()/100000).format("%2.1f"), 
-			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
-			 info.steps.format("%02d")];
-		var distanceTitles = ["km", "mi", ""];
-		
-        View.findDrawableById("Dist_bright")
-        	.setText(distanceValues[Setting.GetDistSystem()]);
-        
-        View.findDrawableById("DistTitle_dim")
-        	.setText(distanceTitles[Setting.GetDistSystem()]);
-        	
-        distanceValues = null;
-        distanceTitles = null;
-    }
-    
-    
     // Show weather
     //
     function DisplayWeather(dc, weatherInfo)
@@ -315,17 +237,28 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
     }
+   
+    function DisplayExtraTz(dc, fieldId)
+    {
+    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
+    	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
+
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText(tzInfo[1]);
+    }
     
-    // Display exchange rate
+      // Display exchange rate
     //
-    function DisplayCurrency(dc)
+    function DisplayExchangeRate(dc, fieldId)
     {
     		var currencyValue = Setting.GetExchangeRate(); 
 			if (currencyValue == null || currencyValue == 0)
 			{
-				View.findDrawableById("Pulse_bright_setbg")
+				View.findDrawableById("field_" + fieldId + "_bright_setbg")
 					.setText("loading...");
-				View.findDrawableById("PulseTitle_dim").setText("");					
+				View.findDrawableById("field_" + fieldId + "_dim").setText("");					
 			}		
 			else 
 			{
@@ -335,22 +268,78 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				format = (currencyValue < 0.0001) ? "%.6f" : format;
 					
 				var rateString = currencyValue.format(format);	
-				var exchangeLabel = View.findDrawableById("Pulse_bright_setbg");
+				var exchangeLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
 				exchangeLabel.setText(rateString);
 				
-				var currencyLabel = View.findDrawableById("PulseTitle_dim");
+				var currencyLabel = View.findDrawableById("field_" + fieldId + "_dim");
 				if (rateString.length() > 5)
 				{
 					currencyLabel.locX = exchangeLabel.locX + dc.getTextWidthInPixels(rateString, Gfx.FONT_TINY) + 3;
 				}
 				else
 				{
-					currencyLabel.locX = View.findDrawableById("DistTitle_dim").locX;
+					currencyLabel.locX = View
+						.findDrawableById("field_" + (fieldId > 4 ? fieldId - 1 : fieldId + 1) + "_dim").locX;
 				}
 				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
 			}
+    }  
+    
+   
+    // Display activity (distance)
+    //
+    function DisplayDistance(dc, fieldId)
+    {
+        var info = ActivityMonitor.getInfo();
+    	var distanceValues = 
+			[(info.distance.toFloat()/100000).format("%2.1f"), 
+			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
+			 info.steps.format("%02d")];
+		var distanceTitles = ["km", "mi", ""];
+		
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(distanceValues[Setting.GetDistSystem()]);
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText(distanceTitles[Setting.GetDistSystem()]);
+        	
+        distanceValues = null;
+        distanceTitles = null;
+    }
+   
+    // call from main update as a callback function
+    //
+    function DisplayPulse(dc, fieldId)
+    {
+    	DisplayPulseFull(dc, fieldId, true);
+    }
+   
+    // display current pulse
+    //
+    function DisplayPulseFull(dc, fieldId, isFullUpdate)
+    {
+    	if (isFullUpdate)
+		{	
+			View.findDrawableById("field_" + fieldId + "_bright_setbg").setText("--    ");
+			View.findDrawableById("field_" + fieldId + "_dim").setText("bpm");
+		}
+    
+		var chr = Activity.getActivityInfo().currentHeartRate;
+		if (chr != null && (_heartRate != chr || isFullUpdate))
+		{
+			_heartRate = chr;
+			var viewPulse = View.findDrawableById("field_" + fieldId + "_bright_setbg");
+			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
+			if (!isFullUpdate)
+			{
+				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
+				viewPulse.draw(dc);
+			}
+		}
     }
     
+   
+  
     // Display current city name based on known GPS location 
     //
     function DisplayLocation(weatherInfo)

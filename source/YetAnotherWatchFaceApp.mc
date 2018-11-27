@@ -16,7 +16,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     //
     function getInitialView() 
     {
+    	baseInitApp();
     	InitBackgroundEvents();
+    	
     	_watchFaceView = new YetAnotherWatchFaceView();
         return [ _watchFaceView, new PowerBudgetDelegate() ];
     }
@@ -25,43 +27,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     //
     function onSettingsChanged() 
     {
-    	//_watchFaceView.UpdateSetting();
-    	
-    	// Find timezone DST data and save it in object store
-    	//
-		var tzData = Ui.loadResource(Rez.JsonData.tzData);
-        for (var i=0; i < tzData.size(); i++ )
-        {
-        	if (tzData[i]["Id"] == Setting.GetEtzId())
-        	{
-        		Setting.SetExtraTimeZone(tzData[i]);
-        		break;
-        	}
-        }
-		tzData = null;
-		
-		// load actual currency symbols and save it in object store
-		//
-		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
-		
-		// need to erase current exchange rate, since it not actual anymore
-		//
-		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
-			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
-		{
-			var weatherInfo = Setting.GetWeatherInfo();
-        	if (weatherInfo != null)
-        	{
-        		Setting.SetExchangeRate(0);
-        	}			
-		}
-		
-		// save new symbols in OS
-		//
-		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
-		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
-		symbols = null;    	
-    	
+		baseInitApp();
+	
+
     	InitBackgroundEvents();
     	
     	_watchFaceView.SetColors();
@@ -99,4 +67,62 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     		Background.registerForTemporalEvent(Time.now());
 		}
     }
+    
+    function baseInitApp()
+    {
+    
+ 	 	// load actual currency symbols and save it in object store
+		//
+		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
+		
+		// save new symbols in OS
+		//
+		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
+		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
+		
+		// need to erase current exchange rate, since it not actual anymore
+		//
+		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
+			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
+		{
+			var weatherInfo = Setting.GetWeatherInfo();
+        	if (weatherInfo != null)
+        	{
+        		Setting.SetExchangeRate(0);
+        	}			
+		}
+		symbols = null; 
+		   
+        // Find timezone DST data and save it in object store
+    	//
+		var tzData = Ui.loadResource(Rez.JsonData.tzData);
+        for (var i=0; i < tzData.size(); i++ )
+        {
+        	if (tzData[i]["Id"] == Setting.GetEtzId())
+        	{
+        		Setting.SetExtraTimeZone(tzData[i]);
+        		break;
+        	}
+        }
+		tzData = null;
+    
+    	// Set base configuraton for displayed fiels
+ 	    //
+ 	    Setting.SetPulseField(0);
+ 	    Setting.SetIsShowExchangeRate(false);
+    	for (var i = 3; i < 6; i++)
+		{
+			if (Setting.GetField(i) == 3)
+			{
+				Setting.SetPulseField(i);
+			}
+			
+			if (Setting.GetField(i) == 1)
+			{
+				Setting.SetIsShowExchangeRate(true);
+			}
+		}
+    }
+    
+    
 }

@@ -14,7 +14,9 @@ class Setting
 	static hidden var _targetCurrency = "target-currency";
     static hidden var _locationApiKey = "location-api-key";
     static hidden var _exchangeRate = "exchange-rate";
-
+    static hidden var _isShowExchangeRate = "is-show-exchange";
+	static hidden var _pulseField = "pulse-field";
+	
 	public static function GetTimeColor()
 	{
 		return App.getApp().getProperty("TimeColor");
@@ -125,9 +127,24 @@ class Setting
 		return App.getApp().setProperty(_isTest, isTest);
 	}
 	
-	public static function GetIsShowCurrency()
+	public static function GetIsShowExchangeRate()
 	{
-		return App.getApp().getProperty("isShowCurrency");
+		return App.getApp().getProperty(_isShowExchangeRate);
+	}
+	
+	public static function SetIsShowExchangeRate(isShowExchange)
+	{
+		App.getApp().setProperty(_isShowExchangeRate, isShowExchange);
+	}	
+	
+	public static function GetPulseField()
+	{
+		return App.getApp().getProperty(_pulseField);
+	}
+	
+	public static function SetPulseField(pulseField)
+	{
+		App.getApp().setProperty(_pulseField, pulseField);
 	}
 	
 	public static function GetBaseCurrency()
@@ -177,6 +194,11 @@ class Setting
 	public static function GetExchangeRate()
 	{
 		return App.getApp().getProperty(_exchangeRate);
+	}
+	
+	public static function GetField(id)
+	{
+		return App.getApp().getProperty("field-" + id).toNumber();
 	}
 	
 }
