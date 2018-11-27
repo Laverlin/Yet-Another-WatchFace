@@ -23,7 +23,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
-	hidden var _methods = [:DisplayExtraTz, :DisplayDistance];
+	hidden var _methods = [:DisplayExtraTz, :DisplayCurrency, :DisplayDistance];
 	
     function initialize() 
     {
@@ -98,15 +98,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
 		if (!Setting.GetIsShowCurrency())
 		{
-			var chr = Activity.getActivityInfo().currentHeartRate;
-			if (chr != null && _heartRate != chr)
-			{
-				_heartRate = chr;
-				var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
-				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
-				viewPulse.draw(dc);
-			}
+			DisplayPulseFull(dc, false);
 		}
     }
     
@@ -135,23 +127,23 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
           
         // Update time in diff TZ
         //
-        new Lang.Method(self, _methods[0]).invoke();
+        new Lang.Method(self, _methods[0]).invoke(dc);
 		//DisplayExtraTz();
         
         // get ActivityMonitor info
         //
-        new Lang.Method(self, _methods[1]).invoke();
+        new Lang.Method(self, _methods[2]).invoke(dc);
 		//DisplayActivity(watchInfo);
        
         // Show Currency
         //
        	if (Setting.GetIsShowCurrency())
 		{
-			DisplayCurrency(dc);
+			new Lang.Method(self, _methods[1]).invoke(dc);
 		}
 		else
 		{
-			View.findDrawableById("PulseTitle_dim").setText("bpm");
+			DisplayPulse(dc);
 		}		
 		
 		// location
@@ -213,7 +205,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
     }
     
-    function DisplayExtraTz()
+    function DisplayExtraTz(dc)
     {
     	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
     	
@@ -224,9 +216,40 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         	.setText(tzInfo[1]);
     }
     
+    // call from main update as a callback function
+    //
+    function DisplayPulse(dc)
+    {
+    	DisplayPulseFull(dc, true);
+    }
+    
+    // display current pulse
+    //
+    function DisplayPulseFull(dc, isFullUpdate)
+    {
+    	if (isFullUpdate)
+		{	
+			View.findDrawableById("Pulse_bright_setbg").setText("--    ");
+			View.findDrawableById("PulseTitle_dim").setText("bpm");
+		}
+    
+		var chr = Activity.getActivityInfo().currentHeartRate;
+		if (chr != null && _heartRate != chr)
+		{
+			_heartRate = chr;
+			var viewPulse = View.findDrawableById("Pulse_bright_setbg");
+			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
+			if (!isFullUpdate)
+			{
+				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
+				viewPulse.draw(dc);
+			}
+		}
+    }
+    
     // Display activity (distance)
     //
-    function DisplayDistance()
+    function DisplayDistance(dc)
     {
         var info = ActivityMonitor.getInfo();
     	var distanceValues = 
