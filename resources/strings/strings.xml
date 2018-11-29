@@ -11,6 +11,7 @@
     <string id = "DisplayExchangeRate">Exchange Rate</string>
     <string id = "DisplayDistance">Distance</string>
     <string id = "DisplayPulse">Pulse</string>
+    <string id = "DisplayFloors">Floors Climbed</string>
     
     <string id="TempSystemTitle">Temperature</string>
     <string id="Celsius">Celsius</string>

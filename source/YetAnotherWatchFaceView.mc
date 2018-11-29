@@ -23,7 +23,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse];
+	hidden var _defaultDimLocX = 178;
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors];
 	
 	
     function initialize() 
@@ -276,8 +277,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				}
 				else
 				{
-					currencyLabel.locX = View
-						.findDrawableById("field_" + (fieldId > 4 ? fieldId - 1 : fieldId + 1) + "_dim").locX;
+					currencyLabel.locX = _defaultDimLocX;
 				}
 				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
 			}
@@ -292,16 +292,38 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			[(info.distance.toFloat()/100000).format("%2.1f"), 
 			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
 			 info.steps.format("%02d")];
-		var distanceTitles = ["km", "mi", ""];
+		var distanceTitles = ["km", "mi", "st."];
 		
-        View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(distanceValues[Setting.GetDistSystem()]);
+        var valueLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
+        valueLabel.setText(distanceValues[Setting.GetDistSystem()]);
         
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText(distanceTitles[Setting.GetDistSystem()]);
+        var distLabel = View.findDrawableById("field_" + fieldId + "_dim");
+        if (Setting.GetDistSystem() == 2 && distanceValues[2].length() > 4)
+        {
+        	distLabel.locX = valueLabel.locX + dc.getTextWidthInPixels(distanceValues[2], Gfx.FONT_TINY) + 3;
+        }
+        else
+        {
+        	distLabel.locX = _defaultDimLocX;
+        }
+        distLabel.setText(distanceTitles[Setting.GetDistSystem()]);
         	
         distanceValues = null;
         distanceTitles = null;
+    }
+    
+    // Display the number of floors climbed for the current day.
+    //
+    function DisplayFloors(dc, fieldId)
+    {
+    	var floors = ActivityMonitor.getInfo().floorsClimbed;
+    	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(floors.format("%2d"));
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("fl.");    	
+    	
     }
    
     // call from main update as a callback function

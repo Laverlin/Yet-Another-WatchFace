@@ -60,6 +60,13 @@
     	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>
     
+    <setting propertyKey="@Properties.tempSystem" title="@Strings.TempSystemTitle">
+    	<settingConfig type="list">
+    		<listEntry value="1">@Strings.Celsius</listEntry>
+    		<listEntry value="2">@Strings.Farenheit</listEntry>
+    	</settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.windSystem" title="@Strings.WindSystemTitle">
     	<settingConfig type="list">
     		<listEntry value="1">@Strings.Knots</listEntry>
@@ -77,6 +84,7 @@
     		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
     	</settingConfig>
     </setting>
     
@@ -86,6 +94,7 @@
     		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
     	</settingConfig>
     </setting>
     
@@ -95,13 +104,7 @@
     		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
-    	</settingConfig>
-    </setting>
-    
-    <setting propertyKey="@Properties.tempSystem" title="@Strings.TempSystemTitle">
-    	<settingConfig type="list">
-    		<listEntry value="1">@Strings.Celsius</listEntry>
-    		<listEntry value="2">@Strings.Farenheit</listEntry>
+    		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
     	</settingConfig>
     </setting>
     
