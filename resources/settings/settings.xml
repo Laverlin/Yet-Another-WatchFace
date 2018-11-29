@@ -31,7 +31,6 @@
             <listEntry value="0xFFD3D9">@Strings.ColorPink</listEntry>
             <listEntry value="0x00F6FF">@Strings.ColorAqua</listEntry>
             <listEntry value="0xFFFF00">@Strings.ColorYellow</listEntry>
-            
         </settingConfig>
     </setting>
     
@@ -60,6 +59,13 @@
    	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
     	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>
+    
+    <setting propertyKey="@Properties.windSystem" title="@Strings.WindSystemTitle">
+    	<settingConfig type="list">
+    		<listEntry value="1">@Strings.Knots</listEntry>
+    		<listEntry value="2">@Strings.Meters</listEntry>
+    	</settingConfig>
+    </setting> 
     
    	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
     	<settingConfig type="boolean"></settingConfig>
@@ -98,13 +104,6 @@
     		<listEntry value="2">@Strings.Farenheit</listEntry>
     	</settingConfig>
     </setting>
-    
-    <setting propertyKey="@Properties.windSystem" title="@Strings.WindSystemTitle">
-    	<settingConfig type="list">
-    		<listEntry value="1">@Strings.Knots</listEntry>
-    		<listEntry value="2">@Strings.Meters</listEntry>
-    	</settingConfig>
-    </setting>        
     
     <setting propertyKey="@Properties.etzId" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">

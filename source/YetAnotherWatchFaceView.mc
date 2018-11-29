@@ -81,7 +81,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	View.findDrawableById("divider")
     		.setLineColor(Setting.GetTimeColor());
     }
-    
      
     // calls every second for partial update
     //
@@ -107,15 +106,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc) 
     {
-    	var watchInfo = WatchData.GetWatchInfo();
-    	
-    	var activityLocation = watchInfo.CurrentLocation;
+   	
+    	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
     	}
 
-		DisplayTimeNDate(dc, watchInfo);
+		DisplayTimeNDate(dc);
 		
         // Weather data
         //
@@ -138,7 +136,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 
 		// watch status
 		//
-		DisplayWatchStatus(watchInfo);
+		DisplayWatchStatus();
 
 		if (Setting.GetIsTest())
 		{
@@ -148,26 +146,26 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         // Call the parent onUpdate function to redraw the layout
         //
         weatherInfo = null;
-        watchInfo = null;
         dc.clearClip();
         View.onUpdate(dc);
     }
     
     // Display current time and date
     //
-    function DisplayTimeNDate(dc, watchInfo)
+    function DisplayTimeNDate(dc)
     {
-    	var gregorianTimeNow = Gregorian.info(watchInfo.Time, Time.FORMAT_MEDIUM);
+    	var gregorianTimeNow = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+    	var is24Hour = Sys.getDeviceSettings().is24Hour;
     	
         // Update Time
         //
         View.findDrawableById("Hour_time")
-        	.setText(watchInfo.Is24Hour 
+        	.setText(is24Hour 
         		? gregorianTimeNow.hour.format("%02d") 
         		: (gregorianTimeNow.hour % 12 == 0 ? 12 : gregorianTimeNow.hour % 12).format("%02d"));
         	
         View.findDrawableById("DaySign_time_setbg")
-        	.setText(watchInfo.Is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
+        	.setText(is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
         
         View.findDrawableById("Minute_time")
         	.setText(gregorianTimeNow.min.format("%02d"));
@@ -249,7 +247,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         	.setText(tzInfo[1]);
     }
     
-      // Display exchange rate
+    // Display exchange rate
     //
     function DisplayExchangeRate(dc, fieldId)
     {
@@ -284,8 +282,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
 			}
     }  
-    
-   
+
     // Display activity (distance)
     //
     function DisplayDistance(dc, fieldId)
@@ -337,9 +334,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
     }
-    
-   
-  
+
     // Display current city name based on known GPS location 
     //
     function DisplayLocation(weatherInfo)
@@ -370,13 +365,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     // Display battery and connection status
     //
-    function DisplayWatchStatus(watchInfo)
+    function DisplayWatchStatus()
     {
     	var viewBt = View.findDrawableById("Bluetooth_dim")
-			.setText(watchInfo.ConnectionState ? "a" : "b");
+			.setText(Sys.getDeviceSettings().phoneConnected ? "a" : "b");
 		
-		View.findDrawableById("Battery1_dim").setText((watchInfo.BatteryLevel % 10).format("%1d"));
-		var batteryLevel = watchInfo.BatteryLevel / 10;
+		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
+		View.findDrawableById("Battery1_dim").setText((batteryLevel % 10).format("%1d"));
+		batteryLevel = batteryLevel / 10;
 		if (batteryLevel == 10 )
 		{
 			View.findDrawableById("Battery3_dim").setText("1");

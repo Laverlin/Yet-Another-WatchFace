@@ -75,11 +75,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		//
 		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
 		
-		// save new symbols in OS
-		//
-		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
-		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);
-		
 		// need to erase current exchange rate, since it not actual anymore
 		//
 		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
@@ -91,6 +86,11 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         		Setting.SetExchangeRate(0);
         	}			
 		}
+		
+		// save new symbols in OS
+		//
+		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
+		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);		
 		symbols = null; 
 		   
         // Find timezone DST data and save it in object store
