@@ -112,6 +112,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	if (activityLocation != null)
     	{
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
+    		//Setting.SetLastKnownLocation([7.823586, 98.236482]);
     	}
 
 		DisplayTimeNDate(dc);

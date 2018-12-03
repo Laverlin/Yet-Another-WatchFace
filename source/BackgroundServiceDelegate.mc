@@ -21,51 +21,40 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
     function onTemporalEvent() 
     {
-    	Sys.println("on temp event");
     	try
     	{
 	    	// init WeatherInfo object which will stor and pass data to the main app
 	    	//
 	    	var weatherData = Setting.GetWeatherInfo();
-	    	Sys.println(weatherData);
-	    	
 	    	if (weatherData != null)
 	    	{
 	    		_weatherInfo = WeatherInfo.FromDictionary(weatherData);
 	    		_weatherInfo.ExchangeRate = Setting.GetExchangeRate();
-	    		Sys.println("exchangeRate: " + _weatherInfo.ExchangeRate);
 	    	}
 	    	else
 	    	{
 	    		_weatherInfo = new WeatherInfo();
-	    		Sys.println("weather info is new");
 	    	}
 	    	    
 	    	// Request Currency
 	    	//
 	    	if (Setting.GetIsShowExchangeRate())
 			{
-				Sys.println("request currency");
 				RequestExchangeRate();
 			}
 	    
 	    	_location = Setting.GetLastKnownLocation();
-	    	Sys.println("location");
-	    	
 	    	var apiKey = Setting.GetWeatherApiKey();
 	    	
 	    	if (_location == null || _location.size() != 2)
 	    	{
-	    		Sys.println("location issue ");
 	    		return;
 	    	}
-	    	Sys.println("location: " + _location[0] + ", " + _location[1]);
 	    	
 			// Request Weather
 			//
 	    	if (apiKey != null && apiKey.length() > 0)
 	    	{
-	    		Sys.println("request weather");
 				RequestWeather(apiKey, _location);
 			}
 			
@@ -73,10 +62,9 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			//
 			if (Setting.GetIsShowCity())
 			{
-				Sys.println("request city");
 				// avoid unnecessary web requests (location name does not change if location the same)
 				// 
-				if(_weatherInfo.Location != null && 
+				if(_weatherInfo.Location != null &&
 					_location[0] == _weatherInfo.Location[0] && 
 					_location[1] == _weatherInfo.Location[1])
 				{
@@ -99,7 +87,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[0],
 			location[1]]);  
 			
-		Sys.println(" :: weather request " + url);
+		//Sys.println(" :: weather request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -143,7 +131,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			location[1],
 			Setting.GetLocationApiKey()]);  
 			
-		Sys.println(" :: location request " + url);	
+		//Sys.println(" :: location request: " + url);	
 			
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -156,15 +144,21 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveLocation(responseCode, data)
 	{
-		Sys.println("loc data" + data);
+		//Sys.println("loc data" + data);
 		try
 		{
 			if (responseCode == 200)
 			{
-				var cityName = data["resourceSets"][0]["resources"][0]["name"];
-				_weatherInfo.City = cityName;
-				_weatherInfo.Location = _location;
-				_weatherInfo.CityStatus = 1; //OK
+				if (data["resourceSets"] instanceof Toybox.Lang.Array && 
+					data["resourceSets"][0]["resources"] instanceof Toybox.Lang.Array &&
+					data["resourceSets"][0]["resources"].size() > 0)
+				{
+					var cityName = data["resourceSets"][0]["resources"][0]["name"];
+					_weatherInfo.City = cityName;
+					_weatherInfo.Location = _location;
+					_weatherInfo.CityStatus = 1; //OK
+					//Sys.println(cityName);
+				}
 			}
 		}
 		catch (ex)
@@ -186,7 +180,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			Setting.GetTargetCurrency()]
 		);
 		 
-		Sys.println(" :: ex rate request: " + url);
+		//Sys.println(" :: ex rate request: " + url);
 		
 		var options = {
         	:method => Comm.HTTP_REQUEST_METHOD_GET,
