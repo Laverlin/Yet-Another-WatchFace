@@ -24,7 +24,7 @@ Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect I
 
 # Changelog
 
-### version 0.9.88
+### version 0.9.87
 - add floors climbed 
 - ability to set what to display in fields, in settings 
 
