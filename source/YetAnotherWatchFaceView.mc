@@ -23,6 +23,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layout;
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
+	hidden var _defaultDimLocX = 178;
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors];
+	
 	
     function initialize() 
     {
@@ -79,7 +82,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	View.findDrawableById("divider")
     		.setLineColor(Setting.GetTimeColor());
     }
-    
      
     // calls every second for partial update
     //
@@ -95,17 +97,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			secondLabel.draw(dc);
 		}
 		
-		if (!Setting.GetIsShowCurrency())
+		if (Setting.GetPulseField() != 0)
 		{
-			var chr = Activity.getActivityInfo().currentHeartRate;
-			if (chr != null && _heartRate != chr)
-			{
-				_heartRate = chr;
-				var viewPulse = View.findDrawableById("Pulse_bright_setbg");
-				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
-				viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
-				viewPulse.draw(dc);
-			}
+			DisplayPulseFull(dc, Setting.GetPulseField(), false);
 		}
     }
     
@@ -113,25 +107,16 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc) 
     {
-    	var watchInfo = WatchData.GetWatchInfo();
-    	
-    	var activityLocation = watchInfo.CurrentLocation;
+   	
+    	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
+    		//Setting.SetLastKnownLocation([7.823586, 98.236482]);
     	}
 
-		DisplayTimeNDate(dc, watchInfo);
-          
-        // Update time in diff TZ
-        //
-		var tzInfo = WatchData.GetTzTime(watchInfo.Time, Setting.GetExtraTimeZone());
-		DisplayExtraTz(tzInfo);
-        
-        // get ActivityMonitor info
-        //
-		DisplayActivity(watchInfo);
-       
+		DisplayTimeNDate(dc);
+		
         // Weather data
         //
         var weatherInfo = null;
@@ -139,26 +124,21 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         {
         	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
         }
-		DisplayWeather(dc, weatherInfo);
-		
-        // Show Currency
-        //
-       	if (Setting.GetIsShowCurrency())
-		{
-			DisplayCurrency(dc, weatherInfo);
-		}
-		else
-		{
-			View.findDrawableById("PulseTitle_dim").setText("bpm");
-		}		
-		
+		DisplayWeather(dc, weatherInfo);		
+          
+        for (var i = 3; i < 6; i++)
+        {
+        	var displayField = Setting.GetField(i);
+        	new Lang.Method(self, _methods[displayField]).invoke(dc, i);
+        }  
+	
 		// location
 		//
 		DisplayLocation(weatherInfo);
 
 		// watch status
 		//
-		DisplayWatchStatus(watchInfo);
+		DisplayWatchStatus();
 
 		if (Setting.GetIsTest())
 		{
@@ -168,26 +148,26 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         // Call the parent onUpdate function to redraw the layout
         //
         weatherInfo = null;
-        watchInfo = null;
         dc.clearClip();
         View.onUpdate(dc);
     }
     
     // Display current time and date
     //
-    function DisplayTimeNDate(dc, watchInfo)
+    function DisplayTimeNDate(dc)
     {
-    	var gregorianTimeNow = Gregorian.info(watchInfo.Time, Time.FORMAT_MEDIUM);
+    	var gregorianTimeNow = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+    	var is24Hour = Sys.getDeviceSettings().is24Hour;
     	
         // Update Time
         //
         View.findDrawableById("Hour_time")
-        	.setText(watchInfo.Is24Hour 
+        	.setText(is24Hour 
         		? gregorianTimeNow.hour.format("%02d") 
         		: (gregorianTimeNow.hour % 12 == 0 ? 12 : gregorianTimeNow.hour % 12).format("%02d"));
         	
         View.findDrawableById("DaySign_time_setbg")
-        	.setText(watchInfo.Is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
+        	.setText(is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
         
         View.findDrawableById("Minute_time")
         	.setText(gregorianTimeNow.min.format("%02d"));
@@ -210,37 +190,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         dowLabel.locX = monthLabel.locX - dc.getTextWidthInPixels(monthText, Gfx.FONT_TINY) - 7;
         dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
     }
-    
-    function DisplayExtraTz(tzInfo)
-    {
-    	
-        View.findDrawableById("TzTime_bright")
-        	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
-
-        View.findDrawableById("TzTimeTitle_dim")
-        	.setText(tzInfo[1]);
-    }
-    
-    // Display activity (distance)
-    //
-    function DisplayActivity(watchInfo)
-    {
-    	var distanceValues = 
-			[watchInfo.DistanceKm.format("%2.1f"), 
-			watchInfo.DistanceMi.format("%2.1f"), 
-			watchInfo.DistanceSteps.format("%02d")];
-		var distanceTitles = ["km", "mi", ""];
-		
-        View.findDrawableById("Dist_bright")
-        	.setText(distanceValues[Setting.GetDistSystem()]);
-        
-        View.findDrawableById("DistTitle_dim")
-        	.setText(distanceTitles[Setting.GetDistSystem()]);
-        	
-        distanceValues = null;
-        distanceTitles = null;
-    }
-    
     
     // Show weather
     //
@@ -288,18 +237,28 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
     }
+   
+    function DisplayExtraTz(dc, fieldId)
+    {
+    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
+    	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
+
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText(tzInfo[1]);
+    }
     
     // Display exchange rate
     //
-    function DisplayCurrency(dc, weatherInfo)
+    function DisplayExchangeRate(dc, fieldId)
     {
-    		var currencyValue = (weatherInfo == null || weatherInfo.ExchangeRate == null) 
-				? 0 : weatherInfo.ExchangeRate; 
-			if (currencyValue == 0)
+    		var currencyValue = Setting.GetExchangeRate(); 
+			if (currencyValue == null || currencyValue == 0)
 			{
-				View.findDrawableById("Pulse_bright_setbg")
+				View.findDrawableById("field_" + fieldId + "_bright_setbg")
 					.setText("loading...");
-				View.findDrawableById("PulseTitle_dim").setText("");					
+				View.findDrawableById("field_" + fieldId + "_dim").setText("");					
 			}		
 			else 
 			{
@@ -309,22 +268,96 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				format = (currencyValue < 0.0001) ? "%.6f" : format;
 					
 				var rateString = currencyValue.format(format);	
-				var exchangeLabel = View.findDrawableById("Pulse_bright_setbg");
+				var exchangeLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
 				exchangeLabel.setText(rateString);
 				
-				var currencyLabel = View.findDrawableById("PulseTitle_dim");
+				var currencyLabel = View.findDrawableById("field_" + fieldId + "_dim");
 				if (rateString.length() > 5)
 				{
 					currencyLabel.locX = exchangeLabel.locX + dc.getTextWidthInPixels(rateString, Gfx.FONT_TINY) + 3;
 				}
 				else
 				{
-					currencyLabel.locX = View.findDrawableById("DistTitle_dim").locX;
+					currencyLabel.locX = _defaultDimLocX;
 				}
 				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
 			}
+    }  
+
+    // Display activity (distance)
+    //
+    function DisplayDistance(dc, fieldId)
+    {
+        var info = ActivityMonitor.getInfo();
+    	var distanceValues = 
+			[(info.distance.toFloat()/100000).format("%2.1f"), 
+			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
+			 info.steps.format("%02d")];
+		var distanceTitles = ["km", "mi", "st."];
+		
+        var valueLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
+        valueLabel.setText(distanceValues[Setting.GetDistSystem()]);
+        
+        var distLabel = View.findDrawableById("field_" + fieldId + "_dim");
+        if (Setting.GetDistSystem() == 2 && distanceValues[2].length() > 4)
+        {
+        	distLabel.locX = valueLabel.locX + dc.getTextWidthInPixels(distanceValues[2], Gfx.FONT_TINY) + 3;
+        }
+        else
+        {
+        	distLabel.locX = _defaultDimLocX;
+        }
+        distLabel.setText(distanceTitles[Setting.GetDistSystem()]);
+        	
+        distanceValues = null;
+        distanceTitles = null;
     }
     
+    // Display the number of floors climbed for the current day.
+    //
+    function DisplayFloors(dc, fieldId)
+    {
+    	var floors = ActivityMonitor.getInfo().floorsClimbed;
+    	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(floors.format("%2d"));
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("fl.");    	
+    	
+    }
+   
+    // call from main update as a callback function
+    //
+    function DisplayPulse(dc, fieldId)
+    {
+    	DisplayPulseFull(dc, fieldId, true);
+    }
+   
+    // display current pulse
+    //
+    function DisplayPulseFull(dc, fieldId, isFullUpdate)
+    {
+    	if (isFullUpdate)
+		{	
+			View.findDrawableById("field_" + fieldId + "_bright_setbg").setText("--    ");
+			View.findDrawableById("field_" + fieldId + "_dim").setText("bpm");
+		}
+    
+		var chr = Activity.getActivityInfo().currentHeartRate;
+		if (chr != null && (_heartRate != chr || isFullUpdate))
+		{
+			_heartRate = chr;
+			var viewPulse = View.findDrawableById("field_" + fieldId + "_bright_setbg");
+			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
+			if (!isFullUpdate)
+			{
+				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
+				viewPulse.draw(dc);
+			}
+		}
+    }
+
     // Display current city name based on known GPS location 
     //
     function DisplayLocation(weatherInfo)
@@ -355,13 +388,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     // Display battery and connection status
     //
-    function DisplayWatchStatus(watchInfo)
+    function DisplayWatchStatus()
     {
     	var viewBt = View.findDrawableById("Bluetooth_dim")
-			.setText(watchInfo.ConnectionState ? "a" : "b");
+			.setText(Sys.getDeviceSettings().phoneConnected ? "a" : "b");
 		
-		View.findDrawableById("Battery1_dim").setText((watchInfo.BatteryLevel % 10).format("%1d"));
-		var batteryLevel = watchInfo.BatteryLevel / 10;
+		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
+		View.findDrawableById("Battery1_dim").setText((batteryLevel % 10).format("%1d"));
+		batteryLevel = batteryLevel / 10;
 		if (batteryLevel == 10 )
 		{
 			View.findDrawableById("Battery3_dim").setText("1");

@@ -31,7 +31,6 @@
             <listEntry value="0xFFD3D9">@Strings.ColorPink</listEntry>
             <listEntry value="0x00F6FF">@Strings.ColorAqua</listEntry>
             <listEntry value="0xFFFF00">@Strings.ColorYellow</listEntry>
-            
         </settingConfig>
     </setting>
     
@@ -73,12 +72,42 @@
     		<listEntry value="1">@Strings.Knots</listEntry>
     		<listEntry value="2">@Strings.Meters</listEntry>
     	</settingConfig>
-    </setting>        
+    </setting> 
     
    	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
     	<settingConfig type="boolean"></settingConfig>
     </setting>
-  
+       
+    <setting propertyKey = "@Properties.field-3" title = "@Strings.field_3_title">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.DisplayExtraTz</listEntry>
+    		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
+    		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
+    		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
+    	</settingConfig>
+    </setting>
+    
+    <setting propertyKey = "@Properties.field-4" title = "@Strings.field_4_title">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.DisplayExtraTz</listEntry>
+    		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
+    		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
+    		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
+    	</settingConfig>
+    </setting>
+    
+    <setting propertyKey = "@Properties.field-5" title = "@Strings.field_5_title">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.DisplayExtraTz</listEntry>
+    		<listEntry value = "1">@Strings.DisplayExchangeRate</listEntry>
+    		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
+    		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
+    		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
+    	</settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.etzId" title="@Strings.ExtraTimeZoneTitle">
         <settingConfig type="list">
 			<listEntry value="1">@Strings.id1</listEntry>
@@ -124,10 +153,6 @@
         </settingConfig>
     </setting>
   
-    <setting propertyKey="@Properties.isShowCurrency" title="@Strings.isShowCurrencyTitle">
-    	<settingConfig type="boolean"></settingConfig>
-    </setting>
-    
     <setting propertyKey="@Properties.base-currency-id" title="@Strings.BaseCurrencyTitle">
 		<settingConfig type="list">
 			<listEntry value = "0">@Strings.cur_EUR</listEntry>

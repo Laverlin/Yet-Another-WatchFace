@@ -7,6 +7,9 @@
     <property id="BrightColor" type="number">0xFFFFFF</property>
     <property id="DimColor" type="number">0xAAAAAA</property>
     
+    <property id = "field-3" type = "number">0</property>
+    <property id = "field-4" type = "number">1</property>
+    <property id = "field-5" type = "number">2</property>
     <property id="IsShowCity" type ="boolean">true</property>
     <property id="is-show-weather" type = "boolean">true</property>
     <property id="is-show-seconds" type = "boolean">true</property>
@@ -14,7 +17,6 @@
     <property id="tempSystem" type="number">1</property>
     <property id="windSystem" type="number">1</property>
     <property id="distSystem" type="number">0</property>
-    <property id="isShowCurrency" type="boolean">0</property>
     <property id = "base-currency-id" type = "number">0</property>
     <property id = "target-currency-id" type = "number">1</property>
 </properties>
