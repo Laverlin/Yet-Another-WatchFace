@@ -16,14 +16,17 @@ This simple configurable digital face has:
 - Actual Currency Exchange Rate, between two out of 47 currencies. Updates once in 60 min if internet connection is available
 - Pulse
 - Distance (km, miles, steps)
-
-There is not much options to configure yet, work in progress...
+- Floors climbed
 
 Configure all the watch face options via the Garmin Connect mobile app:
 Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect IQ Apps, Watch Faces, (select YA-WatchFace), Settings.
 
 
 # Changelog
+
+### version 0.9.88
+- add floors climbed 
+- ability to set what to display in fields, in settings 
 
 ### version 0.9.76
 - add support Forerunner 935 
