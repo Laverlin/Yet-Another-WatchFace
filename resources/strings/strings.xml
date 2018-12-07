@@ -12,6 +12,8 @@
     <string id = "DisplayDistance">Distance</string>
     <string id = "DisplayPulse">Pulse</string>
     <string id = "DisplayFloors">Floors Climbed</string>
+    <string id = "DisplayMsgCount">Message Count</string>
+    <string id = "DisplayAlarmCount">Alarm Count</string>
     
     <string id="TempSystemTitle">Temperature</string>
     <string id="Celsius">Celsius</string>

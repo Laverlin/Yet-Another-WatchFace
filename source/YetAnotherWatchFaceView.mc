@@ -24,7 +24,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
 	hidden var _defaultDimLocX = 178;
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors];
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount];
 	
 	
     function initialize() 
@@ -357,6 +357,24 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
     }
+
+	function DisplayMsgCount(dc, fieldId)
+	{
+		View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(Sys.getDeviceSettings().notificationCount.format("%2d"));
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("msg");  
+	}
+	
+	function DisplayAlarmCount(dc, fieldId)
+	{
+		View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(Sys.getDeviceSettings().alarmCount.format("%2d"));
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("alm");
+	}
 
     // Display current city name based on known GPS location 
     //
