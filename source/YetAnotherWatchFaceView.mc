@@ -14,7 +14,7 @@ using Toybox.Activity as Activity;
 //        -- 3. Fix Timezone Issue 
 //		  -- 4. Add option to show city name
 //		  -- 5. Adjust exchange rate output
-//        -- 6. Refactor backround process (error handling)
+//        6. Refactor backround process (error handling)
 //        -- 7. Option to Show weather
 //        8. Refactor resources, name conventions, etc..
 //
@@ -211,7 +211,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         else
         {
 			var temperature = (Setting.GetTempSystem() == 1 ? weatherInfo.Temperature : weatherInfo.Temperature * 1.8 + 32)
-				.format(weatherInfo.PerceptionProbability > 99 ? "%2d" : "%2.1f");
+				.format(weatherInfo.PerceptionProbability > 99 ? "%d" : "%2.1f");
 			var perception = weatherInfo.PerceptionProbability.format("%2d");
 	        
 			var temperatureLabel = View.findDrawableById("Temperature_bright");
@@ -292,7 +292,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	var distanceValues = 
 			[(info.distance.toFloat()/100000).format("%2.1f"), 
 			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
-			 info.steps.format("%02d")];
+			 info.steps.format("%d")];
 		var distanceTitles = ["km", "mi", "st."];
 		
         var valueLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
@@ -320,7 +320,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	var floors = ActivityMonitor.getInfo().floorsClimbed;
     	
         View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(floors.format("%2d"));
+        	.setText(floors.format("%d"));
         
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("fl.");    	
@@ -361,7 +361,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	function DisplayMsgCount(dc, fieldId)
 	{
 		View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(Sys.getDeviceSettings().notificationCount.format("%2d"));
+        	.setText(Sys.getDeviceSettings().notificationCount.format("%d"));
         
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("msg");  
@@ -370,7 +370,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	function DisplayAlarmCount(dc, fieldId)
 	{
 		View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(Sys.getDeviceSettings().alarmCount.format("%2d"));
+        	.setText(Sys.getDeviceSettings().alarmCount.format("%d"));
         
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("alm");
