@@ -410,8 +410,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     {
     	var viewBt = View.findDrawableById("Bluetooth_dim")
 			.setText(Sys.getDeviceSettings().phoneConnected ? "a" : "b");
-		
+			
 		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
+		
+		var batteryColor = batteryLevel > 20 ? Setting.GetDimColor() : Gfx.COLOR_RED;
+		View.findDrawableById("Battery0_dim").setColor(batteryColor);
+		View.findDrawableById("Battery1_dim").setColor(batteryColor);
+		View.findDrawableById("Battery2_dim").setColor(batteryColor);
+		View.findDrawableById("Battery3_dim").setColor(batteryColor);
+		
 		View.findDrawableById("Battery1_dim").setText((batteryLevel % 10).format("%1d"));
 		batteryLevel = batteryLevel / 10;
 		if (batteryLevel == 10 )
