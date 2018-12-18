@@ -24,7 +24,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
 	hidden var _defaultDimLocX = 178;
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount];
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude];
 	
 	
     function initialize() 
@@ -374,6 +374,16 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("alm");
+	}
+	
+	function DisplayAltitude(dc, fieldId)
+	{
+		var altitude = Activity.getActivityInfo().altitude;
+		View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText((altitude != null) ? altitude.format("%d") : "--");
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("alt");
 	}
 
     // Display current city name based on known GPS location 
