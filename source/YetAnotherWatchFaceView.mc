@@ -24,7 +24,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
 	hidden var _defaultDimLocX = 178;
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude];
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, :DisplayCalories, :DisplayStepsNFloors];
 	
 	
     function initialize() 
@@ -324,7 +324,18 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("fl.");    	
+    }
+    
+    function DisplayStepsNFloors(dc, fieldId)
+    {
+    	var floors = ActivityMonitor.getInfo().floorsClimbed;
+    	var steps = ActivityMonitor.getInfo().steps;
     	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(steps.format("%d") + "/" + floors.format("%d"));
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("");    	
     }
    
     // call from main update as a callback function
@@ -385,6 +396,20 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("alt");
 	}
+	
+	// Display the number of floors climbed for the current day.
+    //
+    function DisplayCalories(dc, fieldId)
+    {
+    	var floors = ActivityMonitor.getInfo().calories;
+    	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(floors.format("%d"));
+        
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("kCal");    	
+    	
+    }
 
     // Display current city name based on known GPS location 
     //

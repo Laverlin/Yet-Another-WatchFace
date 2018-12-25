@@ -88,6 +88,8 @@
     		<listEntry value = "5">@Strings.DisplayMsgCount</listEntry>
     		<listEntry value = "6">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
+    		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
+    		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
     	</settingConfig>
     </setting>
     
@@ -101,6 +103,8 @@
     		<listEntry value = "5">@Strings.DisplayMsgCount</listEntry>
     		<listEntry value = "6">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
+    		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
+    		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
     	</settingConfig>
     </setting>
     
@@ -114,6 +118,8 @@
     		<listEntry value = "5">@Strings.DisplayMsgCount</listEntry>
     		<listEntry value = "6">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
+    		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
+    		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
     	</settingConfig>
     </setting>
     
