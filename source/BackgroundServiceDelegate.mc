@@ -175,7 +175,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestExchangeRate()
 	{
-		var url = Lang.format("http://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y", [
+		var url = Lang.format("https://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y", [
 			Setting.GetBaseCurrency(), 
 			Setting.GetTargetCurrency()]
 		);
@@ -193,7 +193,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveExchangeRate(responseCode, data)
 	{
-		//	Sys.println(" data = " + data);
+		//Sys.println(" data = " + data);
+		//Sys.println(" code = " + responseCode);
 		try
 		{
 			if (responseCode == 200)
