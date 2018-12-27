@@ -24,6 +24,16 @@ Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect I
 
 # Changelog
 
+### version 0.9.97 
+- red battery level if it less 20%
+- add calories and altimeter
+- add combined steps and floors  
+- fix minor issues
+
+### version 0.9.90
+- displaying counts of notifications and messages has been added
+- fix round numbers displaying issue
+
 ### version 0.9.87
 - add floors climbed 
 - ability to set what to display in fields, in settings 
