@@ -200,7 +200,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			View.findDrawableById("Temperature_bright")
 				.setText(
 					!Setting.GetIsShowWeather() ? "" :
-						(Setting.GetLastKnownLocation() == null) ? "no GPS" : "GPS ok");
+						(Setting.GetLastKnownLocation() == null) ? "no GPS" : "loading...");
 			View.findDrawableById("TemperatureTitle_dim").setText("");
 			View.findDrawableById("Perception_bright").setText("");
 			View.findDrawableById("PerceptionTitle_dim").setText("");
