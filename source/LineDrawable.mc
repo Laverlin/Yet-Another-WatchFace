@@ -21,7 +21,7 @@ class LineDrawable extends Ui.Drawable
         _lineColor = params.get(:lineColor);
     }
     
-    function setLineColor(color)
+    function setColor(color)
     {
     	_lineColor = color;
     }

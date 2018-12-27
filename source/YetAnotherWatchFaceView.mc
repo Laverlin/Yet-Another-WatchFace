@@ -79,8 +79,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		}
     	}
     	
-    	View.findDrawableById("divider")
-    		.setLineColor(Setting.GetTimeColor());
+    	//View.findDrawableById("divider")
+    	//	.setLineColor(Setting.GetTimeColor());
     }
      
     // calls every second for partial update
