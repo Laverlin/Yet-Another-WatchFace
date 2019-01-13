@@ -123,6 +123,4 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 			}
 		}
     }
-    
-    
 }

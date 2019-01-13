@@ -78,9 +78,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     			_layout[i].setColor(Setting.GetDimColor());
     		}
     	}
-    	
-    	//View.findDrawableById("divider")
-    	//	.setLineColor(Setting.GetTimeColor());
     }
      
     // calls every second for partial update
@@ -198,9 +195,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 || !Setting.GetIsShowWeather()) // no weather
         {
 			View.findDrawableById("Temperature_bright")
-				.setText(
-					!Setting.GetIsShowWeather() ? "" :
-						(Setting.GetLastKnownLocation() == null) ? "no GPS" : "loading...");
+				.setText(!Setting.GetIsShowWeather() 
+					? "" 
+					: (Setting.GetLastKnownLocation() == null) 
+						? "no GPS" 
+						: (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey().length() == 0)
+							? "no key" 
+							: "loading...");
 			View.findDrawableById("TemperatureTitle_dim").setText("");
 			View.findDrawableById("Perception_bright").setText("");
 			View.findDrawableById("PerceptionTitle_dim").setText("");

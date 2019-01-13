@@ -3,8 +3,11 @@
         <iq:products>
             <iq:product id="fenix5"/>
             <iq:product id="fenix5plus"/>
+            <iq:product id="fenix5splus"/>
             <iq:product id="fenix5x"/>
             <iq:product id="fenix5xplus"/>
+            <iq:product id="fr645"/>
+            <iq:product id="fr645m"/>
             <iq:product id="fr935"/>
         </iq:products>
         <iq:permissions>

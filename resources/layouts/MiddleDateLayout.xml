@@ -8,25 +8,12 @@
     	<param name="y2">186</param>
     </drawable>
     
-    <drawable id = "progress_time" class="LineDrawable" >
+    <!--
+    <drawable id = "progress_dim" class="LineDrawable" >
     	<param name="x1">125</param> 
     	<param name="y1">100</param>
     	<param name="x2">185</param> 
     	<param name="y2">100</param>
-    </drawable>
-  <!-- 
-    <drawable id = "progress0_time" class="LineDrawable" >
-    	<param name="x1">125</param> 
-    	<param name="y1">98</param>
-    	<param name="x2">125</param> 
-    	<param name="y2">103</param>
-    </drawable>
-    
-    <drawable id = "progress1_time" class="LineDrawable" >
-    	<param name="x1">185</param> 
-    	<param name="y1">98</param>
-    	<param name="x2">185</param> 
-    	<param name="y2">103</param>
     </drawable>
     -->
     
