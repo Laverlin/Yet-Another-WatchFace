@@ -32,6 +32,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         WatchFace.initialize();
         Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
+		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
 
 		//Setting.SetLastKnownLocation([13.764073, 100.577436]);

@@ -175,9 +175,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestExchangeRate()
 	{
-		var url = Lang.format("https://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y", [
+		var url = Lang.format("https://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y&apiKey=$3$", [
 			Setting.GetBaseCurrency(), 
-			Setting.GetTargetCurrency()]
+			Setting.GetTargetCurrency(),
+			Setting.GetExchangeApiKey()]
 		);
 		 
 		//Sys.println(" :: ex rate request: " + url);
