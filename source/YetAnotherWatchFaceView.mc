@@ -42,7 +42,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onLayout(dc) 
     {
-        _layout = Rez.Layouts.MiddleDateLayout(dc);
+    	var fh = dc.getFontHeight(Gfx.FONT_NUMBER_HOT);
+    	if (fh == 90 or fh == 82)
+    	{
+    		_layout = Rez.Layouts.Font90Layout(dc);
+    	}
+    	else
+    	{
+        	_layout = Rez.Layouts.MiddleDateLayout(dc);
+        }
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
     }
@@ -181,7 +189,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         	
         var monthText = gregorianTimeNow.month.toLower();
         var monthLabel = findDrawableById("Month_dim");
-        monthLabel.locX = dayLabel.locX - dc.getTextWidthInPixels(dayText, Gfx.FONT_XTINY) - 5;
+        monthLabel.locX = dayLabel.locX - dc.getTextWidthInPixels(dayText, Gfx.FONT_TINY) - 5;
         monthLabel.setText(monthText);	
         
         var dowLabel = View.findDrawableById("WeekDay_bright");

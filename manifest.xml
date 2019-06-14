@@ -11,9 +11,17 @@
             <iq:product id="fenix5splus"/>
             <iq:product id="fenix5x"/>
             <iq:product id="fenix5xplus"/>
+            <iq:product id="fr245"/>
+            <iq:product id="fr245m"/>
             <iq:product id="fr645"/>
             <iq:product id="fr645m"/>
             <iq:product id="fr935"/>
+            <iq:product id="fr945"/>
+            <iq:product id="marqathlete"/>
+            <iq:product id="marqaviator"/>
+            <iq:product id="marqcaptain"/>
+            <iq:product id="marqdriver"/>
+            <iq:product id="marqexpedition"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="Background"/>
