@@ -138,13 +138,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         	new Lang.Method(self, _methods[displayField]).invoke(dc, i);
         }  
 	
-		// location
-		//
 		DisplayLocation(weatherInfo);
 
-		// watch status
-		//
 		DisplayWatchStatus();
+
+		DisplayBottomAlarmCount();
+		
+		DisplayBottomMessageCount();
 
 		if (Setting.GetIsTest())
 		{
@@ -379,6 +379,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		}
     }
 
+	
 	function DisplayMsgCount(dc, fieldId)
 	{
 		View.findDrawableById("field_" + fieldId + "_bright_setbg")
@@ -396,6 +397,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText("alm");
 	}
+	
 	
 	function DisplayAltitude(dc, fieldId)
 	{
@@ -484,4 +486,35 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 		}
     }
+    
+    function DisplayBottomAlarmCount()
+    {
+    	var alarmCount = Sys.getDeviceSettings().alarmCount;
+    	if  (Setting.GetShowAlarm() == 0 or
+    		(Setting.GetShowAlarm() == 1 and alarmCount < 1))
+    	{
+    		 return; 
+    	}
+    	
+        View.findDrawableById("Alarm_icon_time").setText("d");
+    	View.findDrawableById("Alarm_count_dim")
+        	.setText(alarmCount.format("%d"));       
+    }
+    
+    function DisplayBottomMessageCount()
+    {
+    	var textIcon = " ";
+    	var textCount = "  ";
+        var messageCount = Sys.getDeviceSettings().notificationCount;
+    	if  (Setting.GetShowMessage() == 2 or
+    		(Setting.GetShowMessage() == 1 and messageCount > 0))
+    	{
+    		textIcon = "e";
+    		textCount = messageCount.format("%d");
+    	}
+    
+        View.findDrawableById("Message_icon_time").setText(textIcon);
+    	View.findDrawableById("Message_count_dim")
+        	.setText(textCount);       
+    }   
 }

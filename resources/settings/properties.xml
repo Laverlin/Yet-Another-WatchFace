@@ -10,7 +10,9 @@
     <property id = "field-3" type = "number">0</property>
     <property id = "field-4" type = "number">1</property>
     <property id = "field-5" type = "number">2</property>
-    <property id="IsShowCity" type ="boolean">true</property>
+    <property id = "is-show-city" type ="boolean">true</property>
+    <property id = "show-alarm" type = "number">2</property>
+    <property id = "show-message" type = "number">2</property>
     <property id="is-show-weather" type = "boolean">true</property>
     <property id="is-show-seconds" type = "boolean">true</property>
     <property id="etzId" type="number">16</property>

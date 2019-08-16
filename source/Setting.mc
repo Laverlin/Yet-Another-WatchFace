@@ -100,7 +100,7 @@ class Setting
 	
 	public static function GetIsShowCity()
 	{
-		return App.getApp().getProperty("IsShowCity");
+		return App.getApp().getProperty("is-show-city");
 	}
 	
 	public static function GetWindSystem()
@@ -205,6 +205,16 @@ class Setting
 	{
 		return App.getApp().getProperty(_exchangeRate);
 	}
+	
+	public static function GetShowAlarm()
+	{
+		return App.getApp().getProperty("show-alarm");
+	}
+	
+	public static function GetShowMessage()
+	{
+		return App.getApp().getProperty("show-message");
+	}	
 	
 	public static function GetField(id)
 	{

@@ -74,8 +74,24 @@
     	</settingConfig>
     </setting> 
     
-   	<setting propertyKey="@Properties.IsShowCity" title="@Strings.IsShowCityTitle">
+   	<setting propertyKey="@Properties.is-show-city" title="@Strings.IsShowCityTitle">
     	<settingConfig type="boolean"></settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.show-alarm" title="@Strings.IsShowAlarmTitle">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.ShowNever</listEntry>
+    		<listEntry value = "1">@Strings.ShowOnlyValue</listEntry>
+    		<listEntry value = "2">@Strings.ShowAlways</listEntry>
+    	</settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.show-message" title="@Strings.IsShowMessageTitle">
+    	<settingConfig type = "list">
+    		<listEntry value = "0">@Strings.ShowNever</listEntry>
+    		<listEntry value = "1">@Strings.ShowOnlyValue</listEntry>
+    		<listEntry value = "2">@Strings.ShowAlways</listEntry>
+    	</settingConfig>
     </setting>
        
     <setting propertyKey = "@Properties.field-3" title = "@Strings.field_3_title">
@@ -85,8 +101,7 @@
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
     		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
-    		<listEntry value = "5">@Strings.DisplayMsgCount</listEntry>
-    		<listEntry value = "6">@Strings.DisplayAlarmCount</listEntry>
+    		<listEntry value = "5">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
@@ -100,8 +115,6 @@
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
     		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
-    		<listEntry value = "5">@Strings.DisplayMsgCount</listEntry>
-    		<listEntry value = "6">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
@@ -115,8 +128,6 @@
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
     		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
-    		<listEntry value = "5">@Strings.DisplayMsgCount</listEntry>
-    		<listEntry value = "6">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>

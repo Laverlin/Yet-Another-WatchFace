@@ -8,15 +8,6 @@
     	<param name="y2">186</param>
     </drawable>
     
-    <!--
-    <drawable id = "progress_dim" class="LineDrawable" >
-    	<param name="x1">125</param> 
-    	<param name="y1">100</param>
-    	<param name="x2">185</param> 
-    	<param name="y2">100</param>
-    </drawable>
-    -->
-    
     <label id="Hour_time" x="90" y="53" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
     <label id="Minute_time" x="90" y="133" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT"  />
     <label id="Second_time_setbg" x="115" y="164" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
@@ -57,5 +48,31 @@
     <label id="Bluetooth_dim" x = "120" y = "137" font = "@Fonts.icon_font" justification="Gfx.TEXT_JUSTIFY_RIGHT"  />
     
     <label id="debug_version" x = "120" y = "220" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_LT_GRAY"/>
+    
+    <label id="Alarm_icon_time" x="124" y = "195" font = "@Fonts.icon_font" />
+    <label id="Alarm_count_dim" x="144" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+    
+    <label id="Message_icon_time" x="163" y = "195" font = "@Fonts.icon_font"/>
+    <label id="Message_count_dim" x="183" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+     
+    <!--  
+    <drawable id="request1_dim" class="DotDrawable"> 
+    	<param name="x">195</param>
+    	<param name="y">195</param>
+    	<param name="color">Gfx.COLOR_LT_GRAY</param>
+    </drawable> 
+    
+    <drawable id="request2_dim" class="DotDrawable"> 
+    	<param name="x">185</param>
+    	<param name="y">195</param>
+    	<param name="color">Gfx.COLOR_LT_GRAY</param>
+    </drawable> 
+    
+    <drawable id="request3_dim" class="DotDrawable"> 
+    	<param name="x">175</param>
+    	<param name="y">195</param>
+    	<param name="color">Gfx.COLOR_LT_GRAY</param>
+    </drawable>   
+     -->
      
  </layout>

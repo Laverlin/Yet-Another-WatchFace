@@ -55,6 +55,13 @@
 	<string id="IsShowCityTitle">Show Current City</string>
 	<string id="isShowSecondsTitle">Display Seconds</string>
 	
+	<string id="IsShowAlarmTitle">Show Alarm</string>
+	<string id="IsShowMessageTitle">Show Message</string>
+	
+	<string id="ShowNever">Never</string>
+	<string id="ShowOnlyValue">Value</string>
+	<string id="ShowAlways">Always</string>
+	
 	<string id ="ExtraTimeZoneTitle">Second Time Zone</string>
 	<string id="id1"> [-12] (+12, Etc/GMT-12) </string>
 	<string id="id2"> [-11] (SST, US/Samoa) </string>
