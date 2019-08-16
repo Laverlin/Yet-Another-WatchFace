@@ -101,7 +101,6 @@
     		<listEntry value = "2">@Strings.DisplayDistance</listEntry>
     		<listEntry value = "3">@Strings.DisplayPulse</listEntry>
     		<listEntry value = "4">@Strings.DisplayFloors</listEntry>
-    		<listEntry value = "5">@Strings.DisplayAlarmCount</listEntry>
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>

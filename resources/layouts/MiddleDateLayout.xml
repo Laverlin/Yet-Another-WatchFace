@@ -50,29 +50,9 @@
     <label id="debug_version" x = "120" y = "220" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_LT_GRAY"/>
     
     <label id="Alarm_icon_time" x="124" y = "195" font = "@Fonts.icon_font" />
-    <label id="Alarm_count_dim" x="144" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+    <label id="Alarm_count_dim" x="143" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
     
-    <label id="Message_icon_time" x="163" y = "195" font = "@Fonts.icon_font"/>
-    <label id="Message_count_dim" x="183" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
-     
-    <!--  
-    <drawable id="request1_dim" class="DotDrawable"> 
-    	<param name="x">195</param>
-    	<param name="y">195</param>
-    	<param name="color">Gfx.COLOR_LT_GRAY</param>
-    </drawable> 
-    
-    <drawable id="request2_dim" class="DotDrawable"> 
-    	<param name="x">185</param>
-    	<param name="y">195</param>
-    	<param name="color">Gfx.COLOR_LT_GRAY</param>
-    </drawable> 
-    
-    <drawable id="request3_dim" class="DotDrawable"> 
-    	<param name="x">175</param>
-    	<param name="y">195</param>
-    	<param name="color">Gfx.COLOR_LT_GRAY</param>
-    </drawable>   
-     -->
-     
+    <label id="Message_icon_time" x="162" y = "195" font = "@Fonts.icon_font"/>
+    <label id="Message_count_dim" x="181" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+          
  </layout>

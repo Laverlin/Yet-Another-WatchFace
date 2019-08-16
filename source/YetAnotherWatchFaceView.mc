@@ -489,16 +489,18 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     function DisplayBottomAlarmCount()
     {
+    	var textIcon = " ";
+    	var textCount = "  ";    
     	var alarmCount = Sys.getDeviceSettings().alarmCount;
-    	if  (Setting.GetShowAlarm() == 0 or
-    		(Setting.GetShowAlarm() == 1 and alarmCount < 1))
+    	if  (Setting.GetShowAlarm() == 2 or
+    		(Setting.GetShowAlarm() == 1 and alarmCount > 0))
     	{
-    		 return; 
+			textIcon = "d";
+    		textCount = alarmCount.format("%d");
     	}
     	
-        View.findDrawableById("Alarm_icon_time").setText("d");
-    	View.findDrawableById("Alarm_count_dim")
-        	.setText(alarmCount.format("%d"));       
+        View.findDrawableById("Alarm_icon_time").setText(textIcon);
+    	View.findDrawableById("Alarm_count_dim").setText(textCount);       
     }
     
     function DisplayBottomMessageCount()
@@ -514,7 +516,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	}
     
         View.findDrawableById("Message_icon_time").setText(textIcon);
-    	View.findDrawableById("Message_count_dim")
-        	.setText(textCount);       
+    	View.findDrawableById("Message_count_dim").setText(textCount);       
     }   
 }

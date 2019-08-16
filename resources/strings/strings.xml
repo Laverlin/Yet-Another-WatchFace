@@ -59,7 +59,7 @@
 	<string id="IsShowMessageTitle">Show Message</string>
 	
 	<string id="ShowNever">Never</string>
-	<string id="ShowOnlyValue">Value</string>
+	<string id="ShowOnlyValue">Non Zero Count</string>
 	<string id="ShowAlways">Always</string>
 	
 	<string id ="ExtraTimeZoneTitle">Second Time Zone</string>
