@@ -52,7 +52,7 @@
     <label id="Alarm_icon_time" x="124" y = "195" font = "@Fonts.icon_font" />
     <label id="Alarm_count_dim" x="143" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
     
-    <label id="Message_icon_time" x="162" y = "195" font = "@Fonts.icon_font"/>
-    <label id="Message_count_dim" x="181" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+    <label id="Message_icon_time" x="160" y = "195" font = "@Fonts.icon_font"/>
+    <label id="Message_count_dim" x="178" y = "195" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_LEFT" />
           
  </layout>
