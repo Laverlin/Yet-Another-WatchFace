@@ -1,9 +1,9 @@
 # Yet-Another-WatchFace
-Watch Face application for Garmin Fenix 5[X][Plus] & Forerunner 935 smartwatch
+Watch Face application for Garmin Fenix 5[X][Plus], D2, Forerunner 245[M]/645[M]/935/945, Mk1, MARQ1 smartwatch
 
 # Description
 Please, leave your comments, bug reports and ideas on Garmin Forum:
-https://forums.garmin.com/forum/developers/connect-iq/connect-iq-showcase/1422058-watchface-yet-another-watchface
+https://forums.garmin.com/developer/connect-iq/f/showcase/7485/watchface-yet-another-watchface
 
 This simple configurable digital face has:
 
@@ -23,6 +23,11 @@ Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect I
 
 
 # Changelog
+
+### version 0.9.112
+- add alarm and message count at the separate field
+- add support D2, Forerunner 245[M]/645[M]/935/945, Mk1, MARQ1
+- fix issue with updated exchange api
 
 ### version 0.9.97 
 - red battery level if it less 20%
