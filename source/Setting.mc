@@ -118,6 +118,11 @@ class Setting
 		return App.getApp().getProperty("distSystem");
 	}
 	
+	public static function GetAltimeterSystem()
+	{
+		return App.getApp().getProperty("altimeter-system");
+	}
+	
 	public static function GetIsTest()
 	{
 		return App.getApp().getProperty(_isTest);

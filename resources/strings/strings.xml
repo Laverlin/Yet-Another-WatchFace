@@ -25,11 +25,16 @@
     <string id="WindSystemTitle">Wind</string>
     <string id="Knots">Knots</string>
     <string id="Meters">m/s</string>
+    <string id="Kilometers">km/h</string>
     
     <string id="DistSystemTitle">Distance</string>
     <string id="Kilometers">Kilometers</string>
     <string id="Miles">Miles</string>
     <string id="Steps">Steps</string>
+    
+    <string id = "AltimeterSystemTitle">Altitude</string>
+    <string id = "Meter">Meters</string>
+    <string id = "Feet">Feet</string>
 
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="TimeColorTitle">Time Color</string>

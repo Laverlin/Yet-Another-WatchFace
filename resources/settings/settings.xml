@@ -69,6 +69,7 @@
     
     <setting propertyKey="@Properties.windSystem" title="@Strings.WindSystemTitle">
     	<settingConfig type="list">
+    		<listEntry value="0">@Strings.Kilometers</listEntry>
     		<listEntry value="1">@Strings.Knots</listEntry>
     		<listEntry value="2">@Strings.Meters</listEntry>
     	</settingConfig>
@@ -289,6 +290,13 @@
     		<listEntry value="0">@Strings.Kilometers</listEntry>
     		<listEntry value="1">@Strings.Miles</listEntry>
     		<listEntry value="2">@Strings.Steps</listEntry>
+    	</settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.altimeter-system" title="@Strings.AltimeterSystemTitle">
+    	<settingConfig type="list">
+    		<listEntry value="0">@Strings.Meter</listEntry>
+    		<listEntry value="1">@Strings.Feet</listEntry>
     	</settingConfig>
     </setting>
 

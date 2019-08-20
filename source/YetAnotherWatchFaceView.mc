@@ -234,12 +234,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			View.findDrawableById("PerceptionTitle_dim").setText("%");
 			
 			var windLabel = View.findDrawableById("Wind_bright");
-			var wind = (weatherInfo.WindSpeed * (Setting.GetWindSystem() == 1 ? 1.94384 : 1)).format("%2.1f");
+			var windMultiplier = [3.6, 1.94384, 1];
+			var wind = (weatherInfo.WindSpeed * windMultiplier[Setting.GetWindSystem()]).format("%2.1f");
 			windLabel.setText(wind);		
 			var windTitleLabel = View.findDrawableById("WindTitle_dim");
 			windTitleLabel.locX = windLabel.locX + dc.getTextWidthInPixels(wind, Gfx.FONT_TINY) + 1;
-			windTitleLabel.setText(Setting.GetWindSystem() == 1 ? "kn" : "m/s");
-	
+			var windSystemLabel = ["k/h", "kn", "m/s"];
+			windTitleLabel.setText(windSystemLabel[Setting.GetWindSystem()]);
+			
 			var icon = _conditionIcons[weatherInfo.Condition];
 			if (icon != null)
 			{
@@ -402,11 +404,20 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	function DisplayAltitude(dc, fieldId)
 	{
 		var altitude = Activity.getActivityInfo().altitude;
+		if (altitude != null)
+		{
+			altitude = altitude * (Setting.GetAltimeterSystem() == 0 ? 1 : 3.28084);
+		}
+		
 		View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText((altitude != null) ? altitude.format("%d") : "--");
+        	.setText((altitude != null) ? altitude.format("%d") : "---");
         
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("alt");
+        var altTitle = View.findDrawableById("field_" + fieldId + "_dim");
+        if (altitude != null && altitude > 10000)
+        {
+        	altTitle.locX = altTitle.locX + 4;
+        }
+        altTitle.setText((Setting.GetAltimeterSystem() == 0) ? "m" : "ft");
 	}
 	
 	// Display the number of floors climbed for the current day.
