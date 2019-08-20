@@ -123,6 +123,11 @@ class Setting
 		return App.getApp().getProperty("altimeter-system");
 	}
 	
+	public static function GetCityAlign()
+	{
+		return App.getApp().getProperty("city-align");
+	}
+	
 	public static function GetIsTest()
 	{
 		return App.getApp().getProperty(_isTest);

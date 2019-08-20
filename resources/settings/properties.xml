@@ -22,4 +22,5 @@
     <property id = "base-currency-id" type = "number">0</property>
     <property id = "target-currency-id" type = "number">1</property>
     <property id = "altimeter-system" type = "number">0</property>
+    <property id = "city-align" type = "number">0</property>
 </properties>

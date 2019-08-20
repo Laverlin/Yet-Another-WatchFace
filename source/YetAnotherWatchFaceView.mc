@@ -438,6 +438,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function DisplayLocation(weatherInfo)
     {
+    	var cityLabel = (Setting.GetCityAlign() == 0) ? "City_dim" : "CityCenter_dim";
+    	var cityNoLabel = (Setting.GetCityAlign() == 0) ? "CityCenter_dim" : "City_dim";
+    	
     	if (weatherInfo != null && weatherInfo.City != null 
 			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
 		{
@@ -453,13 +456,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 					: city.substring(0, dindex);
 				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
 			}
-			View.findDrawableById("City_dim").setText(city);
+			
+			View.findDrawableById(cityLabel).setText(city);
 			city = null;
 		}
 		else
 		{
-			View.findDrawableById("City_dim").setText("");
+			View.findDrawableById(cityLabel).setText("");
 		}
+		View.findDrawableById(cityNoLabel).setText("");
     }
     
     // Display battery and connection status

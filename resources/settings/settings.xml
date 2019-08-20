@@ -79,6 +79,13 @@
     	<settingConfig type="boolean"></settingConfig>
     </setting>
     
+    <setting propertyKey="@Properties.city-align" title="@Strings.CityAlignTitle">
+    	<settingConfig type="list">
+    		<listEntry value="0">@Strings.Left</listEntry>
+    		<listEntry value="1">@Strings.Center</listEntry>
+    	</settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.show-alarm" title="@Strings.IsShowAlarmTitle">
     	<settingConfig type = "list">
     		<listEntry value = "0">@Strings.ShowNever</listEntry>
@@ -299,5 +306,5 @@
     		<listEntry value="1">@Strings.Feet</listEntry>
     	</settingConfig>
     </setting>
-
+    
 </settings>
