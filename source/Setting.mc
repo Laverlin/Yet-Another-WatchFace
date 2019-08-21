@@ -128,6 +128,11 @@ class Setting
 		return App.getApp().getProperty("city-align");
 	}
 	
+	public static function GetAlarmAlign()
+	{
+		return App.getApp().getProperty("alarm-align");
+	}
+	
 	public static function GetIsTest()
 	{
 		return App.getApp().getProperty(_isTest);

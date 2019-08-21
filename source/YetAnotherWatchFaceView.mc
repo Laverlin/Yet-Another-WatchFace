@@ -505,33 +505,45 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     function DisplayBottomAlarmCount()
     {
-    	var textIcon = " ";
-    	var textCount = "  ";    
-    	var alarmCount = Sys.getDeviceSettings().alarmCount;
-    	if  (Setting.GetShowAlarm() == 2 or
-    		(Setting.GetShowAlarm() == 1 and alarmCount > 0))
-    	{
-			textIcon = "d";
-    		textCount = alarmCount.format("%d");
-    	}
+    	var fieldIcons = ["Alarm_icon_time", "Alarm_icon_center_time"];
+    	var fieldCounts = ["Alarm_count_dim", "Alarm_count_center_dim"];  
     	
-        View.findDrawableById("Alarm_icon_time").setText(textIcon);
-    	View.findDrawableById("Alarm_count_dim").setText(textCount);       
+    	for (var i=0;i<2;i++)
+    	{
+    		View.findDrawableById(fieldIcons[i]).setText(" ");
+    		View.findDrawableById(fieldCounts[i]).setText("  "); 
+    	}  	
+    	
+    	var alarmCount = Sys.getDeviceSettings().alarmCount;
+    	if  (Setting.GetShowAlarm() == 0 or
+    		(Setting.GetShowAlarm() == 1 and alarmCount == 0))
+    	{
+			return;
+    	}    	
+    	
+        View.findDrawableById(fieldIcons[Setting.GetAlarmAlign()]).setText("d");
+    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(alarmCount.format("%d"));       
     }
     
     function DisplayBottomMessageCount()
     {
-    	var textIcon = " ";
-    	var textCount = "  ";
-        var messageCount = Sys.getDeviceSettings().notificationCount;
-    	if  (Setting.GetShowMessage() == 2 or
-    		(Setting.GetShowMessage() == 1 and messageCount > 0))
+    	var fieldIcons = ["Message_icon_time", "Message_icon_center_time"];
+    	var fieldCounts = ["Message_count_dim", "Message_count_center_dim"];
+    	
+    	for (var i=0; i<2; i++)
     	{
-    		textIcon = "e";
-    		textCount = messageCount.format("%d");
+    		View.findDrawableById(fieldIcons[i]).setText(" ");
+    		View.findDrawableById(fieldCounts[i]).setText("  "); 
+    	} 
+    	
+        var messageCount = Sys.getDeviceSettings().notificationCount;
+    	if  (Setting.GetShowMessage() == 0 or
+    		(Setting.GetShowMessage() == 1 and messageCount == 0))
+    	{
+    		return;
     	}
     
-        View.findDrawableById("Message_icon_time").setText(textIcon);
-    	View.findDrawableById("Message_count_dim").setText(textCount);       
+        View.findDrawableById(fieldIcons[Setting.GetAlarmAlign()]).setText("e");
+    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(messageCount.format("%d"));       
     }   
 }

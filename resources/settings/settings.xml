@@ -101,6 +101,13 @@
     		<listEntry value = "2">@Strings.ShowAlways</listEntry>
     	</settingConfig>
     </setting>
+    
+    <setting propertyKey="@Properties.alarm-align" title="@Strings.AlarmAlignTitle">
+    	<settingConfig type="list">
+    		<listEntry value="0">@Strings.Right</listEntry>
+    		<listEntry value="1">@Strings.Center</listEntry>
+    	</settingConfig>
+    </setting>
        
     <setting propertyKey = "@Properties.field-3" title = "@Strings.field_3_title">
     	<settingConfig type = "list">

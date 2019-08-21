@@ -61,8 +61,10 @@
 	<string id="isShowSecondsTitle">Display Seconds</string>
 	
 	<string id="CityAlignTitle">City align</string>
+	<string id="AlarmAlignTitle">Alarm/Notifications align</string>
 	<string id = "Left">Left</string>
 	<string id = "Center">Center</string>
+	<string id = "Right">Right</string>
 	
 	<string id="IsShowAlarmTitle">Show Alarm</string>
 	<string id="IsShowMessageTitle">Show Message</string>
