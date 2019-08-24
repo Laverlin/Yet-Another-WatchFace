@@ -69,7 +69,7 @@
     
     <setting propertyKey="@Properties.windSystem" title="@Strings.WindSystemTitle">
     	<settingConfig type="list">
-    		<listEntry value="0">@Strings.Kilometers</listEntry>
+    		<listEntry value="0">@Strings.KilometersPh</listEntry>
     		<listEntry value="1">@Strings.Knots</listEntry>
     		<listEntry value="2">@Strings.Meters</listEntry>
     	</settingConfig>

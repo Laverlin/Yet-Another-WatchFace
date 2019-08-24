@@ -25,7 +25,7 @@
     <string id="WindSystemTitle">Wind</string>
     <string id="Knots">Knots</string>
     <string id="Meters">m/s</string>
-    <string id="Kilometers">km/h</string>
+    <string id="KilometersPh">km/h</string>
     
     <string id="DistSystemTitle">Distance</string>
     <string id="Kilometers">Kilometers</string>
