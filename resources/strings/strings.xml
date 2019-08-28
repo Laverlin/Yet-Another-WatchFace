@@ -17,6 +17,7 @@
     <string id = "DisplayAltitude">Altitude</string>
     <string id = "DisplayCalories">Calories</string>
     <string id = "DisplayStepsNFloors">Steps/Floors</string>
+    <string id = "DisplaySunEvent">Sun rise/set</string>
     
     <string id="TempSystemTitle">Temperature</string>
     <string id="Celsius">Celsius</string>

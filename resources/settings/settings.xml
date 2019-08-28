@@ -119,6 +119,7 @@
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
+    		<listEntry value = "10">@Strings.DisplaySunEvent</listEntry>
     	</settingConfig>
     </setting>
     
@@ -132,6 +133,7 @@
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
+    		<listEntry value = "10">@Strings.DisplaySunEvent</listEntry>
     	</settingConfig>
     </setting>
     
@@ -145,6 +147,7 @@
     		<listEntry value = "7">@Strings.DisplayAltitude</listEntry>
     		<listEntry value = "8">@Strings.DisplayCalories</listEntry>
     		<listEntry value = "9">@Strings.DisplayStepsNFloors</listEntry>
+    		<listEntry value = "10">@Strings.DisplaySunEvent</listEntry>
     	</settingConfig>
     </setting>
     

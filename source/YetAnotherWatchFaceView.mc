@@ -24,7 +24,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _conditionIcons;
 	hidden var _heartRate = 0;
 	hidden var _defaultDimLocX = 178;
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, :DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, :DisplayCalories, :DisplayStepsNFloors];
+	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
+							:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
+							:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
 	
 	
     function initialize() 
@@ -259,6 +261,51 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 
         View.findDrawableById("field_" + fieldId + "_dim")
         	.setText(tzInfo[1]);
+    }
+    
+    function DisplaySunEvent(dc, fieldId)
+    {
+    
+		//var lon = -122.0363496;
+        //var lat = 37.36883;
+        //var lon = 37.58;
+        //var lat = 55.7558;
+        
+        //var lon = 151.22;
+        //var lat = -33.87;
+        
+        //var lat = 14.687;
+        //var lon = -17.45;
+        
+        var hour = 0;
+        var min = 0;
+       	var location = Setting.GetLastKnownLocation();
+
+ 		if (location != null && location.size() == 2)
+	    {
+	    	var time = Sys.getClockTime();
+	        var DOY = WatchData.GetDOY(Time.now());
+	    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
+	    	if (ne != null) 
+	    	{
+		    	if (ne[0] >= time.hour and ne[1] >= time.min)
+		    	{
+		    		ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, false);
+		    		if (ne[0] >= time.hour and ne[1] >= time.min)
+		    		{
+		    			ne = WatchData.GetNextSunEvent(DOY + 1, location[0], location[1], time.timeZoneOffset, time.dst, true);
+		    		}
+		    	}
+		    	hour = ne[0];
+		    	min = ne[1];
+	    	}
+	    }
+    	
+        View.findDrawableById("field_" + fieldId + "_bright_setbg")
+        	.setText(hour.format("%02d") + ":" + min.format("%02d"));
+
+        View.findDrawableById("field_" + fieldId + "_dim")
+        	.setText("s");
     }
     
     // Display exchange rate
