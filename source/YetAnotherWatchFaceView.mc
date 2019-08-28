@@ -288,10 +288,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
 	    	if (ne != null) 
 	    	{
-		    	if (ne[0] >= time.hour and ne[1] >= time.min)
+		    	if (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1]))
 		    	{
 		    		ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, false);
-		    		if (ne[0] >= time.hour and ne[1] >= time.min)
+		    		if (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1]))
 		    		{
 		    			ne = WatchData.GetNextSunEvent(DOY + 1, location[0], location[1], time.timeZoneOffset, time.dst, true);
 		    		}
