@@ -27,6 +27,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
 							:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
 							:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
+	hidden var _ecHour = null;
+	hidden var _eventTime = null;
 	
 	
     function initialize() 
@@ -268,6 +270,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
 		//var lon = -122.0363496;
         //var lat = 37.36883;
+        
         //var lon = 37.58;
         //var lat = 55.7558;
         
@@ -277,35 +280,55 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         //var lat = 14.687;
         //var lon = -17.45;
         
-        var hour = 0;
-        var min = 0;
-       	var location = Setting.GetLastKnownLocation();
-
- 		if (location != null && location.size() == 2)
-	    {
-	    	var time = Sys.getClockTime();
-	        var DOY = WatchData.GetDOY(Time.now());
-	    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
-	    	if (ne != null) 
-	    	{
-		    	if (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1]))
+        var eventTime = null;
+        var location = Setting.GetLastKnownLocation();
+        var time = Sys.getClockTime();
+        
+        if (_ecHour == time.hour && 
+        	_eventTime != null &&
+        	time.hour <= _eventTime[0] && time.min < _eventTime[1]) 
+        {
+        	eventTime = _eventTime;
+        }
+		else
+		{
+	 		if (location != null && location.size() == 2)
+		    {
+		        var DOY = WatchData.GetDOY(Time.now());
+		        
+		        // get sunrise
+		        //
+		    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
+		    	if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
 		    	{
+		    		// if missed sunrise, get sunset
+		    		//
 		    		ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, false);
-		    		if (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1]))
+		    		if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
 		    		{
-		    			ne = WatchData.GetNextSunEvent(DOY + 1, location[0], location[1], time.timeZoneOffset, time.dst, true);
+		    			// if missed sunset, get sunrise next day
+		    			//
+		    			DOY = WatchData.GetDOY(Time.now().add(new Toybox.Time.Duration(86400)));
+		    			ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
 		    		}
 		    	}
-		    	hour = ne[0];
-		    	min = ne[1];
-	    	}
+		    	eventTime = ne;
+		    	_ecHour = time.hour;
+		    	_eventTime = eventTime;
+		    }
 	    }
     	
-        View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(hour.format("%02d") + ":" + min.format("%02d"));
+    	var text = (eventTime == null) 
+    		? "no gps" 
+    		: eventTime[0].format("%02d") + ":" + eventTime[1].format("%02d");
+        View.findDrawableById("field_" + fieldId + "_bright_setbg").setText(text);
 
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("s");
+		if (eventTime != null)
+		{
+			var font = Ui.loadResource(Rez.Fonts.icon_font);
+			View.findDrawableById("field_" + fieldId + "_dim").setFont(font);
+        	View.findDrawableById("field_" + fieldId + "_dim").setText("e");
+        }
     }
     
     // Display exchange rate
