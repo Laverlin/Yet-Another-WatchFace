@@ -285,7 +285,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         var eventTime = null;
         var location = Setting.GetLastKnownLocation();
         var time = Sys.getClockTime();
-        var eventGlyph = " ";
         
         if (_ecHour == time.hour && 
         	_eventTime != null &&
@@ -301,19 +300,16 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		        
 		        // get sunrise
 		        //
-		        eventGlyph = "r";
 		    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
 		    	if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
 		    	{
 		    		// if missed sunrise, get sunset
 		    		//
-		    		eventGlyph = "s";
 		    		ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, false);
 		    		if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
 		    		{
 		    			// if missed sunset, get sunrise next day
 		    			//
-		    			eventGlyph = "r";
 		    			DOY = WatchData.GetDOY(Time.now().add(new Toybox.Time.Duration(86400)));
 		    			ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
 		    		}
@@ -332,7 +328,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (eventTime != null)
 		{
 			View.findDrawableById("field_" + fieldId + "_dim").setFont(_iconFont);
-        	View.findDrawableById("field_" + fieldId + "_dim").setText(eventGlyph);
+        	View.findDrawableById("field_" + fieldId + "_dim").setText(eventTime[2] ? "r" : "s");
         }
     }
     

@@ -93,7 +93,7 @@ class WatchData
 		if (localT >= 24 * 3600) {localT = localT - 24 * 3600;}
 		if (localT < 0) {localT = localT + 24 * 3600;}
 		
-		return [localT.toNumber() % 86400 / 3600, localT.toNumber() % 3600 / 60];
+		return [localT.toNumber() % 86400 / 3600, localT.toNumber() % 3600 / 60, isRise];
     }
     
     
