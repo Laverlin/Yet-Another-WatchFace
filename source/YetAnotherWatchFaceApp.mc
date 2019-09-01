@@ -17,6 +17,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function getInitialView() 
     {
     	baseInitApp();
+    	
     	InitBackgroundEvents();
     	
     	_watchFaceView = new YetAnotherWatchFaceView();
@@ -29,7 +30,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     {
 		baseInitApp();
 	
-
     	InitBackgroundEvents();
     	
     	_watchFaceView.SetColors();
@@ -70,7 +70,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     
     function baseInitApp()
     {
-    
  	 	// load actual currency symbols and save it in object store
 		//
 		var symbols = Ui.loadResource(Rez.JsonData.currencySymbols);
@@ -92,19 +91,53 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		Setting.SetBaseCurrency(symbols["symbols"][Setting.GetBaseCurrencyId()]);
 		Setting.SetTargetCurrency(symbols["symbols"][Setting.GetTargetCurrencyId()]);		
 		symbols = null; 
-		   
+		
         // Find timezone DST data and save it in object store
     	//
-		var tzData = Ui.loadResource(Rez.JsonData.tzData);
-        for (var i=0; i < tzData.size(); i++ )
-        {
-        	if (tzData[i]["Id"] == Setting.GetEtzId())
-        	{
-        		Setting.SetExtraTimeZone(tzData[i]);
-        		break;
-        	}
-        }
-		tzData = null;
+		var tzData = null; 
+		
+		if (Setting.GetEtzId() == 1) {tzData = Ui.loadResource(Rez.JsonData.tzData1);}
+		else if (Setting.GetEtzId() == 2) {tzData = Ui.loadResource(Rez.JsonData.tzData2);}
+		else if (Setting.GetEtzId() == 3) {tzData = Ui.loadResource(Rez.JsonData.tzData3);}
+		else if (Setting.GetEtzId() == 4) {tzData = Ui.loadResource(Rez.JsonData.tzData4);}
+		else if (Setting.GetEtzId() == 5) {tzData = Ui.loadResource(Rez.JsonData.tzData5);}
+		else if (Setting.GetEtzId() == 6) {tzData = Ui.loadResource(Rez.JsonData.tzData6);}
+		else if (Setting.GetEtzId() == 7) {tzData = Ui.loadResource(Rez.JsonData.tzData7);}
+		else if (Setting.GetEtzId() == 8) {tzData = Ui.loadResource(Rez.JsonData.tzData8);}
+		else if (Setting.GetEtzId() == 9) {tzData = Ui.loadResource(Rez.JsonData.tzData9);}
+		else if (Setting.GetEtzId() == 10) {tzData = Ui.loadResource(Rez.JsonData.tzData10);}
+		else if (Setting.GetEtzId() == 11) {tzData = Ui.loadResource(Rez.JsonData.tzData11);}
+		else if (Setting.GetEtzId() == 12) {tzData = Ui.loadResource(Rez.JsonData.tzData12);}
+		else if (Setting.GetEtzId() == 13) {tzData = Ui.loadResource(Rez.JsonData.tzData13);}
+		else if (Setting.GetEtzId() == 14) {tzData = Ui.loadResource(Rez.JsonData.tzData14);}
+		else if (Setting.GetEtzId() == 15) {tzData = Ui.loadResource(Rez.JsonData.tzData15);}
+		else if (Setting.GetEtzId() == 16) {tzData = Ui.loadResource(Rez.JsonData.tzData16);}
+		else if (Setting.GetEtzId() == 17) {tzData = Ui.loadResource(Rez.JsonData.tzData17);}
+		else if (Setting.GetEtzId() == 18) {tzData = Ui.loadResource(Rez.JsonData.tzData18);}
+		else if (Setting.GetEtzId() == 19) {tzData = Ui.loadResource(Rez.JsonData.tzData19);}
+		else if (Setting.GetEtzId() == 20) {tzData = Ui.loadResource(Rez.JsonData.tzData20);}
+		else if (Setting.GetEtzId() == 21) {tzData = Ui.loadResource(Rez.JsonData.tzData21);}
+		else if (Setting.GetEtzId() == 22) {tzData = Ui.loadResource(Rez.JsonData.tzData22);}
+		else if (Setting.GetEtzId() == 23) {tzData = Ui.loadResource(Rez.JsonData.tzData23);}
+		else if (Setting.GetEtzId() == 24) {tzData = Ui.loadResource(Rez.JsonData.tzData24);}
+		else if (Setting.GetEtzId() == 25) {tzData = Ui.loadResource(Rez.JsonData.tzData25);}
+		else if (Setting.GetEtzId() == 26) {tzData = Ui.loadResource(Rez.JsonData.tzData26);}
+		else if (Setting.GetEtzId() == 27) {tzData = Ui.loadResource(Rez.JsonData.tzData27);}
+		else if (Setting.GetEtzId() == 28) {tzData = Ui.loadResource(Rez.JsonData.tzData28);}
+		else if (Setting.GetEtzId() == 29) {tzData = Ui.loadResource(Rez.JsonData.tzData29);}
+		else if (Setting.GetEtzId() == 30) {tzData = Ui.loadResource(Rez.JsonData.tzData30);}
+		else if (Setting.GetEtzId() == 31) {tzData = Ui.loadResource(Rez.JsonData.tzData31);}
+		else if (Setting.GetEtzId() == 32) {tzData = Ui.loadResource(Rez.JsonData.tzData32);}
+		else if (Setting.GetEtzId() == 33) {tzData = Ui.loadResource(Rez.JsonData.tzData33);}
+		else if (Setting.GetEtzId() == 34) {tzData = Ui.loadResource(Rez.JsonData.tzData34);}
+		else if (Setting.GetEtzId() == 35) {tzData = Ui.loadResource(Rez.JsonData.tzData35);}
+		else if (Setting.GetEtzId() == 36) {tzData = Ui.loadResource(Rez.JsonData.tzData36);}
+		else if (Setting.GetEtzId() == 37) {tzData = Ui.loadResource(Rez.JsonData.tzData37);}
+		else if (Setting.GetEtzId() == 38) {tzData = Ui.loadResource(Rez.JsonData.tzData38);}
+		else if (Setting.GetEtzId() == 39) {tzData = Ui.loadResource(Rez.JsonData.tzData39);}
+		else if (Setting.GetEtzId() == 40) {tzData = Ui.loadResource(Rez.JsonData.tzData40);}
+		
+		Setting.SetExtraTimeZone(tzData);
     
     	// Set base configuraton for displayed fiels
  	    //

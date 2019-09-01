@@ -29,7 +29,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 							:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
 	hidden var _ecHour = null;
 	hidden var _eventTime = null;
-	hidden var _iconFont = Ui.loadResource(Rez.Fonts.icon_font);
+	hidden var _iconFont;
 	
 	
 	
@@ -59,6 +59,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
 		setLayout(_layout);
 		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
+		_iconFont = Ui.loadResource(Rez.Fonts.icon_font);
+		
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -269,19 +271,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     function DisplaySunEvent(dc, fieldId)
     {
-    
-		//var lon = -122.0363496;
-        //var lat = 37.36883;
-        
-        //var lon = 37.58;
-        //var lat = 55.7558;
-        
-        //var lon = 151.22;
-        //var lat = -33.87;
-        
-        //var lat = 14.687;
-        //var lon = -17.45;
-        
         var eventTime = null;
         var location = Setting.GetLastKnownLocation();
         var time = Sys.getClockTime();
@@ -314,7 +303,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		    			ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
 		    		}
 		    	}
-		    	eventTime = ne;
+		    	eventTime = ne; 
 		    	_ecHour = time.hour;
 		    	_eventTime = eventTime;
 		    }
@@ -593,12 +582,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	}    	
     	
         View.findDrawableById(fieldIcons[Setting.GetAlarmAlign()]).setText("d");
-    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(alarmCount.format("%d"));       
+    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(alarmCount.format("%d"));            
     }
     
     function DisplayBottomMessageCount()
     {
-    	var fieldIcons = ["Message_icon_time", "Message_icon_center_time"];
+	   	var fieldIcons = ["Message_icon_time", "Message_icon_center_time"];
     	var fieldCounts = ["Message_count_dim", "Message_count_center_dim"];
     	
     	for (var i=0; i<2; i++)
@@ -615,6 +604,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	}
     
         View.findDrawableById(fieldIcons[Setting.GetAlarmAlign()]).setText("e");
-    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(messageCount.format("%d"));       
+    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(messageCount.format("%d"));            
     }   
 }
