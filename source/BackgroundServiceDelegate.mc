@@ -68,6 +68,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 					_location[0] == _weatherInfo.Location[0] && 
 					_location[1] == _weatherInfo.Location[1])
 				{
+					//Sys.println("location has not changed");
 					return;
 				}
 				RequestLocation(_location);
@@ -139,7 +140,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
         };
 
 		_syncCounter = _syncCounter + 1;
-    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveLocation));	
+    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveLocation));
 	}
 	
 	function OnReceiveLocation(responseCode, data)

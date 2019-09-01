@@ -96,47 +96,15 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	//
 		var tzData = null; 
 		
-		if (Setting.GetEtzId() == 1) {tzData = Ui.loadResource(Rez.JsonData.tzData1);}
-		else if (Setting.GetEtzId() == 2) {tzData = Ui.loadResource(Rez.JsonData.tzData2);}
-		else if (Setting.GetEtzId() == 3) {tzData = Ui.loadResource(Rez.JsonData.tzData3);}
-		else if (Setting.GetEtzId() == 4) {tzData = Ui.loadResource(Rez.JsonData.tzData4);}
-		else if (Setting.GetEtzId() == 5) {tzData = Ui.loadResource(Rez.JsonData.tzData5);}
-		else if (Setting.GetEtzId() == 6) {tzData = Ui.loadResource(Rez.JsonData.tzData6);}
-		else if (Setting.GetEtzId() == 7) {tzData = Ui.loadResource(Rez.JsonData.tzData7);}
-		else if (Setting.GetEtzId() == 8) {tzData = Ui.loadResource(Rez.JsonData.tzData8);}
-		else if (Setting.GetEtzId() == 9) {tzData = Ui.loadResource(Rez.JsonData.tzData9);}
-		else if (Setting.GetEtzId() == 10) {tzData = Ui.loadResource(Rez.JsonData.tzData10);}
-		else if (Setting.GetEtzId() == 11) {tzData = Ui.loadResource(Rez.JsonData.tzData11);}
-		else if (Setting.GetEtzId() == 12) {tzData = Ui.loadResource(Rez.JsonData.tzData12);}
-		else if (Setting.GetEtzId() == 13) {tzData = Ui.loadResource(Rez.JsonData.tzData13);}
-		else if (Setting.GetEtzId() == 14) {tzData = Ui.loadResource(Rez.JsonData.tzData14);}
-		else if (Setting.GetEtzId() == 15) {tzData = Ui.loadResource(Rez.JsonData.tzData15);}
-		else if (Setting.GetEtzId() == 16) {tzData = Ui.loadResource(Rez.JsonData.tzData16);}
-		else if (Setting.GetEtzId() == 17) {tzData = Ui.loadResource(Rez.JsonData.tzData17);}
-		else if (Setting.GetEtzId() == 18) {tzData = Ui.loadResource(Rez.JsonData.tzData18);}
-		else if (Setting.GetEtzId() == 19) {tzData = Ui.loadResource(Rez.JsonData.tzData19);}
-		else if (Setting.GetEtzId() == 20) {tzData = Ui.loadResource(Rez.JsonData.tzData20);}
-		else if (Setting.GetEtzId() == 21) {tzData = Ui.loadResource(Rez.JsonData.tzData21);}
-		else if (Setting.GetEtzId() == 22) {tzData = Ui.loadResource(Rez.JsonData.tzData22);}
-		else if (Setting.GetEtzId() == 23) {tzData = Ui.loadResource(Rez.JsonData.tzData23);}
-		else if (Setting.GetEtzId() == 24) {tzData = Ui.loadResource(Rez.JsonData.tzData24);}
-		else if (Setting.GetEtzId() == 25) {tzData = Ui.loadResource(Rez.JsonData.tzData25);}
-		else if (Setting.GetEtzId() == 26) {tzData = Ui.loadResource(Rez.JsonData.tzData26);}
-		else if (Setting.GetEtzId() == 27) {tzData = Ui.loadResource(Rez.JsonData.tzData27);}
-		else if (Setting.GetEtzId() == 28) {tzData = Ui.loadResource(Rez.JsonData.tzData28);}
-		else if (Setting.GetEtzId() == 29) {tzData = Ui.loadResource(Rez.JsonData.tzData29);}
-		else if (Setting.GetEtzId() == 30) {tzData = Ui.loadResource(Rez.JsonData.tzData30);}
-		else if (Setting.GetEtzId() == 31) {tzData = Ui.loadResource(Rez.JsonData.tzData31);}
-		else if (Setting.GetEtzId() == 32) {tzData = Ui.loadResource(Rez.JsonData.tzData32);}
-		else if (Setting.GetEtzId() == 33) {tzData = Ui.loadResource(Rez.JsonData.tzData33);}
-		else if (Setting.GetEtzId() == 34) {tzData = Ui.loadResource(Rez.JsonData.tzData34);}
-		else if (Setting.GetEtzId() == 35) {tzData = Ui.loadResource(Rez.JsonData.tzData35);}
-		else if (Setting.GetEtzId() == 36) {tzData = Ui.loadResource(Rez.JsonData.tzData36);}
-		else if (Setting.GetEtzId() == 37) {tzData = Ui.loadResource(Rez.JsonData.tzData37);}
-		else if (Setting.GetEtzId() == 38) {tzData = Ui.loadResource(Rez.JsonData.tzData38);}
-		else if (Setting.GetEtzId() == 39) {tzData = Ui.loadResource(Rez.JsonData.tzData39);}
-		else if (Setting.GetEtzId() == 40) {tzData = Ui.loadResource(Rez.JsonData.tzData40);}
-		
+		var tzIds = [Rez.JsonData.tzData1, Rez.JsonData.tzData2, Rez.JsonData.tzData3, Rez.JsonData.tzData4, Rez.JsonData.tzData5, Rez.JsonData.tzData6,
+			Rez.JsonData.tzData7, Rez.JsonData.tzData8, Rez.JsonData.tzData9, Rez.JsonData.tzData10, Rez.JsonData.tzData11, Rez.JsonData.tzData12,
+			Rez.JsonData.tzData13, Rez.JsonData.tzData14, Rez.JsonData.tzData15, Rez.JsonData.tzData16, Rez.JsonData.tzData17, Rez.JsonData.tzData18,
+			Rez.JsonData.tzData19, Rez.JsonData.tzData20, Rez.JsonData.tzData21, Rez.JsonData.tzData22, Rez.JsonData.tzData23, Rez.JsonData.tzData24, 
+			Rez.JsonData.tzData25, Rez.JsonData.tzData26, Rez.JsonData.tzData27, Rez.JsonData.tzData28, Rez.JsonData.tzData29, Rez.JsonData.tzData30,
+			Rez.JsonData.tzData31, Rez.JsonData.tzData32, Rez.JsonData.tzData33, Rez.JsonData.tzData34, Rez.JsonData.tzData35, Rez.JsonData.tzData36,
+			Rez.JsonData.tzData37, Rez.JsonData.tzData38, Rez.JsonData.tzData39, Rez.JsonData.tzData40];
+		tzData = Ui.loadResource(tzIds[Setting.GetEtzId() - 1]);
+
 		Setting.SetExtraTimeZone(tzData);
     
     	// Set base configuraton for displayed fiels

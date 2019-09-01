@@ -518,7 +518,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			}
 			
 			View.findDrawableById(cityLabel).setText(city);
-			city = null;
 		}
 		else
 		{
