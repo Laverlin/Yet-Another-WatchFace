@@ -62,7 +62,7 @@ class WatchData
     //
     static function GetNextSunEvent(DOY, lat, lon, tzOffset, dst, isRise)
     {
-        var ZENITH = 90.833;
+        var ZENITH = 90.51;
 
 		var lonHour = lon / 15;
 		var t = isRise 

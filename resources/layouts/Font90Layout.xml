@@ -1,4 +1,6 @@
 <layout id="Font90Layout">
+    
+    <!--  
     <drawable class="Background" />
     
     <drawable id = "divider_time" class="LineDrawable" >
@@ -7,6 +9,8 @@
     	<param name="x2">120</param> 
     	<param name="y2">186</param>
     </drawable>
+    
+    -->
      
     <label id="Hour_time" x="90" y="33" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
     <label id="Minute_time" x="90" y="120" font="Gfx.FONT_NUMBER_HOT" justification="Gfx.TEXT_JUSTIFY_RIGHT"  />

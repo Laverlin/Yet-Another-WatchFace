@@ -31,8 +31,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		baseInitApp();
 	
     	InitBackgroundEvents();
+
+    	_watchFaceView.DropLayouts();
     	
-    	_watchFaceView.SetColors();
         Ui.requestUpdate();
     }
     
