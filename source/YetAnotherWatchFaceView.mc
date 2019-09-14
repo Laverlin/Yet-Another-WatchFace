@@ -24,18 +24,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 	hidden var _heartRate = 0;
 	hidden var _heartRateText = "-- ";
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
-							:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
-							:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
+	hidden var _methods = [
+		:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
+		:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
+		:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
 	hidden var _ecHour = null;
 	hidden var _eventTime = null;
 	
 	hidden var _layouts = {};
-	hidden var _fonts = 
-		[Ui.loadResource(Rez.Fonts.msss16_font), Ui.loadResource(Rez.Fonts.icon_font), Ui.loadResource(Rez.Fonts.vertical_font)];
+	hidden var _fonts = [
+		Ui.loadResource(Rez.Fonts.msss16_font), Ui.loadResource(Rez.Fonts.icon_font), Ui.loadResource(Rez.Fonts.vertical_font)];
 	hidden var _colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), Gfx.COLOR_RED];
 	hidden var _funcs = [
-		:DisplayLocation, :DisplayBottomMessageCount, :DisplayBottomAlarmCount, 
+		:DisplayLocation, :DisplayBottomAlarmCount, :DisplayBottomMessageCount, 
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
 		:DisplayTemp, :DisplayWind, :DisplayConnection, 
 		:LoadField3, :LoadField4, :LoadField5, 
@@ -74,7 +75,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         }
 		setLayout(_layout);
 */
-		DropLayouts();
+		InvalidateLayout();
 
     }
     
@@ -112,7 +113,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc) 
     {
-   	
    		_gTimeNow = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
@@ -127,9 +127,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	
 		for (var i = 0; i < _layouts.size(); i++)
 		{
-			var funcs = (_layouts.values()[i]["fun"] instanceof Toybox.Lang.Array) 
-				? _layouts.values()[i]["fun"]
-				: (new Lang.Method(self, _funcs[_layouts.values()[i]["fun"]]).invoke());
+			var funcs = (new Lang.Method(self, _funcs[_layouts.values()[i]["fun"]]).invoke());
 				
 			var x = null;
 			var f = null;	
@@ -171,10 +169,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				f = _layouts.values()[i]["f"][j] < 100 
 	        			? _layouts.values()[i]["f"][j] 
 	        			: _fonts[_layouts.values()[i]["f"][j] - 100];
+
 				text = (_layouts.values()[i]["t"][j] == null)
-					? (funcs[j] instanceof Toybox.Lang.Number)
-						? new Lang.Method(self, _funcs[funcs[j]]).invoke()
-	        			: funcs[j] 
+					? funcs[j] 
 	        		: _layouts.values()[i]["t"][j];
 	        			
 				dc.drawText(x, _layouts.values()[i]["y"][j], f, text, a);
@@ -191,10 +188,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		}
     }
     
-    function DropLayouts()
+    function InvalidateLayout()
     {
-    	Sys.println("Invalidate layout");
-    	
     	_layouts = {};
     	_layouts.put("city", Ui.loadResource(Setting.GetCityAlign() == 0 ? Rez.JsonData.l_city_left : Rez.JsonData.l_city_center));   	
     	_layouts.put("date", Ui.loadResource(Rez.JsonData.l_date));
@@ -249,7 +244,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     }
     
     ///
-    /// return [day, month, DOW]
+    /// returns [day, month, DOW]
     ///
     function DisplayDate()
     {
@@ -257,7 +252,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     }
 
     ///
-    /// return [Hour, Min]
+    /// returns [Hour, Min]
     ///
     function DisplayTime()
     {
@@ -267,21 +262,33 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         		_gTimeNow.min.format("%02d")];
     }  
        
+    ///
+    /// returns [pm|am]
+    ///   
     function DisplayPmAm()
     {
-    	return _gTimeNow.hour > 11 ? "pm" : "am";
+    	return [_gTimeNow.hour > 11 ? "pm" : "am"];
     }
     
+    ///
+    /// returns [seconds]
+    ///
     function DisplaySeconds()
     {
-    	return Sys.getClockTime().sec.format("%02d");
+    	return [Sys.getClockTime().sec.format("%02d")];
     }
-    
+ 
+    ///
+    /// returns [connection status]
+    ///   
     function DisplayConnection()
     {
-    	return Sys.getDeviceSettings().phoneConnected ? "a" : "b";
+    	return [Sys.getDeviceSettings().phoneConnected ? "a" : "b"];
     }
     
+    ///
+    /// returns temperature and perception probability
+    ///
     function DisplayTemp()
     {
     	var weatherInfo = (Setting.GetWeatherInfo() != null) 
@@ -514,11 +521,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
 			}
 			
-			return city;
+			return [city];
 		}
 		else
 		{
-			return "";
+			return [""];
 		}
     }
     
@@ -545,10 +552,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	var alarmCount = Sys.getDeviceSettings().alarmCount;
     	if (Setting.GetShowAlarm() == 1 and alarmCount == 0)
     	{
-			return "";
+			return ["", ""];
     	} 
     	
-		return alarmCount.format("%d");
+		return ["d", alarmCount.format("%d")];
     }
     
     ///
@@ -559,8 +566,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	var msgCount = Sys.getDeviceSettings().notificationCount;
     	if  (Setting.GetShowMessage() == 1 and msgCount == 0)
     	{
-			return "";
+			return ["", ""];
     	} 
-		return msgCount.format("%d");     
+		return ["e", msgCount.format("%d")];     
     }   
 }

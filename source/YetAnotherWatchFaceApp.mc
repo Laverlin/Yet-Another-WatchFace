@@ -32,7 +32,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 	
     	InitBackgroundEvents();
 
-    	_watchFaceView.DropLayouts();
+    	_watchFaceView.InvalidateLayout();
     	
         Ui.requestUpdate();
     }
