@@ -31,6 +31,7 @@
             <listEntry value="0xFFD3D9">@Strings.ColorPink</listEntry>
             <listEntry value="0x00F6FF">@Strings.ColorAqua</listEntry>
             <listEntry value="0xFFFF00">@Strings.ColorYellow</listEntry>
+            <listEntry value="0xFF422D">@Strings.ColorYellowRed</listEntry>
         </settingConfig>
     </setting>
     

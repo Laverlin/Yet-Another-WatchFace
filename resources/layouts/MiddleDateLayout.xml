@@ -1,7 +1,0 @@
-<layout id="MiddleDateLayout">
-
-  
-    
-    <label id="debug_version" x = "120" y = "220" font = "@Fonts.msss16_font" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_LT_GRAY"/>
-          
- </layout>

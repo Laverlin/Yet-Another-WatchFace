@@ -2,10 +2,8 @@ using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
 using Toybox.Lang as Lang;
-using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Gregorian;
-using Toybox.ActivityMonitor as ActivityMonitor;
-using Toybox.Activity as Activity;
+
 
 // Main WatchFaace view
 // ToDo:: 
@@ -20,32 +18,20 @@ using Toybox.Activity as Activity;
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
-	hidden var _layout;
-	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
-	hidden var _heartRate = 0;
-	hidden var _heartRateText = "-- ";
-	hidden var _methods = [
-		:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
-		:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
-		:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
-	hidden var _ecHour = null;
-	hidden var _eventTime = null;
-	
 	hidden var _layouts = {};
 	hidden var _fonts = [
 		Ui.loadResource(Rez.Fonts.msss16_font), Ui.loadResource(Rez.Fonts.icon_font), Ui.loadResource(Rez.Fonts.vertical_font)];
-	hidden var _colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), Gfx.COLOR_RED];
 	hidden var _funcs = [
 		:DisplayLocation, :DisplayBottomAlarmCount, :DisplayBottomMessageCount, 
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
 		:DisplayTemp, :DisplayWind, :DisplayConnection, 
 		:LoadField3, :LoadField4, :LoadField5, 
 		:DisplayWatchStatus];
-	
-	hidden var _gTimeNow;
+
 	hidden var _secDim;
 	hidden var _is90 = false;
-	
+	hidden var _displayFunctions = new DisplayFunctions();
+	hidden var _colors;
 	
     function initialize() 
     {
@@ -87,7 +73,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		if (Setting.GetPulseField() != 0)
 		{
 			var layout = _layouts["field" + Setting.GetPulseField()];
-			var pulseData = DisplayPulse(layout);
+			var pulseData = _displayFunctions.DisplayPulse(layout);
 			
 			if (pulseData[2])
 			{
@@ -102,7 +88,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc) 
     {
-   		_gTimeNow = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+   		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
@@ -116,11 +102,12 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	
 		for (var i = 0; i < _layouts.size(); i++)
 		{
-			var funcs = (new Lang.Method(self, _funcs[_layouts.values()[i]["fun"]]).invoke());
+			var funcs = (new Lang.Method(_displayFunctions, _funcs[_layouts.values()[i]["fun"]]).invoke(_layouts.values()[i]));
 				
 			var x = null;
 			var f = null;	
 			var text = null;
+			
 			for(var j = 0; j < _layouts.values()[i]["x"].size(); j++)
 			{
 				dc.setColor(_colors[_layouts.values()[i]["c"][j]], 
@@ -178,6 +165,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     function InvalidateLayout()
     {
+    	_colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), 0xFF422D];
+    	
     	_layouts = {};
     	_layouts.put("city", Ui.loadResource(Setting.GetCityAlign() == 0 ? Rez.JsonData.l_city_left : Rez.JsonData.l_city_center));   	
     	
@@ -216,347 +205,4 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
      }
-    
-    function LoadField3()
-    {
-       	return new Lang.Method(self, _methods[Setting.GetField(3)]).invoke(_layouts["field3"]);
-    }
-    
-   	function LoadField4()
-    {
-       	return new Lang.Method(self, _methods[Setting.GetField(4)]).invoke(_layouts["field4"]);
-    }
-    
-    function LoadField5()
-    {
-       	return new Lang.Method(self, _methods[Setting.GetField(5)]).invoke(_layouts["field5"]);
-    }
-    
-    ///
-    /// returns [day, month, DOW]
-    ///
-    function DisplayDate()
-    {
-    	return [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()] ;
-    }
-
-    ///
-    /// returns [Hour, Min]
-    ///
-    function DisplayTime()
-    {
-    	return [Sys.getDeviceSettings().is24Hour 
-        			? _gTimeNow.hour.format("%02d") 
-        			: (_gTimeNow.hour % 12 == 0 ? 12 : _gTimeNow.hour % 12).format("%02d"),
-        		_gTimeNow.min.format("%02d")];
-    }  
-       
-    ///
-    /// returns [pm|am]
-    ///   
-    function DisplayPmAm()
-    {
-    	return [_gTimeNow.hour > 11 ? "pm" : "am"];
-    }
-    
-    ///
-    /// returns [seconds]
-    ///
-    function DisplaySeconds()
-    {
-    	return [Sys.getClockTime().sec.format("%02d")];
-    }
- 
-    ///
-    /// returns [connection status]
-    ///   
-    function DisplayConnection()
-    {
-    	return [Sys.getDeviceSettings().phoneConnected ? "a" : "b"];
-    }
-    
-    ///
-    /// returns temperature and perception probability
-    ///
-    function DisplayTemp()
-    {
-    	var weatherInfo = (Setting.GetWeatherInfo() != null) 
-    		? WeatherInfo.FromDictionary(Setting.GetWeatherInfo())
-    		: null;
-
-    	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 ) // no weather
-        {
-			var temp =  Setting.GetLastKnownLocation() == null 
-						? "no GPS" 
-						: (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey().length() == 0)
-							? "no key" 
-							: "loading...";
-			return [temp, "", "", ""];
-        }
-        else
-        {
-        	var temp = (Setting.GetTempSystem() == 1 ? weatherInfo.Temperature : weatherInfo.Temperature * 1.8 + 32)
-				.format(weatherInfo.PerceptionProbability > 99 ? "%d" : "%2.1f");
-			var perception = weatherInfo.PerceptionProbability.format("%2d");
-			
-			return [temp, Setting.GetTempSystem() == 1 ? "c" : "f", weatherInfo.PerceptionProbability.format("%2d"), "%"];
-        }
-    }
-    
-    function DisplayWind()
-    {
-    	var weatherInfo = (Setting.GetWeatherInfo() != null) 
-    		? WeatherInfo.FromDictionary(Setting.GetWeatherInfo())
-    		: null;
-
-    	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 ) // no weather
-        {
-        	return ["", "", ""];
-        }
-        else
-        {
-        	var windMultiplier = [3.6, 1.94384, 1];
-        	var windSystemLabel = ["k/h", "kn", "m/s"];
-        	
-        	return [(weatherInfo.WindSpeed * windMultiplier[Setting.GetWindSystem()]).format("%2.1f"),
-        		windSystemLabel[Setting.GetWindSystem()],
-        		(_conditionIcons[weatherInfo.Condition] == null) 
-        			? ""
-        			: _conditionIcons[weatherInfo.Condition]];
-        }
-    }
-    
-   	///
-   	/// Return extra time-zone info
-   	///
-    function DisplayExtraTz(layout)
-    {
-    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
-    	return [tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"), tzInfo[1]];
-    }
-    
-    function DisplaySunEvent(layout)
-    {
-        var eventTime = null;
-        var location = Setting.GetLastKnownLocation();
-        var time = Sys.getClockTime();
-        
-        if (_ecHour == time.hour && 
-        	_eventTime != null &&
-        	time.hour <= _eventTime[0] && time.min < _eventTime[1]) 
-        {
-        	eventTime = _eventTime;
-        }
-		else
-		{
-	 		if (location != null && location.size() == 2)
-		    {
-		        var DOY = WatchData.GetDOY(Time.now());
-		        
-		        // get sunrise
-		        //
-		    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
-		    	if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
-		    	{
-		    		// if missed sunrise, get sunset
-		    		//
-		    		ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, false);
-		    		if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
-		    		{
-		    			// if missed sunset, get sunrise next day
-		    			//
-		    			DOY = WatchData.GetDOY(Time.now().add(new Toybox.Time.Duration(86400)));
-		    			ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
-		    		}
-		    	}
-		    	eventTime = ne; 
-		    	_ecHour = time.hour;
-		    	_eventTime = eventTime;
-		    }
-	    }
-	    
-	    if (eventTime == null)
-	    {
-	    	return ["no gps", ""];
-	    }
-	    else
-	    {
-	    	layout["f"][1] = 101;
-	    	return [eventTime[0].format("%02d") + ":" + eventTime[1].format("%02d"), eventTime[2] ? "r" : "s"];
-	    }
-    }
-    
-    // Display exchange rate
-    //
-    function DisplayExchangeRate(layout)
-    {
-    		var currencyValue = Setting.GetExchangeRate(); 
-			if (currencyValue == null || currencyValue == 0)
-			{
-				return ["loading...", ""];
-			}		
-			else 
-			{
-				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";
-				format = (currencyValue < 0.01) ? "%.4f" : format;
-				format = (currencyValue < 0.001) ? "%.5f" : format;
-				format = (currencyValue < 0.0001) ? "%.6f" : format;
-
-				return [currencyValue.format(format), Setting.GetTargetCurrency().toLower()];					
-			}
-    }  
-
-    // Display activity (distance)
-    //
-    function DisplayDistance(layout)
-    {  	
-        var info = ActivityMonitor.getInfo();
-    	var distanceValues = 
-			[(info.distance.toFloat()/100000).format("%2.1f"), 
-			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
-			 info.steps.format("%d")];
-		var distanceTitles = ["km", "mi", "st."];
-		
-		return [distanceValues[Setting.GetDistSystem()], distanceTitles[Setting.GetDistSystem()]];
-    }
-    
-    // Display the number of floors climbed for the current day.
-    //
-    function DisplayFloors(layout)
-    {
-    	var floors = ActivityMonitor.getInfo().floorsClimbed;
-    	return [floors.format("%d"), "fl."];
-    }
-    
-    function DisplayStepsNFloors(layout)
-    {
-    	var floors = ActivityMonitor.getInfo().floorsClimbed;
-    	var steps = ActivityMonitor.getInfo().steps;
-    	return [steps.format("%d") + "/" + floors.format("%d"), ""];
-    }
-   
-     // display current pulse
-    //
-    function DisplayPulse(layout)
-    {       
-    	var isUpdate = false;
-		var chr = Activity.getActivityInfo().currentHeartRate;
-		if (chr != null && _heartRate != chr)
-		{
-			_heartRate = chr;
-			_heartRateText = (chr < 100) ? chr.toString() + "  " : chr.toString();
-			isUpdate = true;
-		}
-
-		return [_heartRateText, "bpm", isUpdate];
-    }
-
-	
-	function DisplayMsgCount(layout)
-	{
-		return [Sys.getDeviceSettings().notificationCount.format("%d"), "msg"]; 
-	}
-	
-	function DisplayAlarmCount(layout)
-	{
-		return [Sys.getDeviceSettings().alarmCount.format("%d"), "alm"];
-	}
-	
-	
-	function DisplayAltitude(layout)
-	{
-		var altitude = Activity.getActivityInfo().altitude;
-		if (altitude != null)
-		{
-			altitude = altitude * (Setting.GetAltimeterSystem() == 0 ? 1 : 3.28084);
-		}
-		
-		return [(altitude != null) ? altitude.format("%d") : "---", (Setting.GetAltimeterSystem() == 0) ? "m" : "ft"];
-	}
-	
-	// Display the number of floors climbed for the current day.
-    //
-    function DisplayCalories(layout)
-    {
-    	return [ActivityMonitor.getInfo().calories.format("%d"), "kCal"];
-    }
-
-    // Display current city name based on known GPS location 
-    //
-    function DisplayLocation()
-    {
-    
-    	var weatherInfo = null;
-        if (Setting.GetWeatherInfo() != null)
-        {
-        	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
-        }
-        
-    	if (weatherInfo != null && weatherInfo.City != null 
-			&& weatherInfo.CityStatus == 1)
-		{
-			//var aligns = [Rez.JsonData.l_city_left, Rez.JsonData.l_city_center];
-		
-			// short <city, country> length if it's too long.
-			// first cut country, if it's still not fit - cut and add dots.
-			//
-			var city = weatherInfo.City;
-			if (city.length() > 23)
-			{
-				var dindex = city.find(",");
-				city = (dindex == 0) 
-					? city
-					: city.substring(0, dindex);
-				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
-			}
-			
-			return [city];
-		}
-		else
-		{
-			return [""];
-		}
-    }
-    
-    // Display battery and connection status
-    //
-    function DisplayWatchStatus()
-    {
-		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
-		
-		// set red color if battery level too low
-		// 
-		_layouts["battery"]["c"] = batteryLevel <= 20
-			? [3, 3, 3, 3]
-			: [2, 2, 2, 2];
-	
-		return (batteryLevel.format("%d") + "%").toCharArray().reverse().add("").add("");
-    }
-    
-    ///
-    /// Display alam count under main data
-    ///
-    function DisplayBottomAlarmCount()
-    {
-    	var alarmCount = Sys.getDeviceSettings().alarmCount;
-    	if (Setting.GetShowAlarm() == 1 and alarmCount == 0)
-    	{
-			return ["", ""];
-    	} 
-    	
-		return ["d", alarmCount.format("%d")];
-    }
-    
-    ///
-    /// Display notification count under main data
-    ///
-    function DisplayBottomMessageCount()
-    {
-    	var msgCount = Sys.getDeviceSettings().notificationCount;
-    	if  (Setting.GetShowMessage() == 1 and msgCount == 0)
-    	{
-			return ["", ""];
-    	} 
-		return ["e", msgCount.format("%d")];     
-    }   
 }
