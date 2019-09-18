@@ -10,9 +10,10 @@ using Toybox.Application as App;
 (:background)
 class BackgroundServiceDelegate extends Sys.ServiceDelegate 
 {
-	hidden var _weatherInfo;
 	hidden var _syncCounter = 0;
 	hidden var _location;
+	hidden var _city;
+	hidden var _received = {}; 
 	 
 	function initialize() 
 	{
@@ -23,19 +24,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     {
     	try
     	{
-	    	// init WeatherInfo object which will stor and pass data to the main app
-	    	//
-	    	var weatherData = Setting.GetWeatherInfo();
-	    	if (weatherData != null)
-	    	{
-	    		_weatherInfo = WeatherInfo.FromDictionary(weatherData);
-	    		_weatherInfo.ExchangeRate = Setting.GetExchangeRate();
-	    	}
-	    	else
-	    	{
-	    		_weatherInfo = new WeatherInfo();
-	    	}
-	    	    
 	    	// Request Currency
 	    	//
 	    	if (Setting.GetIsShowExchangeRate())
@@ -64,9 +52,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				// avoid unnecessary web requests (location name does not change if location the same)
 				// 
-				if(_weatherInfo.Location != null &&
-					_location[0] == _weatherInfo.Location[0] && 
-					_location[1] == _weatherInfo.Location[1])
+				_city = Setting.GetCity();
+				if(_city != null && _city["lrloc"] != null &&
+					_location[0] == _city["lrloc"][0] && 
+					_location[1] == _city["lrloc"][1])
 				{
 					//Sys.println("location has not changed");
 					return;
@@ -105,11 +94,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			if (responseCode == 200)
 			{
-				_weatherInfo.Temperature = data["currently"]["temperature"].toFloat();
-				_weatherInfo.WindSpeed = data["currently"]["windSpeed"].toFloat();
-				_weatherInfo.PerceptionProbability = data["currently"]["precipProbability"].toFloat() * 100;
-				_weatherInfo.Condition = data["currently"]["icon"];
-				_weatherInfo.WeatherStatus = 1; //OK
+				_received.put("weather", {
+					"temp" => data["currently"]["temperature"].toFloat(),
+					"wndSpeed" => data["currently"]["windSpeed"].toFloat(),
+					"perception" => data["currently"]["precipProbability"].toFloat() * 100,
+					"condition" => data["currently"]["icon"]});
 			}
 		}
 		catch(ex)
@@ -120,7 +109,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		_syncCounter = _syncCounter - 1;
 		if (_syncCounter == 0)
 		{
-			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
+			Background.exit(_received);
 		}
 	}
 	
@@ -154,11 +143,9 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 					data["resourceSets"][0]["resources"] instanceof Toybox.Lang.Array &&
 					data["resourceSets"][0]["resources"].size() > 0)
 				{
-					var cityName = data["resourceSets"][0]["resources"][0]["name"];
-					_weatherInfo.City = cityName;
-					_weatherInfo.Location = _location;
-					_weatherInfo.CityStatus = 1; //OK
-					//Sys.println(cityName);
+					_received.put("city", { 
+						"City" => data["resourceSets"][0]["resources"][0]["name"],
+						"lrloc" => _location});
 				}
 			}
 		}
@@ -170,17 +157,20 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		_syncCounter = _syncCounter - 1;
 		if (_syncCounter == 0)
 		{
-			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
+			Background.exit(_received);
 		}
 	}
 	
 	function RequestExchangeRate()
 	{
-		var url = Lang.format("https://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y&apiKey=$3$", [
+		/*var url = Lang.format("https://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y&apiKey=$3$", [
 			Setting.GetBaseCurrency(), 
 			Setting.GetTargetCurrency(),
-			Setting.GetExchangeApiKey()]
-		);
+			Setting.GetExchangeApiKey()]);*/
+			
+		var url = Lang.format("https://api.exchangeratesapi.io/latest?base=$1$&symbols=$2$", [
+			Setting.GetBaseCurrency(), 
+			Setting.GetTargetCurrency()]);	
 		 
 		//Sys.println(" :: ex rate request: " + url);
 		
@@ -201,9 +191,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			if (responseCode == 200)
 			{
-				_weatherInfo.ExchangeRate = 
-					data[Lang.format("$1$_$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])]["val"]
-					.toFloat();
+				_received.put("exchange", {
+					"ExchangeRate" => data["rates"][Setting.GetTargetCurrency()].toFloat()});
 			}
 		}
 		catch(ex)
@@ -214,7 +203,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		_syncCounter = _syncCounter - 1;
 		if (_syncCounter == 0)
 		{
-			Background.exit(WeatherInfo.ToDictionary(_weatherInfo));
+			Background.exit(_received);
 		}
 	}
 }

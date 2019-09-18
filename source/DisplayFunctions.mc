@@ -90,11 +90,9 @@ class DisplayFunctions
     ///
     function DisplayTemp(layout)
     {
-    	var weatherInfo = (Setting.GetWeatherInfo() != null) 
-    		? WeatherInfo.FromDictionary(Setting.GetWeatherInfo())
-    		: null;
+    	var weather = Setting.GetWeather();
 
-    	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 ) // no weather
+    	if (weather == null) // no weather
         {
 			var temp =  Setting.GetLastKnownLocation() == null 
 						? "no GPS" 
@@ -105,21 +103,18 @@ class DisplayFunctions
         }
         else
         {
-        	var temp = (Setting.GetTempSystem() == 1 ? weatherInfo.Temperature : weatherInfo.Temperature * 1.8 + 32)
-				.format(weatherInfo.PerceptionProbability > 99 ? "%d" : "%2.1f");
-			var perception = weatherInfo.PerceptionProbability.format("%2d");
+        	var temp = (Setting.GetTempSystem() == 1 ? weather["temp"] : weather["temp"] * 1.8 + 32)
+				.format(weather["perception"] > 99 ? "%d" : "%2.1f");
 			
-			return [temp, Setting.GetTempSystem() == 1 ? "c" : "f", weatherInfo.PerceptionProbability.format("%2d"), "%"];
+			return [temp, Setting.GetTempSystem() == 1 ? "c" : "f", weather["perception"].format("%2d"), "%"];
         }
     }
     
     function DisplayWind(layout)
     {
-    	var weatherInfo = (Setting.GetWeatherInfo() != null) 
-    		? WeatherInfo.FromDictionary(Setting.GetWeatherInfo())
-    		: null;
+    	var weather = Setting.GetWeather(); 
 
-    	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 ) // no weather
+    	if (weather == null) // no weather
         {
         	return ["", "", ""];
         }
@@ -128,11 +123,11 @@ class DisplayFunctions
         	var windMultiplier = [3.6, 1.94384, 1];
         	var windSystemLabel = ["k/h", "kn", "m/s"];
         	
-        	return [(weatherInfo.WindSpeed * windMultiplier[Setting.GetWindSystem()]).format("%2.1f"),
+        	return [(weather["wndSpeed"] * windMultiplier[Setting.GetWindSystem()]).format("%2.1f"),
         		windSystemLabel[Setting.GetWindSystem()],
-        		(_conditionIcons[weatherInfo.Condition] == null) 
+        		(_conditionIcons[weather["condition"]] == null) 
         			? ""
-        			: _conditionIcons[weatherInfo.Condition]];
+        			: _conditionIcons[weather["condition"]]];
         }
     }
     
@@ -295,22 +290,14 @@ class DisplayFunctions
     //
     function DisplayLocation(layout)
     {
-    
-    	var weatherInfo = null;
-        if (Setting.GetWeatherInfo() != null)
-        {
-        	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
-        }
-        
-    	if (weatherInfo != null && weatherInfo.City != null 
-			&& weatherInfo.CityStatus == 1)
+    	var fcity = Setting.GetCity();
+    	
+    	if ( fcity != null)
 		{
-			//var aligns = [Rez.JsonData.l_city_left, Rez.JsonData.l_city_center];
-		
 			// short <city, country> length if it's too long.
 			// first cut country, if it's still not fit - cut and add dots.
 			//
-			var city = weatherInfo.City;
+			var city = fcity["City"];
 			if (city.length() > 23)
 			{
 				var dindex = city.find(",");
