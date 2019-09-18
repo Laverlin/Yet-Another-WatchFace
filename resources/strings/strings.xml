@@ -56,6 +56,7 @@
 	<string id="ColorPink">Pink</string>
 	<string id="ColorAqua">Aqua</string>
 	<string id="ColorYellow">Yellow</string>
+	<string id="ColorYellowRed">Yellow Red</string>
 	
 	<string id="isShowWeatherTitle">Show Weather (you must provide http://darksky.net API key)</string>
 	<string id="IsShowCityTitle">Show Current City</string>

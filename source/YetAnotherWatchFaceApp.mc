@@ -31,8 +31,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		baseInitApp();
 	
     	InitBackgroundEvents();
+
+    	_watchFaceView.InvalidateLayout();
     	
-    	_watchFaceView.SetColors();
         Ui.requestUpdate();
     }
     
@@ -41,8 +42,21 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	Background.registerForTemporalEvent(new Toybox.Time.Duration(60 * 60));
         if (data != null)
         {
-       		Setting.SetWeatherInfo(data);
-       		Setting.SetExchangeRate(data["ExchangeRate"]);
+        	if (data.hasKey("exchange"))
+        	{
+        		Setting.SetExchangeRate(data["exchange"]["ExchangeRate"]);
+        	}
+        	
+        	if (data.hasKey("city"))
+        	{
+        		Setting.SetCity(data["city"]);
+        	}
+        	
+        	if (data.hasKey("weather"))
+        	{
+        		Setting.SetWeather(data["weather"]);
+        	}
+
         }
 
         Ui.requestUpdate();
@@ -79,11 +93,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
 			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
 		{
-			var weatherInfo = Setting.GetWeatherInfo();
-        	if (weatherInfo != null)
-        	{
-        		Setting.SetExchangeRate(0);
-        	}			
+       		Setting.SetExchangeRate(0);
 		}
 		
 		// save new symbols in OS

@@ -19,8 +19,8 @@
     <property id="tempSystem" type="number">1</property>
     <property id="windSystem" type="number">1</property>
     <property id="distSystem" type="number">0</property>
-    <property id = "base-currency-id" type = "number">0</property>
-    <property id = "target-currency-id" type = "number">1</property>
+    <property id = "base-currency-id2" type = "number">0</property>
+    <property id = "target-currency-id2" type = "number">1</property>
     <property id = "altimeter-system" type = "number">0</property>
     <property id = "city-align" type = "number">0</property>
     <property id = "alarm-align" type = "number">0</property>

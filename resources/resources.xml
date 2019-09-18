@@ -61,11 +61,67 @@
 	<jsonData id="tzData40">{"Offsets":[-840],"Abbrs":["+14"],"Untils":[null]}</jsonData>
 	
 	<jsonData id="currencySymbols">
-		{"symbols":["EUR", "USD", "HUF", "AUD", "NZD", "OMR", "SEK", "AMD", "CNY",
-			"CZK", "INR", "KRW", "ANG", "QAR", "DKK", "IDR", "ILS", "PAB",
-    		"PHP", "SGD", "ZAR", "ARS", "BGN", "CAD", "CLP", "DOP",
-    		"JPY", "LVL", "CHF", "SCR", "THB", "TRY", "TWD", "AED", "BRL", "KHR",
-    		"HRK", "EGP", "HKD", "MXN", "NOK", "PLN", "RUB", "VND", "UAH",
-    		"GBP", "BTC", "BYN"]}
+		{"symbols":["EUR", "USD", "HUF", "AUD", "NZD", "SEK", "CNY",
+			"CZK", "INR", "KRW", "QAR", "IDR", "ILS", 
+    		"PHP", "SGD", "ZAR", "BGN", "CAD", 
+    		"JPY", "CHF", "THB", "TRY", "BRL", 
+    		"HRK", "HKD", "MXN", "NOK", "PLN", "RUB", 
+    		"GBP"]}
 	</jsonData>
+	
+	<!-- 
+		layout constants
+		color:	0 => time
+				1 => bright
+				2 => dim
+				
+		font:	0 => Gfx.FONT_NUMBER_XTINY
+				1 => Gfx.FONT_NUMBER_TINY
+				7 => Gfx.FONT_NUMBER_HOT
+				100 => msss16_font
+				101 => icon_font
+				102 => vertical_font
+				
+		align:	0 => Gfx.TEXT_JUSTIFY_RIGHT
+				1 => Gfx.TEXT_JUSTIFY_CENTER
+				2 => Gfx.TEXT_JUSTIFY_LEFT
+	 -->
+	<jsonData id="l_city_left">{"x":[35], "y":[31], "c":[2], "f":[100], "a":[2], "t":[null], "fun":0}</jsonData>
+	<jsonData id="l_city_center">{"x":[120], "y":[31], "c":[2], "f":[100], "a":[1], "t":[null], "fun":0}</jsonData>
+	
+	<jsonData id="l_alarm_right">{"x":[124, 143], "y":[195, 195], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":1}</jsonData>
+	<jsonData id="l_alarm_center">{"x":[91, 110], "y":[202, 202], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":1}</jsonData>
+	
+	<jsonData id="l_msg_right">{"x":[160, 178], "y":[195, 195], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":2}</jsonData>
+	<jsonData id="l_msg_center">{"x":[129, 147], "y":[202, 202], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":2}</jsonData>
+	
+	<jsonData id="l_date">{"x":[115, 88, 50], "y":[107, 105, 105], "c":[1, 2, 1], "f":[0, 1, 0], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -5, -7]}</jsonData>
+	<jsonData id="l_date_f90">{"x":[115, 88, 50], "y":[107, 105, 105], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -5, -7]}</jsonData>
+	
+	<jsonData id="l_time">{"x":[90, 90], "y":[53, 133], "c":[0, 0], "f":[7, 7], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
+	<jsonData id="l_time_f90">{"x":[90, 90], "y":[33, 120], "c":[0, 0], "f":[7, 7], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
+	
+	<jsonData id="l_pmam">{"x":[115], "y":[90], "c":[0], "f":[100], "a":[0], "t":[null], "fun":5}</jsonData>
+	<jsonData id="l_pmam_f90">{"x":[115], "y":[87], "c":[0], "f":[100], "a":[0], "t":[null], "fun":5}</jsonData>
+	
+	<jsonData id="l_sec">{"x":[115], "y":[164], "c":[0], "f":[1], "a":[0], "t":[null], "fun":6}</jsonData>
+
+	<jsonData id="l_temp">
+		{"x":[125, 165, 207, 221], "y":[48, 52, 48, 55], "c":[1, 2, 1, 2], "f":[1, 101, 1, 100], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 1, null, null]}
+	</jsonData>
+	<jsonData id="l_wind">
+		{"x":[125, 165, 190], "y":[72, 78, 74], "c":[1, 2, 0], "f":[1, 100, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 1, null]}
+	</jsonData>
+	
+	<jsonData id="l_bt">{"x":[120], "y":[137], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
+	
+	 
+	<jsonData id="l_field3">{"x":[125, 178], "y":[107, 113], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":10, "lcor" : 3}</jsonData>
+	<jsonData id="l_field4">{"x":[125, 178], "y":[140, 146], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3}</jsonData>
+	<jsonData id="l_field5">{"x":[125, 178], "y":[164, 170], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3}</jsonData>
+	 
+    <jsonData id="l_battery">{"x":[114, 114, 114, 114], "y":[53, 63, 72, 81], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
+
+    
+	
 </resources>

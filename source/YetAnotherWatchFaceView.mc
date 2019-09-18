@@ -2,10 +2,8 @@ using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
 using Toybox.Lang as Lang;
-using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Gregorian;
-using Toybox.ActivityMonitor as ActivityMonitor;
-using Toybox.Activity as Activity;
+
 
 // Main WatchFaace view
 // ToDo:: 
@@ -20,18 +18,20 @@ using Toybox.Activity as Activity;
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
-	hidden var _layout;
-	hidden var _conditionIcons;
-	hidden var _heartRate = 0;
-	hidden var _defaultDimLocX = 178;
-	hidden var _methods = [:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
-							:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
-							:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
-	hidden var _ecHour = null;
-	hidden var _eventTime = null;
-	hidden var _iconFont;
-	
-	
+	hidden var _layouts = {};
+	hidden var _fonts = [
+		Ui.loadResource(Rez.Fonts.msss16_font), Ui.loadResource(Rez.Fonts.icon_font), Ui.loadResource(Rez.Fonts.vertical_font)];
+	hidden var _funcs = [
+		:DisplayLocation, :DisplayBottomAlarmCount, :DisplayBottomMessageCount, 
+		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
+		:DisplayTemp, :DisplayWind, :DisplayConnection, 
+		:LoadField3, :LoadField4, :LoadField5, 
+		:DisplayWatchStatus];
+
+	hidden var _secDim;
+	hidden var _is90 = false;
+	hidden var _displayFunctions = new DisplayFunctions();
+	hidden var _colors;
 	
     function initialize() 
     {
@@ -48,72 +48,39 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onLayout(dc) 
     {
-    	var fh = dc.getFontHeight(Gfx.FONT_NUMBER_HOT);
-    	if (fh == 90 or fh == 82)
-    	{
-    		_layout = Rez.Layouts.Font90Layout(dc);
-    	}
-    	else
-    	{
-        	_layout = Rez.Layouts.MiddleDateLayout(dc);
-        }
-		setLayout(_layout);
-		_conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
-		_iconFont = Ui.loadResource(Rez.Fonts.icon_font);
-		
-    }
+    	_secDim = [dc.getTextWidthInPixels("00", Gfx.FONT_TINY), dc.getFontHeight(Gfx.FONT_TINY)];
+    	_is90 = (dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 90 || dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 82) ? true : false;
 
-    // Called when this View is brought to the foreground. Restore
-    // the state of this View and prepare it to be shown. This includes
-    // loading resources into memory.
-    //
-    function onShow() 
-    {
-		SetColors();
-	}
-	
-	// Set colors according to property name and app setting
-	// 
-    function SetColors()
-    {
-    	for(var i = 0; i < _layout.size(); i++)
-    	{
-    		if(_layout[i].identifier.find("_time") != null)
-    		{
-    			_layout[i].setColor(Setting.GetTimeColor());
-    		}
-    		if(_layout[i].identifier.find("_setbg") != null)
-    		{
-    			_layout[i].setBackgroundColor(Setting.GetBackgroundColor());
-    		}
-    		if(_layout[i].identifier.find("_bright") != null)
-    		{
-    			_layout[i].setColor(Setting.GetBrightColor());
-    		}
-    		if(_layout[i].identifier.find("_dim") != null)
-    		{
-    			_layout[i].setColor(Setting.GetDimColor());
-    		}
-    	}
+		InvalidateLayout();
     }
-     
+    
     // calls every second for partial update
     //
     function onPartialUpdate(dc)
     {
     	if (Setting.GetIsShowSeconds())
     	{
-	    	var clockTime = Sys.getClockTime();
-	    	
-	    	var secondLabel = View.findDrawableById("Second_time_setbg");
-	     	dc.setClip(secondLabel.locX - secondLabel.width, secondLabel.locY, secondLabel.width + 1, secondLabel.height);
-	     	secondLabel.setText(clockTime.sec.format("%02d"));
-			secondLabel.draw(dc);
+	    	dc.setClip(_layouts["sec"]["x"][0] - _secDim[0], _layouts["sec"]["y"][0], _layouts["sec"]["x"][0] + 1, _secDim[1]);
+	    	dc.setColor(Setting.GetTimeColor(), Setting.GetBackgroundColor());
+	    	dc.drawText(
+	    		_layouts["sec"]["x"][0], 
+	    		_layouts["sec"]["y"][0], 
+	    		Gfx.FONT_TINY, 
+	    		Sys.getClockTime().sec.format("%02d"), 
+	    		Gfx.TEXT_JUSTIFY_RIGHT);
 		}
 		
 		if (Setting.GetPulseField() != 0)
 		{
-			DisplayPulseFull(dc, Setting.GetPulseField(), false);
+			var layout = _layouts["field" + Setting.GetPulseField()];
+			var pulseData = _displayFunctions.DisplayPulse(layout);
+			
+			if (pulseData[2])
+			{
+				dc.setClip(layout["x"][0], layout["y"][0], layout["x"][0] + _secDim[0], _secDim[1]);
+				dc.setColor(Setting.GetBrightColor(), Setting.GetBackgroundColor());
+				dc.drawText(layout["x"][0], layout["y"][0], Gfx.FONT_TINY, pulseData[0], Gfx.TEXT_JUSTIFY_LEFT);
+			}
 		}
     }
     
@@ -121,7 +88,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc) 
     {
-   	
+   		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
@@ -129,480 +96,113 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		//Setting.SetLastKnownLocation([7.823586, 98.236482]);
     	}
 
-		DisplayTimeNDate(dc);
-		
-        // Weather data
-        //
-        var weatherInfo = null;
-        if (Setting.GetWeatherInfo() != null)
-        {
-        	weatherInfo = WeatherInfo.FromDictionary(Setting.GetWeatherInfo());
-        }
-		DisplayWeather(dc, weatherInfo);		
-          
-        for (var i = 3; i < 6; i++)
-        {
-        	var displayField = Setting.GetField(i);
-        	new Lang.Method(self, _methods[displayField]).invoke(dc, i);
-        }  
-	
-		DisplayLocation(weatherInfo);
-
-		DisplayWatchStatus();
-
-		DisplayBottomAlarmCount();
-		
-		DisplayBottomMessageCount();
-
-		if (Setting.GetIsTest())
-		{
-			View.findDrawableById("debug_version").setText(Rez.Strings.AppVersionValue);
-		}
-		
-        // Call the parent onUpdate function to redraw the layout
-        //
-        weatherInfo = null;
-        dc.clearClip();
-        View.onUpdate(dc);
-    }
-    
-    // Display current time and date
-    //
-    function DisplayTimeNDate(dc)
-    {
-    	var gregorianTimeNow = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-    	var is24Hour = Sys.getDeviceSettings().is24Hour;
+		dc.clearClip();
+		dc.setColor(Gfx.COLOR_TRANSPARENT, Setting.GetBackgroundColor());
+    	dc.clear();
     	
-        // Update Time
-        //
-        View.findDrawableById("Hour_time")
-        	.setText(is24Hour 
-        		? gregorianTimeNow.hour.format("%02d") 
-        		: (gregorianTimeNow.hour % 12 == 0 ? 12 : gregorianTimeNow.hour % 12).format("%02d"));
-        	
-        View.findDrawableById("DaySign_time_setbg")
-        	.setText(is24Hour ? "" : gregorianTimeNow.hour > 11 ? "pm" : "am");
-        
-        View.findDrawableById("Minute_time")
-        	.setText(gregorianTimeNow.min.format("%02d"));
-        
-       	View.findDrawableById("Second_time_setbg")
-        		.setText(Setting.GetIsShowSeconds() ? gregorianTimeNow.sec.format("%02d") : "");
-        
-        // Update date
-        //
-        var dayText = gregorianTimeNow.day.format("%02d");
-        var dayLabel = View.findDrawableById("Day_bright");
-        dayLabel.setText(dayText);
-        	
-        var monthText = gregorianTimeNow.month.toLower();
-        var monthLabel = findDrawableById("Month_dim");
-        monthLabel.locX = dayLabel.locX - dc.getTextWidthInPixels(dayText, Gfx.FONT_TINY) - 5;
-        monthLabel.setText(monthText);	
-        
-        var dowLabel = View.findDrawableById("WeekDay_bright");
-        dowLabel.locX = monthLabel.locX - dc.getTextWidthInPixels(monthText, Gfx.FONT_TINY) - 7;
-        dowLabel.setText(gregorianTimeNow.day_of_week.toLower());
-    }
-    
-    // Show weather
-    //
-    function DisplayWeather(dc, weatherInfo)
-    {
-    	if (weatherInfo == null || weatherInfo.WeatherStatus != 1 || !Setting.GetIsShowWeather()) // no weather
-        {
-			View.findDrawableById("Temperature_bright")
-				.setText(!Setting.GetIsShowWeather() 
-					? "" 
-					: (Setting.GetLastKnownLocation() == null) 
-						? "no GPS" 
-						: (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey().length() == 0)
-							? "no key" 
-							: "loading...");
-			View.findDrawableById("TemperatureTitle_dim").setText("");
-			View.findDrawableById("Perception_bright").setText("");
-			View.findDrawableById("PerceptionTitle_dim").setText("");
-			View.findDrawableById("Wind_bright").setText("");
-			View.findDrawableById("WindTitle_dim").setText("");
-			View.findDrawableById("Condition_time").setText("");
-        }
-        else
-        {
-			var temperature = (Setting.GetTempSystem() == 1 ? weatherInfo.Temperature : weatherInfo.Temperature * 1.8 + 32)
-				.format(weatherInfo.PerceptionProbability > 99 ? "%d" : "%2.1f");
-			var perception = weatherInfo.PerceptionProbability.format("%2d");
-	        
-			var temperatureLabel = View.findDrawableById("Temperature_bright");
-			temperatureLabel.setText(temperature);
-			var temperatureTitleLabel = View.findDrawableById("TemperatureTitle_dim");
-			temperatureTitleLabel.locX = temperatureLabel.locX + 1 + dc.getTextWidthInPixels(temperature, Gfx.FONT_TINY);
-			temperatureTitleLabel.setText(Setting.GetTempSystem() == 1 ? "c" : "f");
-			
-			View.findDrawableById("Perception_bright").setText(perception);
-			View.findDrawableById("PerceptionTitle_dim").setText("%");
-			
-			var windLabel = View.findDrawableById("Wind_bright");
-			var windMultiplier = [3.6, 1.94384, 1];
-			var wind = (weatherInfo.WindSpeed * windMultiplier[Setting.GetWindSystem()]).format("%2.1f");
-			windLabel.setText(wind);		
-			var windTitleLabel = View.findDrawableById("WindTitle_dim");
-			windTitleLabel.locX = windLabel.locX + dc.getTextWidthInPixels(wind, Gfx.FONT_TINY) + 1;
-			var windSystemLabel = ["k/h", "kn", "m/s"];
-			windTitleLabel.setText(windSystemLabel[Setting.GetWindSystem()]);
-			
-			var icon = _conditionIcons[weatherInfo.Condition];
-			if (icon != null)
-			{
-				View.findDrawableById("Condition_time").setText(icon);
-			}
-		}
-    }
-   
-    function DisplayExtraTz(dc, fieldId)
-    {
-    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
-    	
-        View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"));
-
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText(tzInfo[1]);
-    }
-    
-    function DisplaySunEvent(dc, fieldId)
-    {
-        var eventTime = null;
-        var location = Setting.GetLastKnownLocation();
-        var time = Sys.getClockTime();
-        
-        if (_ecHour == time.hour && 
-        	_eventTime != null &&
-        	time.hour <= _eventTime[0] && time.min < _eventTime[1]) 
-        {
-        	eventTime = _eventTime;
-        }
-		else
+		for (var i = 0; i < _layouts.size(); i++)
 		{
-	 		if (location != null && location.size() == 2)
-		    {
-		        var DOY = WatchData.GetDOY(Time.now());
-		        
-		        // get sunrise
-		        //
-		    	var ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
-		    	if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
-		    	{
-		    		// if missed sunrise, get sunset
-		    		//
-		    		ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, false);
-		    		if (ne != null && (time.hour > ne[0] || (time.hour == ne[0] && time.min > ne[1])))
-		    		{
-		    			// if missed sunset, get sunrise next day
-		    			//
-		    			DOY = WatchData.GetDOY(Time.now().add(new Toybox.Time.Duration(86400)));
-		    			ne = WatchData.GetNextSunEvent(DOY, location[0], location[1], time.timeZoneOffset, time.dst, true);
-		    		}
-		    	}
-		    	eventTime = ne; 
-		    	_ecHour = time.hour;
-		    	_eventTime = eventTime;
-		    }
-	    }
-    	
-    	var text = (eventTime == null) 
-    		? "no gps" 
-    		: eventTime[0].format("%02d") + ":" + eventTime[1].format("%02d");
-        View.findDrawableById("field_" + fieldId + "_bright_setbg").setText(text);
-
-		if (eventTime != null)
-		{
-			View.findDrawableById("field_" + fieldId + "_dim").setFont(_iconFont);
-        	View.findDrawableById("field_" + fieldId + "_dim").setText(eventTime[2] ? "r" : "s");
-        }
-    }
-    
-    // Display exchange rate
-    //
-    function DisplayExchangeRate(dc, fieldId)
-    {
-    		var currencyValue = Setting.GetExchangeRate(); 
-			if (currencyValue == null || currencyValue == 0)
-			{
-				View.findDrawableById("field_" + fieldId + "_bright_setbg")
-					.setText("loading...");
-				View.findDrawableById("field_" + fieldId + "_dim").setText("");					
-			}		
-			else 
-			{
-				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";
-				format = (currencyValue < 0.01) ? "%.4f" : format;
-				format = (currencyValue < 0.001) ? "%.5f" : format;
-				format = (currencyValue < 0.0001) ? "%.6f" : format;
-					
-				var rateString = currencyValue.format(format);	
-				var exchangeLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
-				exchangeLabel.setText(rateString);
+			var funcs = (new Lang.Method(_displayFunctions, _funcs[_layouts.values()[i]["fun"]]).invoke(_layouts.values()[i]));
 				
-				var currencyLabel = View.findDrawableById("field_" + fieldId + "_dim");
-				if (rateString.length() > 5)
-				{
-					currencyLabel.locX = exchangeLabel.locX + dc.getTextWidthInPixels(rateString, Gfx.FONT_TINY) + 3;
-				}
-				else
-				{
-					currencyLabel.locX = _defaultDimLocX;
-				}
-				currencyLabel.setText(Setting.GetTargetCurrency().toLower());
-			}
-    }  
-
-    // Display activity (distance)
-    //
-    function DisplayDistance(dc, fieldId)
-    {
-        var info = ActivityMonitor.getInfo();
-    	var distanceValues = 
-			[(info.distance.toFloat()/100000).format("%2.1f"), 
-			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
-			 info.steps.format("%d")];
-		var distanceTitles = ["km", "mi", "st."];
-		
-        var valueLabel = View.findDrawableById("field_" + fieldId + "_bright_setbg");
-        valueLabel.setText(distanceValues[Setting.GetDistSystem()]);
-        
-        var distLabel = View.findDrawableById("field_" + fieldId + "_dim");
-        if (Setting.GetDistSystem() == 2 && distanceValues[2].length() > 4)
-        {
-        	distLabel.locX = valueLabel.locX + dc.getTextWidthInPixels(distanceValues[2], Gfx.FONT_TINY) + 3;
-        }
-        else
-        {
-        	distLabel.locX = _defaultDimLocX;
-        }
-        distLabel.setText(distanceTitles[Setting.GetDistSystem()]);
-        	
-        distanceValues = null;
-        distanceTitles = null;
-    }
-    
-    // Display the number of floors climbed for the current day.
-    //
-    function DisplayFloors(dc, fieldId)
-    {
-    	var floors = ActivityMonitor.getInfo().floorsClimbed;
-    	
-        View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(floors.format("%d"));
-        
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("fl.");    	
-    }
-    
-    function DisplayStepsNFloors(dc, fieldId)
-    {
-    	var floors = ActivityMonitor.getInfo().floorsClimbed;
-    	var steps = ActivityMonitor.getInfo().steps;
-    	
-        View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(steps.format("%d") + "/" + floors.format("%d"));
-        
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("");    	
-    }
-   
-    // call from main update as a callback function
-    //
-    function DisplayPulse(dc, fieldId)
-    {
-    	DisplayPulseFull(dc, fieldId, true);
-    }
-   
-    // display current pulse
-    //
-    function DisplayPulseFull(dc, fieldId, isFullUpdate)
-    {
-    	if (isFullUpdate)
-		{	
-			View.findDrawableById("field_" + fieldId + "_bright_setbg").setText("--    ");
-			View.findDrawableById("field_" + fieldId + "_dim").setText("bpm");
-		}
-    
-		var chr = Activity.getActivityInfo().currentHeartRate;
-		if (chr != null && (_heartRate != chr || isFullUpdate))
-		{
-			_heartRate = chr;
-			var viewPulse = View.findDrawableById("field_" + fieldId + "_bright_setbg");
-			viewPulse.setText((chr < 100) ? chr.toString() + "  " : chr.toString());
-			if (!isFullUpdate)
-			{
-				dc.setClip(viewPulse.locX, viewPulse.locY, viewPulse.locX + 30, viewPulse.height);
-				viewPulse.draw(dc);
-			}
-		}
-    }
-
-	
-	function DisplayMsgCount(dc, fieldId)
-	{
-		View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(Sys.getDeviceSettings().notificationCount.format("%d"));
-        
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("msg");  
-	}
-	
-	function DisplayAlarmCount(dc, fieldId)
-	{
-		View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(Sys.getDeviceSettings().alarmCount.format("%d"));
-        
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("alm");
-	}
-	
-	
-	function DisplayAltitude(dc, fieldId)
-	{
-		var altitude = Activity.getActivityInfo().altitude;
-		if (altitude != null)
-		{
-			altitude = altitude * (Setting.GetAltimeterSystem() == 0 ? 1 : 3.28084);
-		}
-		
-		View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText((altitude != null) ? altitude.format("%d") : "---");
-        
-        var altTitle = View.findDrawableById("field_" + fieldId + "_dim");
-        if (altitude != null && altitude > 10000)
-        {
-        	altTitle.locX = altTitle.locX + 4;
-        }
-        altTitle.setText((Setting.GetAltimeterSystem() == 0) ? "m" : "ft");
-	}
-	
-	// Display the number of floors climbed for the current day.
-    //
-    function DisplayCalories(dc, fieldId)
-    {
-    	var floors = ActivityMonitor.getInfo().calories;
-    	
-        View.findDrawableById("field_" + fieldId + "_bright_setbg")
-        	.setText(floors.format("%d"));
-        
-        View.findDrawableById("field_" + fieldId + "_dim")
-        	.setText("kCal");    	
-    	
-    }
-
-    // Display current city name based on known GPS location 
-    //
-    function DisplayLocation(weatherInfo)
-    {
-    	var cityLabel = (Setting.GetCityAlign() == 0) ? "City_dim" : "CityCenter_dim";
-    	var cityNoLabel = (Setting.GetCityAlign() == 0) ? "CityCenter_dim" : "City_dim";
-    	
-    	if (weatherInfo != null && weatherInfo.City != null 
-			&& weatherInfo.CityStatus == 1 && Setting.GetIsShowCity())
-		{
-			// short <city, country> length if it's too long.
-			// first cut country, if it's still not fit - cut and add dots.
-			//
-			var city = weatherInfo.City;
-			if (city.length() > 23)
-			{
-				var dindex = city.find(",");
-				city = (dindex == 0) 
-					? city
-					: city.substring(0, dindex);
-				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
-			}
+			var x = null;
+			var f = null;	
+			var text = null;
 			
-			View.findDrawableById(cityLabel).setText(city);
+			for(var j = 0; j < _layouts.values()[i]["x"].size(); j++)
+			{
+				dc.setColor(_colors[_layouts.values()[i]["c"][j]], 
+					_layouts.values()[i].hasKey("tb") ? Gfx.COLOR_TRANSPARENT : Setting.GetBackgroundColor());
+
+	        	var a = _layouts.values()[i]["a"][j];
+	        	
+	        	// if lcor is present AND lenght of prev text is greater than default X. 
+	        	// then default x should be increased on lcor
+	        	//
+	        	if (_layouts.values()[i].hasKey("lcor") && 
+	        		_layouts.values()[i]["lcor"] != null &&
+	        		text != null &&
+	        		x + dc.getTextWidthInPixels(text, f) > _layouts.values()[i]["x"][j])
+	        	{
+	        		x = x + dc.getTextWidthInPixels(text, f) + _layouts.values()[i]["lcor"];
+	        	}
+	        	else
+	        	{
+		        	// if cor is present default X should be adjasted on cor
+		        	//
+		        	if (_layouts.values()[i].hasKey("cor") && 
+		        		_layouts.values()[i]["cor"][j] != null &&
+		        		text != null) 
+		        	{
+		        		x = x + (a == 0 ? -1 : 1) * dc.getTextWidthInPixels(text, f) + _layouts.values()[i]["cor"][j];
+		        	}
+		        	else
+		        	{
+		        		x = _layouts.values()[i]["x"][j];
+		        	}
+	        	}
+
+				f = _layouts.values()[i]["f"][j] < 100 
+	        			? _layouts.values()[i]["f"][j] 
+	        			: _fonts[_layouts.values()[i]["f"][j] - 100];
+
+				text = (_layouts.values()[i]["t"][j] == null)
+					? funcs[j] 
+	        		: _layouts.values()[i]["t"][j];
+	        			
+				dc.drawText(x, _layouts.values()[i]["y"][j], f, text, a);
+			}
 		}
-		else
+		
+		dc.setColor(Setting.GetTimeColor(), Gfx.COLOR_TRANSPARENT);
+        dc.drawLine(120, 54, 120, 186);
+        
+        if (Setting.GetIsTest())
 		{
-			View.findDrawableById(cityLabel).setText("");
+			dc.setColor(Setting.GetDimColor(), Gfx.COLOR_TRANSPARENT);
+			dc.drawText(120, 220, _fonts[0], Ui.loadResource(Rez.Strings.AppVersionValue), Gfx.TEXT_JUSTIFY_CENTER);
 		}
-		View.findDrawableById(cityNoLabel).setText("");
     }
     
-    // Display battery and connection status
-    //
-    function DisplayWatchStatus()
+    function InvalidateLayout()
     {
-    	var viewBt = View.findDrawableById("Bluetooth_dim")
-			.setText(Sys.getDeviceSettings().phoneConnected ? "a" : "b");
-			
-		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
-		
-		var batteryColor = batteryLevel > 20 ? Setting.GetDimColor() : Gfx.COLOR_RED;
-		View.findDrawableById("Battery0_dim").setColor(batteryColor);
-		View.findDrawableById("Battery1_dim").setColor(batteryColor);
-		View.findDrawableById("Battery2_dim").setColor(batteryColor);
-		View.findDrawableById("Battery3_dim").setColor(batteryColor);
-		
-		View.findDrawableById("Battery1_dim").setText((batteryLevel % 10).format("%1d"));
-		batteryLevel = batteryLevel / 10;
-		if (batteryLevel == 10 )
-		{
-			View.findDrawableById("Battery3_dim").setText("1");
-			View.findDrawableById("Battery2_dim").setText("0");
-		}
-		else
-		{
-			View.findDrawableById("Battery3_dim").setText("");
-			if (batteryLevel > 0)
-			{
-				View.findDrawableById("Battery2_dim").setText((batteryLevel % 10).format("%1d"));
-			}
-			else
-			{
-				View.findDrawableById("Battery2_dim").setText("");
-			}
-		}
-    }
-    
-    function DisplayBottomAlarmCount()
-    {
-    	var fieldIcons = ["Alarm_icon_time", "Alarm_icon_center_time"];
-    	var fieldCounts = ["Alarm_count_dim", "Alarm_count_center_dim"];  
+    	_colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), 0xFF422D];
     	
-    	for (var i=0;i<2;i++)
-    	{
-    		View.findDrawableById(fieldIcons[i]).setText(" ");
-    		View.findDrawableById(fieldCounts[i]).setText("  "); 
-    	}  	
+    	_layouts = {};
+    	_layouts.put("city", Ui.loadResource(Setting.GetCityAlign() == 0 ? Rez.JsonData.l_city_left : Rez.JsonData.l_city_center));   	
     	
-    	var alarmCount = Sys.getDeviceSettings().alarmCount;
-    	if  (Setting.GetShowAlarm() == 0 or
-    		(Setting.GetShowAlarm() == 1 and alarmCount == 0))
+		_layouts.put("hour", Ui.loadResource(_is90 ? Rez.JsonData.l_time_f90 : Rez.JsonData.l_time));
+    	_layouts.put("date", Ui.loadResource(_is90 ? Rez.JsonData.l_date_f90 : Rez.JsonData.l_date));
+		_layouts.put("btooth", Ui.loadResource(Rez.JsonData.l_bt));    	
+    	
+    	if (Setting.GetIsShowSeconds())
     	{
-			return;
+    		_layouts.put("sec", Ui.loadResource(Rez.JsonData.l_sec));
+    	}
+    	
+    	if (!Sys.getDeviceSettings().is24Hour)
+    	{
+    		_layouts.put("pmam", Ui.loadResource(_is90 ? Rez.JsonData.l_pmam_f90 : Rez.JsonData.l_pmam));
+    	}
+    	
+    	if (Setting.GetIsShowWeather())
+    	{
+    		_layouts.put("temp", Ui.loadResource(Rez.JsonData.l_temp));
+    		_layouts.put("wind", Ui.loadResource(Rez.JsonData.l_wind));
+    	}
+    	
+    	if (Setting.GetShowAlarm() > 0)
+    	{
+    		_layouts.put("alarm", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_alarm_right : Rez.JsonData.l_alarm_center));
+    	}
+    	
+    	if (Setting.GetShowMessage() > 0)
+    	{
+    		_layouts.put("msg", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_msg_right : Rez.JsonData.l_msg_center));
     	}    	
     	
-        View.findDrawableById(fieldIcons[Setting.GetAlarmAlign()]).setText("d");
-    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(alarmCount.format("%d"));            
-    }
-    
-    function DisplayBottomMessageCount()
-    {
-	   	var fieldIcons = ["Message_icon_time", "Message_icon_center_time"];
-    	var fieldCounts = ["Message_count_dim", "Message_count_center_dim"];
-    	
-    	for (var i=0; i<2; i++)
-    	{
-    		View.findDrawableById(fieldIcons[i]).setText(" ");
-    		View.findDrawableById(fieldCounts[i]).setText("  "); 
-    	} 
-    	
-        var messageCount = Sys.getDeviceSettings().notificationCount;
-    	if  (Setting.GetShowMessage() == 0 or
-    		(Setting.GetShowMessage() == 1 and messageCount == 0))
-    	{
-    		return;
-    	}
-    
-        View.findDrawableById(fieldIcons[Setting.GetAlarmAlign()]).setText("e");
-    	View.findDrawableById(fieldCounts[Setting.GetAlarmAlign()]).setText(messageCount.format("%d"));            
-    }   
+    	_layouts.put("field3", Ui.loadResource(Rez.JsonData.l_field3));
+    	_layouts.put("field4", Ui.loadResource(Rez.JsonData.l_field4));
+    	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
+    	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
+     }
 }

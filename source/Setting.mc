@@ -6,7 +6,6 @@ using Toybox.Application as App;
 class Setting
 {
 	static hidden var _lastKnownLocation = "lastKnownLocation";
-	static hidden var _weatherInfo = "WeatherInfo";
 	static hidden var _etz = "etz";
 	static hidden var _isTest = "isTest";
 	
@@ -17,6 +16,29 @@ class Setting
     static hidden var _isShowExchangeRate = "is-show-exchange";
 	static hidden var _pulseField = "pulse-field";
 	static hidden var _exchangeApiKey = "exchange-api-key";
+	static hidden var _city = "city";
+	static hidden var _weather = "weather";
+
+	public static function GetWeather()
+	{
+		return App.getApp().getProperty(_weather);
+	}
+	
+	public static function SetWeather(weather)
+	{
+		App.getApp().setProperty(_weather, weather);
+	}
+
+	
+	public static function GetCity()
+	{
+		return App.getApp().getProperty(_city);
+	}
+	
+	public static function SetCity(city)
+	{
+		App.getApp().setProperty(_city, city);
+	}
 	
 	public static function GetTimeColor()
 	{
@@ -66,16 +88,6 @@ class Setting
 	public static function SetLastKnownLocation(lastKnownLocation)
 	{
 		App.getApp().setProperty(_lastKnownLocation, lastKnownLocation);
-	}
-	
-	public static function GetWeatherInfo()
-	{
-		return App.getApp().getProperty(_weatherInfo);
-	}
-	
-	public static function SetWeatherInfo(weatherInfo)
-	{
-		App.getApp().setProperty(_weatherInfo, weatherInfo);
 	}
 	
 	public static function GetEtzId()
@@ -193,12 +205,12 @@ class Setting
 	
 	public static function GetBaseCurrencyId()
 	{
-		return App.getApp().getProperty("base-currency-id");
+		return App.getApp().getProperty("base-currency-id2");
 	}
 	
 	public static function GetTargetCurrencyId()
 	{
-		return App.getApp().getProperty("target-currency-id");
+		return App.getApp().getProperty("target-currency-id2");
 	}
 	
 	public static function GetIsShowWeather()
