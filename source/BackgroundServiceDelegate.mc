@@ -115,11 +115,18 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
+	/*
 		var url = Lang.format(
 			"https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
 			location[0],
 			location[1],
 			Setting.GetLocationApiKey()]);  
+			*/
+		var url = Lang.format(
+			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&deviceId=$3$", [
+			location[0],
+			location[1],
+			Sys.getDeviceSettings().uniqueIdentifier]); 	
 			
 		//Sys.println(" :: location request: " + url);	
 			
@@ -139,14 +146,9 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			if (responseCode == 200)
 			{
-				if (data["resourceSets"] instanceof Toybox.Lang.Array && 
-					data["resourceSets"][0]["resources"] instanceof Toybox.Lang.Array &&
-					data["resourceSets"][0]["resources"].size() > 0)
-				{
-					_received.put("city", { 
-						"City" => data["resourceSets"][0]["resources"][0]["name"],
-						"lrloc" => _location});
-				}
+				_received.put("city", { 
+					"City" => data["cityName"],
+					"lrloc" => _location});
 			}
 		}
 		catch (ex)
@@ -163,11 +165,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestExchangeRate()
 	{
-		/*var url = Lang.format("https://free.currencyconverterapi.com/api/v6/convert?q=$1$_$2$&compact=y&apiKey=$3$", [
-			Setting.GetBaseCurrency(), 
-			Setting.GetTargetCurrency(),
-			Setting.GetExchangeApiKey()]);*/
-			
+		
 		var url = Lang.format("https://api.exchangeratesapi.io/latest?base=$1$&symbols=$2$", [
 			Setting.GetBaseCurrency(), 
 			Setting.GetTargetCurrency()]);	
