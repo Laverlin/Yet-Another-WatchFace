@@ -26,7 +26,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     	{
     		var now = Toybox.Time.now();
     		if (Setting.GetLastRequestTime() != null &&
-    			now.lessThan(new Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60))))
+    			now.lessThan(new Toybox.Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60))))
     		{
     			//System.println("too early");
     			Background.exit(null);
