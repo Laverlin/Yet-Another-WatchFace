@@ -159,7 +159,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         if (Setting.GetIsTest())
 		{
 			dc.setColor(Setting.GetDimColor(), Gfx.COLOR_TRANSPARENT);
-			dc.drawText(120, 220, _fonts[0], Ui.loadResource(Rez.Strings.AppVersionValue), Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawText(120, 220, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
 		}
     }
     

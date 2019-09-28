@@ -18,6 +18,7 @@ class Setting
 	static hidden var _exchangeApiKey = "exchange-api-key";
 	static hidden var _city = "city";
 	static hidden var _weather = "weather";
+	static hidden var _appVersion = "appVersion";
 
 	public static function GetWeather()
 	{
@@ -107,7 +108,12 @@ class Setting
 	
 	public static function SetAppVersion(appVersionValue)
 	{
-		return App.getApp().setProperty("AppVersion", appVersionValue); 
+		return App.getApp().setProperty(_appVersion, appVersionValue); 
+	}
+	
+	public static function GetAppVersion()
+	{
+		return App.getApp().getProperty(_appVersion); 
 	}
 	
 	public static function GetIsShowCity()

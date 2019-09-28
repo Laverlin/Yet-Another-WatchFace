@@ -54,7 +54,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				// 
 				_city = Setting.GetCity();
 				if(_city == null ||
-					(_location[0] != _city["lrloc"][0] && 
+					(_location[0] != _city["lrloc"][0] || 
 					_location[1] != _city["lrloc"][1]))
 				{
 					RequestLocation(_location);
@@ -113,18 +113,12 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
-	/*
 		var url = Lang.format(
-			"https://dev.virtualearth.net/REST/v1/Locations/$1$,$2$?o=json&includeEntityTypes=populatedPlace&key=$3$", [
+			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$", [
 			location[0],
 			location[1],
-			Setting.GetLocationApiKey()]);  
-			*/
-		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&deviceId=$3$", [
-			location[0],
-			location[1],
-			Sys.getDeviceSettings().uniqueIdentifier]); 	
+			Sys.getDeviceSettings().uniqueIdentifier,
+			Setting.GetAppVersion()]); 	
 			
 		//Sys.println(" :: location request: " + url);	
 			
@@ -167,7 +161,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			Setting.GetBaseCurrency(), 
 			Setting.GetTargetCurrency()]);	
 		 
-		Sys.println(" :: ex rate request: " + url);
+		//Sys.println(" :: ex rate request: " + url);
 		
 		var options = {
         	:method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -180,8 +174,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveExchangeRate(responseCode, data)
 	{
-		Sys.println(" data = " + data);
-		Sys.println(" code = " + responseCode);
+		//Sys.println(" data = " + data);
+		//Sys.println(" code = " + responseCode);
 		try
 		{
 			if (responseCode == 200)
