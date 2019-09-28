@@ -50,17 +50,15 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			//
 			if (Setting.GetIsShowCity())
 			{
-				// avoid unnecessary web requests (location name does not change if location the same)
+				// avoid unnecessary web requests
 				// 
 				_city = Setting.GetCity();
-				if(_city != null && _city["lrloc"] != null &&
-					_location[0] == _city["lrloc"][0] && 
-					_location[1] == _city["lrloc"][1])
+				if(_city == null ||
+					(_location[0] != _city["lrloc"][0] && 
+					_location[1] != _city["lrloc"][1]))
 				{
-					//Sys.println("location has not changed");
-					return;
+					RequestLocation(_location);
 				}
-				RequestLocation(_location);
 			}
 		}
 		catch(ex)
@@ -165,12 +163,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestExchangeRate()
 	{
-		
 		var url = Lang.format("https://api.exchangeratesapi.io/latest?base=$1$&symbols=$2$", [
 			Setting.GetBaseCurrency(), 
 			Setting.GetTargetCurrency()]);	
 		 
-		//Sys.println(" :: ex rate request: " + url);
+		Sys.println(" :: ex rate request: " + url);
 		
 		var options = {
         	:method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -183,8 +180,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveExchangeRate(responseCode, data)
 	{
-		//Sys.println(" data = " + data);
-		//Sys.println(" code = " + responseCode);
+		Sys.println(" data = " + data);
+		Sys.println(" code = " + responseCode);
 		try
 		{
 			if (responseCode == 200)
