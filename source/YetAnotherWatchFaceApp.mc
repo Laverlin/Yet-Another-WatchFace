@@ -42,6 +42,8 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	Background.registerForTemporalEvent(new Toybox.Time.Duration(60 * 60));
         if (data != null)
         {
+        	Setting.SetLastRequestTime(Toybox.Time.now().value());
+        	
         	if (data.hasKey("exchange"))
         	{
         		Setting.SetExchangeRate(data["exchange"]["ExchangeRate"]);
@@ -56,7 +58,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         	{
         		Setting.SetWeather(data["weather"]);
         	}
-
         }
 
         Ui.requestUpdate();

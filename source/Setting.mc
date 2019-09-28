@@ -19,6 +19,7 @@ class Setting
 	static hidden var _city = "city";
 	static hidden var _weather = "weather";
 	static hidden var _appVersion = "appVersion";
+	static hidden var _lastRequestTime = "lastRequestTime";
 
 	public static function GetWeather()
 	{
@@ -30,6 +31,15 @@ class Setting
 		App.getApp().setProperty(_weather, weather);
 	}
 
+	public static function GetLastRequestTime()
+	{
+		return App.getApp().getProperty(_lastRequestTime);
+	}
+	
+	public static function SetLastRequestTime(lastRequestTime)
+	{
+		App.getApp().setProperty(_lastRequestTime, lastRequestTime);	
+	}
 	
 	public static function GetCity()
 	{

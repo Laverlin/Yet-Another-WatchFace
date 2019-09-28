@@ -24,6 +24,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     {
     	try
     	{
+    		var now = Toybox.Time.now();
+    		if (Setting.GetLastRequestTime() != null &&
+    			now.lessThan(new Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60))))
+    		{
+    			//System.println("too early");
+    			Background.exit(null);
+    			return;
+    		}
+    		//System.println("execute " + now.add(new Toybox.Time.Duration(5 * 60)).value() + " :: " + Setting.GetLastRequestTime() 
+    		//	+ " = " + (now.value().toLong() -  new Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60)).value().toLong()));
+    		
 	    	// Request Currency
 	    	//
 	    	if (Setting.GetIsShowExchangeRate())
@@ -36,6 +47,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	    	
 	    	if (_location == null || _location.size() != 2)
 	    	{
+	    		Background.exit(null);
 	    		return;
 	    	}
 	    	
@@ -54,10 +66,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				// 
 				_city = Setting.GetCity();
 				if(_city == null ||
-					(_location[0] != _city["lrloc"][0] || 
-					_location[1] != _city["lrloc"][1]))
+					(_location[0].toFloat() != _city["lrloc"][0].toFloat() || 
+					_location[1].toFloat() != _city["lrloc"][1].toFloat()))
 				{
 					RequestLocation(_location);
+					//System.println("request new location");
 				}
 			}
 		}
