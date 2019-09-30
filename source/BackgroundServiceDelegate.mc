@@ -22,16 +22,19 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
     function onTemporalEvent() 
     {
+    	var isRequested = false;
+    	
     	try
     	{
     		var now = Toybox.Time.now();
+    		/*
     		if (Setting.GetLastRequestTime() != null &&
     			now.lessThan(new Toybox.Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60))))
     		{
     			//System.println("too early");
-    			Background.exit(null);
+    			Background.exit({});
     			return;
-    		}
+    		}*/
     		//System.println("execute " + now.add(new Toybox.Time.Duration(5 * 60)).value() + " :: " + Setting.GetLastRequestTime() 
     		//	+ " = " + (now.value().toLong() -  new Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60)).value().toLong()));
     		
@@ -39,15 +42,19 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	    	//
 	    	if (Setting.GetIsShowExchangeRate())
 			{
+				isRequested = true;
 				RequestExchangeRate();
 			}
 	    
 	    	_location = Setting.GetLastKnownLocation();
 	    	var apiKey = Setting.GetWeatherApiKey();
 	    	
-	    	if (_location == null || _location.size() != 2)
+	    	if (_location == null)
 	    	{
-	    		Background.exit(null);
+	    		if (!isRequested)
+	    		{
+	    			Background.exit({});
+	    		}
 	    		return;
 	    	}
 	    	
@@ -55,6 +62,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			//
 	    	if (apiKey != null && apiKey.length() > 0)
 	    	{
+	    		isRequested = true;
 				RequestWeather(apiKey, _location);
 			}
 			
@@ -65,12 +73,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				// avoid unnecessary web requests
 				// 
 				_city = Setting.GetCity();
-				if(_city == null ||
-					(_location[0].toFloat() != _city["lrloc"][0].toFloat() || 
-					_location[1].toFloat() != _city["lrloc"][1].toFloat()))
+				if(_city == null)
 				{
+					isRequested = true;
 					RequestLocation(_location);
-					//System.println("request new location");
+				}
+				else if (
+					_location[0].toFloat() != _city["lrloc"][0].toFloat() || 
+					_location[1].toFloat() != _city["lrloc"][1].toFloat())
+				{
+					isRequested = true;
+					RequestLocation(_location);
 				}
 			}
 		}
@@ -78,6 +91,12 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		{
 			Sys.println("temp event error: " + ex.getErrorMessage());
 		}		
+		
+		if (!isRequested)
+		{
+			//Sys.println("ops");
+			Background.exit({});	
+		}
     }
     
     function RequestWeather(apiKey, location)
@@ -126,12 +145,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
+		var ploc = (_city != null) ? _city["lrloc"] : [0,0];
 		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$", [
+			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
 			location[0],
 			location[1],
 			Sys.getDeviceSettings().uniqueIdentifier,
-			Setting.GetAppVersion()]); 	
+			Setting.GetAppVersion(),
+			ploc[0],
+			ploc[1],
+			Lang.format("$1$.$2$", Sys.getDeviceSettings().firmwareVersion),
+			Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion)]); 	
 			
 		//Sys.println(" :: location request: " + url);	
 			

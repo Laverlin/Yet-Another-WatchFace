@@ -10,6 +10,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 	
     function initialize() {
         AppBase.initialize();
+        //Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
     }
 
     // Return the initial view of your application here
@@ -39,6 +40,8 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     
     function onBackgroundData(data) 
     {
+    	//Sys.println("on bg data : " + data);
+    	
     	Background.registerForTemporalEvent(new Toybox.Time.Duration(60 * 60));
         if (data != null)
         {
