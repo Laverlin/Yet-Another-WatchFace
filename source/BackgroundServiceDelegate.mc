@@ -22,27 +22,12 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
     function onTemporalEvent() 
     {
-    	var isRequested = false;
-    	
     	try
     	{
-    		var now = Toybox.Time.now();
-    		/*
-    		if (Setting.GetLastRequestTime() != null &&
-    			now.lessThan(new Toybox.Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60))))
-    		{
-    			//System.println("too early");
-    			Background.exit({});
-    			return;
-    		}*/
-    		//System.println("execute " + now.add(new Toybox.Time.Duration(5 * 60)).value() + " :: " + Setting.GetLastRequestTime() 
-    		//	+ " = " + (now.value().toLong() -  new Time.Moment(Setting.GetLastRequestTime()).add(new Toybox.Time.Duration(5 * 60)).value().toLong()));
-    		
 	    	// Request Currency
 	    	//
 	    	if (Setting.GetIsShowExchangeRate())
 			{
-				isRequested = true;
 				RequestExchangeRate();
 			}
 	    
@@ -51,10 +36,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	    	
 	    	if (_location == null)
 	    	{
-	    		if (!isRequested)
-	    		{
-	    			Background.exit({});
-	    		}
 	    		return;
 	    	}
 	    	
@@ -62,7 +43,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			//
 	    	if (apiKey != null && apiKey.length() > 0)
 	    	{
-	    		isRequested = true;
 				RequestWeather(apiKey, _location);
 			}
 			
@@ -73,30 +53,20 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				// avoid unnecessary web requests
 				// 
 				_city = Setting.GetCity();
-				if(_city == null)
+				if(_city != null &&
+					_location[0].toFloat() == _city["lrloc"][0].toFloat() && 
+					_location[1].toFloat() == _city["lrloc"][1].toFloat())
 				{
-					isRequested = true;
-					RequestLocation(_location);
+					return;
 				}
-				else if (
-					_location[0].toFloat() != _city["lrloc"][0].toFloat() || 
-					_location[1].toFloat() != _city["lrloc"][1].toFloat())
-				{
-					isRequested = true;
-					RequestLocation(_location);
-				}
+				
+				RequestLocation(_location);
 			}
 		}
 		catch(ex)
 		{
 			Sys.println("temp event error: " + ex.getErrorMessage());
 		}		
-		
-		if (!isRequested)
-		{
-			//Sys.println("ops");
-			Background.exit({});	
-		}
     }
     
     function RequestWeather(apiKey, location)
@@ -130,6 +100,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 					"perception" => data["currently"]["precipProbability"].toFloat() * 100,
 					"condition" => data["currently"]["icon"]});
 			}
+			else
+			{
+				_received.put("isErr", true);
+			}
 		}
 		catch(ex)
 		{
@@ -148,6 +122,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		var ploc = (_city != null) ? _city["lrloc"] : [0,0];
 		var url = Lang.format(
 			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
+			//"http://localhost:7409/api/service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
 			location[0],
 			location[1],
 			Sys.getDeviceSettings().uniqueIdentifier,
@@ -178,6 +153,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				_received.put("city", { 
 					"City" => data["cityName"],
 					"lrloc" => _location});
+			}
+			else
+			{
+				_received.put("isErr", true);
 			}
 		}
 		catch (ex)
@@ -219,6 +198,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				_received.put("exchange", {
 					"ExchangeRate" => data["rates"][Setting.GetTargetCurrency()].toFloat()});
+			}
+			else
+			{
+				_received.put("isErr", true);
 			}
 		}
 		catch(ex)

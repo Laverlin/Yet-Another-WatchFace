@@ -2,6 +2,8 @@ using Toybox.Application as App;
 using Toybox.WatchUi as Ui;
 using Toybox.Background as Background;
 using Toybox.System as Sys;
+using Toybox.Timer as Timer;
+using Toybox.Lang as Lang;
 
 (:background)
 class YetAnotherWatchFaceApp extends App.AppBase {
@@ -10,21 +12,21 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 	
     function initialize() {
         AppBase.initialize();
-        //Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
     }
 
     // Return the initial view of your application here
     //
     function getInitialView() 
     {
+    	_watchFaceView = new YetAnotherWatchFaceView(self);
+    	
     	baseInitApp();
     	
     	InitBackgroundEvents();
     	
-    	_watchFaceView = new YetAnotherWatchFaceView();
         return [ _watchFaceView, new PowerBudgetDelegate() ];
     }
-
+    
     // New app settings have been received so trigger a UI update
     //
     function onSettingsChanged() 
@@ -41,11 +43,17 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onBackgroundData(data) 
     {
     	//Sys.println("on bg data : " + data);
-    	
-    	Background.registerForTemporalEvent(new Toybox.Time.Duration(60 * 60));
         if (data != null)
         {
-        	Setting.SetLastRequestTime(Toybox.Time.now().value());
+        	if (data.hasKey("isErr"))
+        	{
+        		Setting.SetConError(true);	
+        	}
+        	else
+        	{
+        		Setting.SetConError(false);
+        	}
+        	
         	
         	if (data.hasKey("exchange"))
         	{
@@ -73,6 +81,10 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     
     function InitBackgroundEvents()
     {
+    	Setting.SetConError(false);
+    	//var time = System.getClockTime();
+    	//Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
+    	
     	var FIVE_MINUTES = new Toybox.Time.Duration(5 * 60);
 		var lastTime = Background.getLastTemporalEventTime();
 		if (lastTime != null) 

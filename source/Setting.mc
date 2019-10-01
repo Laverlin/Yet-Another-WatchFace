@@ -19,7 +19,7 @@ class Setting
 	static hidden var _city = "city";
 	static hidden var _weather = "weather";
 	static hidden var _appVersion = "appVersion";
-	static hidden var _lastRequestTime = "lastRequestTime";
+	static hidden var _conError = "conError";
 
 	public static function GetWeather()
 	{
@@ -31,14 +31,14 @@ class Setting
 		App.getApp().setProperty(_weather, weather);
 	}
 
-	public static function GetLastRequestTime()
+	public static function GetConError()
 	{
-		return App.getApp().getProperty(_lastRequestTime);
+		return App.getApp().getProperty(_conError);
 	}
 	
-	public static function SetLastRequestTime(lastRequestTime)
+	public static function SetConError(conError)
 	{
-		App.getApp().setProperty(_lastRequestTime, lastRequestTime);	
+		App.getApp().setProperty(_conError, conError);	
 	}
 	
 	public static function GetCity()

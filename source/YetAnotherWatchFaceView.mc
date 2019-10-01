@@ -3,6 +3,7 @@ using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
 using Toybox.Lang as Lang;
 using Toybox.Time.Gregorian as Gregorian;
+using Toybox.Time as Time;
 
 
 // Main WatchFaace view
@@ -32,10 +33,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _is90 = false;
 	hidden var _displayFunctions = new DisplayFunctions();
 	hidden var _colors;
+	hidden var _wfApp;
+	hidden var _lastBg = null;
+	hidden var _bgInterval = new Toybox.Time.Duration(5 * 60);
 	
-    function initialize() 
+    function initialize(wfApp) 
     {
         WatchFace.initialize();
+        _wfApp = wfApp;
         Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
@@ -86,15 +91,28 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     
     // Update the view
     //
-    function onUpdate(dc) 
+    function onUpdate(dc)  
     {
    		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
     		Setting.SetLastKnownLocation(activityLocation.toDegrees());
-    		//Setting.SetLastKnownLocation([7.823586, 98.236482]);
+    		//Setting.SetLastKnownLocation([35.523790,23.974350]);
     	}
+
+
+		if (_lastBg == null)
+		{
+			_lastBg = new Time.Moment(Time.now().value());
+		}
+		else if (_lastBg.add(_bgInterval).lessThan(new Time.Moment(Time.now().value())))
+		{
+			_lastBg = new Time.Moment(Time.now().value());
+			_wfApp.InitBackgroundEvents();
+		}
+		
+		
 
 		dc.clearClip();
 		dc.setColor(Gfx.COLOR_TRANSPARENT, Setting.GetBackgroundColor());
