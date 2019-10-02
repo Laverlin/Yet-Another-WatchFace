@@ -12,7 +12,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 {
 	hidden var _syncCounter = 0;
 	hidden var _location;
-	hidden var _city;
 	hidden var _received = {}; 
 	 
 	function initialize() 
@@ -24,6 +23,9 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     {
     	try
     	{
+    		var time = System.getClockTime();
+    		Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
+    	
 	    	// Request Currency
 	    	//
 	    	if (Setting.GetIsShowExchangeRate())
@@ -52,10 +54,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				// avoid unnecessary web requests
 				// 
-				_city = Setting.GetCity();
-				if(_city != null &&
-					_location[0].toFloat() == _city["lrloc"][0].toFloat() && 
-					_location[1].toFloat() == _city["lrloc"][1].toFloat())
+				var city = Setting.GetCity();
+				if(city != null &&
+					_location[0].toFloat() == city["lrloc"][0].toFloat() && 
+					_location[1].toFloat() == city["lrloc"][1].toFloat())
 				{
 					return;
 				}
@@ -119,16 +121,13 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function RequestLocation(location)
 	{
-		var ploc = (_city != null) ? _city["lrloc"] : [0,0];
 		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
+			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&did=$3$&v=$4$&fw=$5$&ciqv=$6$", [
 			//"http://localhost:7409/api/service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
 			location[0],
 			location[1],
 			Sys.getDeviceSettings().uniqueIdentifier,
 			Setting.GetAppVersion(),
-			ploc[0],
-			ploc[1],
 			Lang.format("$1$.$2$", Sys.getDeviceSettings().firmwareVersion),
 			Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion)]); 	
 			

@@ -82,11 +82,7 @@ class DisplayFunctions
     ///   
     function DisplayConnection(layout)
     {
-    	
-    	layout["c"] = Setting.GetConError()
-			? [3]
-			: [0];
-			
+    	layout["c"] = Setting.GetConError() ? [3] : [0];
 
     	return [Sys.getDeviceSettings().phoneConnected ? "a" : "b"];
     }

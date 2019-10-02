@@ -35,7 +35,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _colors;
 	hidden var _wfApp;
 	hidden var _lastBg = null;
-	hidden var _bgInterval = new Toybox.Time.Duration(5 * 60);
+	hidden var _bgInterval = new Toybox.Time.Duration(59 * 60); //one hour
 	
     function initialize(wfApp) 
     {
@@ -112,8 +112,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			_wfApp.InitBackgroundEvents();
 		}
 		
-		
-
 		dc.clearClip();
 		dc.setColor(Gfx.COLOR_TRANSPARENT, Setting.GetBackgroundColor());
     	dc.clear();
