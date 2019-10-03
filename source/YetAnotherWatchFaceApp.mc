@@ -86,6 +86,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	//Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
     	
     	var FIVE_MINUTES = new Toybox.Time.Duration(5 * 60);
+
 		var lastTime = Background.getLastTemporalEventTime();
 		if (lastTime != null) 
 		{

@@ -1,4 +1,5 @@
 using Toybox.Application as App;
+using Toybox.Application.Storage as Storage;
 
 /// Wrapper class for stored properties
 ///
@@ -33,22 +34,26 @@ class Setting
 
 	public static function GetConError()
 	{
-		return App.getApp().getProperty(_conError);
+		return Storage.getValue(_conError); 
+		//App.getApp().getProperty(_conError);
 	}
 	
 	public static function SetConError(conError)
 	{
-		App.getApp().setProperty(_conError, conError);	
+		Storage.setValue(_conError, conError);
+		//App.getApp().setProperty(_conError, conError);	
 	}
 	
 	public static function GetCity()
 	{
-		return App.getApp().getProperty(_city);
+		return Storage.getValue(_city);
+		//return App.getApp().getProperty(_city);
 	}
 	
 	public static function SetCity(city)
 	{
-		App.getApp().setProperty(_city, city);
+		Storage.setValue(_city, city);
+		//App.getApp().setProperty(_city, city);
 	}
 	
 	public static function GetTimeColor()
@@ -93,12 +98,14 @@ class Setting
 	
 	public static function GetLastKnownLocation()
 	{
-		return App.getApp().getProperty(_lastKnownLocation);
+		//return App.getApp().getProperty(_lastKnownLocation);
+		return Storage.getValue(_lastKnownLocation);
 	}
 	
 	public static function SetLastKnownLocation(lastKnownLocation)
 	{
-		App.getApp().setProperty(_lastKnownLocation, lastKnownLocation);
+		//App.getApp().setProperty
+		Storage.setValue(_lastKnownLocation, lastKnownLocation);
 	}
 	
 	public static function GetEtzId()
@@ -106,24 +113,16 @@ class Setting
 		return App.getApp().getProperty("etzId");
 	}
 	
-	public static function GetLocationApiKey()
-	{
-		return App.getApp().getProperty(_locationApiKey); 
-	}
-	
-	public static function SetLocationApiKey(apiKeyValue)
-	{
-		return App.getApp().setProperty(_locationApiKey, apiKeyValue); 
-	}
-	
 	public static function SetAppVersion(appVersionValue)
 	{
-		return App.getApp().setProperty(_appVersion, appVersionValue); 
+		Storage.setValue(_appVersion, appVersionValue);
+		//App.getApp().setProperty(_appVersion, appVersionValue); 
 	}
 	
 	public static function GetAppVersion()
 	{
-		return App.getApp().getProperty(_appVersion); 
+		return Storage.setValue(_appVersion); //, appVersionValue
+		//App.getApp().getProperty(_appVersion); 
 	}
 	
 	public static function GetIsShowCity()

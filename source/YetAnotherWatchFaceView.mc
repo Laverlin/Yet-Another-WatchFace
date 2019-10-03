@@ -41,7 +41,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     {
         WatchFace.initialize();
         _wfApp = wfApp;
-        Setting.SetLocationApiKey(Ui.loadResource(Rez.Strings.LocationApiKeyValue));
+
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
@@ -102,6 +102,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	}
 
 
+		/// fire background process if needed
+		///
 		if (_lastBg == null)
 		{
 			_lastBg = new Time.Moment(Time.now().value());

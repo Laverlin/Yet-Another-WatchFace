@@ -23,8 +23,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     {
     	try
     	{
-    		var time = System.getClockTime();
-    		Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
+    		//var time = System.getClockTime();
+    		//Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
     	
 	    	// Request Currency
 	    	//
