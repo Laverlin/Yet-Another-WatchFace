@@ -121,7 +121,7 @@ class Setting
 	
 	public static function GetAppVersion()
 	{
-		return Storage.setValue(_appVersion); //, appVersionValue
+		return Storage.getValue(_appVersion); //, appVersionValue
 		//App.getApp().getProperty(_appVersion); 
 	}
 	
