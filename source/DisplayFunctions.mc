@@ -231,14 +231,27 @@ class DisplayFunctions
     //
     function DisplayFloors(layout)
     {
-    	var floors = ActivityMonitor.getInfo().floorsClimbed;
-    	return [floors.format("%d"), "fl."];
+    	var info = ActivityMonitor.getInfo();
+    	if (info has :floorsClimbed)
+    	{ 
+    		return [info.floorsClimbed.format("%d"), "fl."]; 
+    	}
+    	else
+    	{
+    		return ["n/a", ""];
+    	}
+  	
     }
     
     function DisplayStepsNFloors(layout)
     {
-    	var floors = ActivityMonitor.getInfo().floorsClimbed;
-    	var steps = ActivityMonitor.getInfo().steps;
+    	var info = ActivityMonitor.getInfo();
+    	if (!(info has :floorsClimbed))
+    	{
+    		return ["n/a", ""];
+    	}
+    	var floors = info.floorsClimbed;
+    	var steps = info.steps;
     	return [steps.format("%d") + "/" + floors.format("%d"), ""];
     }
    
@@ -294,7 +307,7 @@ class DisplayFunctions
     {
     	var fcity = Setting.GetCity();
     	
-    	if ( fcity != null)
+    	if ( fcity != null && fcity["City"] != null)
 		{
 			// short <city, country> length if it's too long.
 			// first cut country, if it's still not fit - cut and add dots.
