@@ -54,7 +54,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     function onLayout(dc) 
     {
     	_secDim = [dc.getTextWidthInPixels("00", Gfx.FONT_TINY), dc.getFontHeight(Gfx.FONT_TINY)];
-    	_is90 = (dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 90 || dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 82) ? true : false;
+    	_is90 = (dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 90 || 
+    		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 82 ||
+    		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 92) ? true : false;
+    	//Sys.println(dc.getFontHeight(Gfx.FONT_NUMBER_HOT));
 
 		InvalidateLayout();
     }
