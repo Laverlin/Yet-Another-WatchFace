@@ -68,6 +68,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		catch(ex)
 		{
 			Sys.println("temp event error: " + ex.getErrorMessage());
+			_received.put("isErr", true);
+			Background.exit(_received);
 		}		
     }
     
