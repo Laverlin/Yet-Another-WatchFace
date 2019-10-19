@@ -24,7 +24,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	
     	InitBackgroundEvents();
     	
-        return [ _watchFaceView, new PowerBudgetDelegate() ];
+        return [_watchFaceView, new PowerBudgetDelegate()];
     }
     
     // New app settings have been received so trigger a UI update
@@ -32,11 +32,8 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onSettingsChanged() 
     {
 		baseInitApp();
-	
     	InitBackgroundEvents();
-
-    	_watchFaceView.InvalidateLayout();
-    	
+    	_watchFaceView.InvalidateLayout();  	
         Ui.requestUpdate();
     }
     

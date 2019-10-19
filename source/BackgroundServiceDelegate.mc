@@ -108,15 +108,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				_received.put("isErr", true);
 			}
+			
+			_syncCounter = _syncCounter - 1;
+			if (_syncCounter == 0)
+			{
+				Background.exit(_received);
+			}
 		}
 		catch(ex)
 		{
 			Sys.println("get weather error : " + ex.getErrorMessage());
-		}
-		
-		_syncCounter = _syncCounter - 1;
-		if (_syncCounter == 0)
-		{
+			_received.put("isErr", true);
 			Background.exit(_received);
 		}
 	}
@@ -159,15 +161,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				_received.put("isErr", true);
 			}
+			
+			_syncCounter = _syncCounter - 1;
+			if (_syncCounter == 0)
+			{
+				Background.exit(_received);
+			}
 		}
 		catch (ex)
 		{
 			Sys.println("get location error : " + ex.getErrorMessage());
-		}
-				
-		_syncCounter = _syncCounter - 1;
-		if (_syncCounter == 0)
-		{
+			_received.put("isErr", true);
 			Background.exit(_received);
 		}
 	}
@@ -204,15 +208,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				_received.put("isErr", true);
 			}
+			
+			_syncCounter = _syncCounter - 1;
+			if (_syncCounter == 0)
+			{
+				Background.exit(_received);
+			}
 		}
 		catch(ex)
 		{
 			Sys.println("get ex rate error : " + ex.getErrorMessage());
-		}
-		
-		_syncCounter = _syncCounter - 1;
-		if (_syncCounter == 0)
-		{
+			_received.put("isErr", true);
 			Background.exit(_received);
 		}
 	}
