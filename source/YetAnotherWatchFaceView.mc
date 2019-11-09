@@ -175,12 +175,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		}
 		
 		dc.setColor(Setting.GetTimeColor(), Gfx.COLOR_TRANSPARENT);
-        dc.drawLine(130, 56, 130, 204);
+		var line = Ui.loadResource(Rez.JsonData.l_line);
+        dc.drawLine(line["x"][0], line["y"][0], line["x"][1], line["y"][1]);
         
         if (Setting.GetIsTest())
 		{
 			dc.setColor(Setting.GetDimColor(), Gfx.COLOR_TRANSPARENT);
-			dc.drawText(120, 220, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawText(dc.getWidth()/2, 220, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
 		}
     }
     
@@ -225,5 +226,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("field4", Ui.loadResource(Rez.JsonData.l_field4));
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
+
      }
 }

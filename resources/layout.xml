@@ -1,5 +1,5 @@
 <resources>	
-	
+	<!-- Default -->
 	<!-- 
 		layout constants
 		color:	0 => time
@@ -53,4 +53,5 @@
 	 
     <jsonData id="l_battery">{"x":[114, 114, 114, 114], "y":[53, 63, 72, 81], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
     
+    <jsonData id="l_line">{"x":[120, 120],"y":[54, 186]}</jsonData>
 </resources>    
