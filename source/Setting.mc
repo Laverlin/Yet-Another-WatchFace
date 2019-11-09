@@ -115,14 +115,14 @@ class Setting
 	
 	public static function SetAppVersion(appVersionValue)
 	{
-		Storage.setValue(_appVersion, appVersionValue);
-		//App.getApp().setProperty(_appVersion, appVersionValue); 
+		//Storage.setValue(_appVersion, appVersionValue);
+		App.getApp().setProperty(_appVersion, appVersionValue); 
 	}
 	
 	public static function GetAppVersion()
 	{
-		return Storage.getValue(_appVersion); //, appVersionValue
-		//App.getApp().getProperty(_appVersion); 
+		//return Storage.getValue(_appVersion); //, appVersionValue
+		App.getApp().getProperty(_appVersion); 
 	}
 	
 	public static function GetIsShowCity()

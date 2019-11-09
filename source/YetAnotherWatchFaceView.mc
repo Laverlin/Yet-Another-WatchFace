@@ -175,7 +175,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		}
 		
 		dc.setColor(Setting.GetTimeColor(), Gfx.COLOR_TRANSPARENT);
-        dc.drawLine(120, 54, 120, 186);
+        dc.drawLine(130, 56, 130, 204);
         
         if (Setting.GetIsTest())
 		{
