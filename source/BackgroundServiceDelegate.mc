@@ -126,14 +126,15 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	function RequestLocation(location)
 	{
 		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&did=$3$&v=$4$&fw=$5$&ciqv=$6$", [
+			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&did=$3$&v=$4$&fw=$5$&ciqv=$6$&dname=$7$", [
 			//"http://localhost:7409/api/service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
 			location[0],
 			location[1],
 			Sys.getDeviceSettings().uniqueIdentifier,
 			Setting.GetAppVersion(),
 			Lang.format("$1$.$2$", Sys.getDeviceSettings().firmwareVersion),
-			Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion)]); 	
+			Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion),
+			Setting.GetDeviceName()]); 	
 			
 		//Sys.println(" :: location request: " + url);	
 			

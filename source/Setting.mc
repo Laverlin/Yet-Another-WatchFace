@@ -21,6 +21,7 @@ class Setting
 	static hidden var _weather = "weather";
 	static hidden var _appVersion = "appVersion";
 	static hidden var _conError = "conError";
+	static hidden var _deviceName = "device-name";
 
 	public static function GetWeather()
 	{
@@ -30,6 +31,16 @@ class Setting
 	public static function SetWeather(weather)
 	{
 		App.getApp().setProperty(_weather, weather);
+	}
+	
+	public static function SetDeviceName(deviceNme)
+	{
+		Storage.setValue(_deviceName, deviceNme);
+	}
+
+	public static function GetDeviceName()
+	{
+		return Storage.getValue(_deviceName);
 	}
 
 	public static function GetConError()
