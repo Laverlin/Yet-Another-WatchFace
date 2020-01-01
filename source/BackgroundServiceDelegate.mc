@@ -119,6 +119,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				_received.put("isErr", true);
 			}
 			
+			if (responseCode == 403)
+			{
+				_received.put("isAuthErr", true);
+			}
+			
 			_syncCounter = _syncCounter - 1;
 			if (_syncCounter == 0)
 			{
@@ -158,7 +163,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	
 	function OnReceiveLocation(responseCode, data)
 	{
-		//Sys.println("loc data" + data);
+		//Sys.println("loc data" + data + ", code=" + responseCode);
 		try
 		{
 			if (responseCode == 200)
@@ -171,6 +176,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			{
 				_received.put("isErr", true);
 			}
+			
 			
 			if (responseCode == 403)
 			{
