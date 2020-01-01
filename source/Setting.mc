@@ -21,7 +21,9 @@ class Setting
 	static hidden var _weather = "weather";
 	static hidden var _appVersion = "appVersion";
 	static hidden var _conError = "conError";
+	static hidden var _authError = "authError";
 	static hidden var _deviceName = "device-name";
+	static hidden var _watchServerApiToken = "server-api-token";
 
 	public static function GetWeather()
 	{
@@ -42,6 +44,17 @@ class Setting
 	{
 		return Storage.getValue(_deviceName);
 	}
+	
+	public static function GetWatchServerToken()
+	{
+		return Storage.getValue(_watchServerApiToken);
+	}
+	
+	public static function SetWatchServerToken(watchServerApiToken)
+	{
+		Storage.setValue(_watchServerApiToken, watchServerApiToken);
+	}	
+	
 
 	public static function GetConError()
 	{
@@ -54,6 +67,18 @@ class Setting
 		Storage.setValue(_conError, conError);
 		//App.getApp().setProperty(_conError, conError);	
 	}
+	
+	public static function SetAuthError(authError)
+	{
+		Storage.setValue(_authError, authError);
+	}
+	
+	public static function GetAuthError()
+	{
+		return Storage.getValue(_authError);
+	}
+	
+
 	
 	public static function GetCity()
 	{
@@ -86,10 +111,10 @@ class Setting
 	{
 		return App.getApp().getProperty("DimColor");
 	}
-	
+		
 	public static function GetWeatherApiUrl()
 	{
-		return "https://api.darksky.net/forecast";
+		return "https://ivan-b.com/garminapi/wf-service/weather";
 	}
 	
 	public static function GetWeatherApiKey()
@@ -109,7 +134,6 @@ class Setting
 	
 	public static function GetLastKnownLocation()
 	{
-		//return App.getApp().getProperty(_lastKnownLocation);
 		return Storage.getValue(_lastKnownLocation);
 	}
 	

@@ -42,16 +42,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     	//Sys.println("on bg data : " + data);
         if (data != null)
         {
-        	if (data.hasKey("isErr"))
-        	{
-        		Setting.SetConError(true);	
-        	}
-        	else
-        	{
-        		Setting.SetConError(false);
-        	}
-        	
-        	
+      		Setting.SetConError(data.hasKey("isErr"));
+      		Setting.SetAuthError(data.hasKey("isAuthErr"));	
+
         	if (data.hasKey("exchange"))
         	{
         		Setting.SetExchangeRate(data["exchange"]["ExchangeRate"]);
@@ -79,6 +72,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function InitBackgroundEvents()
     {
     	Setting.SetConError(false);
+    	Setting.SetAuthError(false);
     	//var time = System.getClockTime();
     	//Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
     	

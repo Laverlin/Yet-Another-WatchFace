@@ -43,10 +43,13 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	    	
 			// Request Weather
 			//
+			/*
 	    	if (apiKey != null && apiKey.length() > 0)
 	    	{
-				RequestWeather(apiKey, _location);
+				
 			}
+			*/
+			RequestWeather(apiKey, _location);
 			
 			// Request Location
 			//
@@ -74,12 +77,17 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     }
     
     function RequestWeather(apiKey, location)
-	{
-		var url = Lang.format("$1$/$2$/$3$,$4$?exclude=minutely,hourly,daily,flags,alerts&units=si", [
-			Setting.GetWeatherApiUrl(),
-			apiKey,
+	{	
+		var url = Lang.format(
+			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&ciqv=$7$&dname=$8$", [
+			Setting.GetWatchServerToken(),
 			location[0],
-			location[1]]);  
+			location[1],
+			Sys.getDeviceSettings().uniqueIdentifier,
+			Setting.GetAppVersion(),
+			Lang.format("$1$.$2$", Sys.getDeviceSettings().firmwareVersion),
+			Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion),
+			Setting.GetDeviceName()]);			
 			
 		//Sys.println(" :: weather request " + url);
 
@@ -96,13 +104,15 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	{
 		try
 		{
+			//Sys.println("weather data" + data + "\n code: " + responseCode);
+		
 			if (responseCode == 200)
 			{
 				_received.put("weather", {
-					"temp" => data["currently"]["temperature"].toFloat(),
-					"wndSpeed" => data["currently"]["windSpeed"].toFloat(),
-					"perception" => data["currently"]["precipProbability"].toFloat() * 100,
-					"condition" => data["currently"]["icon"]});
+					"temp" => data["temperature"].toFloat(),
+					"wndSpeed" => data["windSpeed"].toFloat(),
+					"perception" => data["precipProbability"].toFloat() * 100,
+					"condition" => data["icon"]});
 			}
 			else
 			{
@@ -127,7 +137,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	{
 		var url = Lang.format(
 			"https://ivan-b.com/garminapi/wf-service/location?lat=$1$&lon=$2$&did=$3$&v=$4$&fw=$5$&ciqv=$6$&dname=$7$", [
-			//"http://localhost:7409/api/service/location?lat=$1$&lon=$2$&dId=$3$&v=$4$&vi=01&plat=$5$&plon=$6$&fw=$7$&ciqv=$8$", [
 			location[0],
 			location[1],
 			Sys.getDeviceSettings().uniqueIdentifier,
@@ -161,6 +170,11 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			else
 			{
 				_received.put("isErr", true);
+			}
+			
+			if (responseCode == 403)
+			{
+				_received.put("isAuthErr", true);
 			}
 			
 			_syncCounter = _syncCounter - 1;

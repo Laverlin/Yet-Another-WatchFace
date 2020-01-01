@@ -43,6 +43,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         _wfApp = wfApp;
 
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
+		Setting.SetWatchServerToken(Ui.loadResource(Rez.Strings.WatchServerTokenValue));
 		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1 ? true : false);
 		Setting.SetDeviceName(Ui.loadResource(Rez.Strings.DeviceName));

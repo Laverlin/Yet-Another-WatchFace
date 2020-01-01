@@ -98,8 +98,8 @@ class DisplayFunctions
         {
 			var temp =  Setting.GetLastKnownLocation() == null 
 						? "no GPS" 
-						: (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey().length() == 0)
-							? "no key" 
+						: (Setting.GetAuthError())
+							? "auth err" 
 							: "loading...";
 			return [temp, "", "", ""];
         }
