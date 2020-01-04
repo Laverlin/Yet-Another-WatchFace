@@ -77,6 +77,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	{	
 		var url = Lang.format(
 			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&ciqv=$7$&dname=$8$&wapiKey=$9$", [
+			//"localhost:5051/api/YAFace/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&ciqv=$7$&dname=$8$&wapiKey=$9$", [
 			Setting.GetWatchServerToken(),
 			location[0],
 			location[1],
