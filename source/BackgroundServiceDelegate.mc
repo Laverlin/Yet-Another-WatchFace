@@ -43,13 +43,10 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	    	
 			// Request Weather
 			//
-			/*
 	    	if (apiKey != null && apiKey.length() > 0)
 	    	{
-				
-			}
-			*/
-			RequestWeather(apiKey, _location);
+				RequestWeather(apiKey, _location);
+			}		
 			
 			// Request Location
 			//
@@ -79,7 +76,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     function RequestWeather(apiKey, location)
 	{	
 		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&ciqv=$7$&dname=$8$", [
+			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&ciqv=$7$&dname=$8$&wapiKey=$9$", [
 			Setting.GetWatchServerToken(),
 			location[0],
 			location[1],
@@ -87,7 +84,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			Setting.GetAppVersion(),
 			Lang.format("$1$.$2$", Sys.getDeviceSettings().firmwareVersion),
 			Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion),
-			Setting.GetDeviceName()]);			
+			Setting.GetDeviceName(),
+			Setting.GetWeatherApiKey()]);			
 			
 		//Sys.println(" :: weather request " + url);
 

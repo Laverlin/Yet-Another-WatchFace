@@ -94,13 +94,15 @@ class DisplayFunctions
     {
     	var weather = Setting.GetWeather();
 
-    	if (weather == null) // no weather
+    	if (weather == null || Setting.GetAuthError()) // no weather
         {
 			var temp =  Setting.GetLastKnownLocation() == null 
 						? "no GPS" 
 						: (Setting.GetAuthError())
-							? "auth err" 
-							: "loading...";
+							? "auth error" 
+							: (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey() == "")
+								? "no API key"
+								: "loading...";
 			return [temp, "", "", ""];
         }
         else
