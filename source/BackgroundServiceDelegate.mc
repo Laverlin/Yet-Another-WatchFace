@@ -103,7 +103,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	{
 		try
 		{
-			//Sys.println("weather data" + data + "\n code: " + responseCode);
+			//Sys.println("weather data: " + data + "\n code: " + responseCode);
 		
 			if (responseCode == 200)
 			{
@@ -118,7 +118,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 				_received.put("isErr", true);
 			}
 			
-			if (responseCode == 403)
+			if (responseCode == 403 || responseCode == 401)
 			{
 				_received.put("isAuthErr", true);
 			}

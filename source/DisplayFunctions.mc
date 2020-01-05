@@ -118,9 +118,9 @@ class DisplayFunctions
     {
     	var weather = Setting.GetWeather(); 
 
-    	if (weather == null) // no weather
+    	if (weather == null || Setting.GetAuthError()) // no weather
         {
-        	return ["", "", ""];
+        	return ["", "", " "];
         }
         else
         {
