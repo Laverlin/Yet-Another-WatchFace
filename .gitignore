@@ -1,4 +1,4 @@
 .project
 /bin
 developer_key
-resources\settings\version.xml
+/resources/settings/secret.xml
