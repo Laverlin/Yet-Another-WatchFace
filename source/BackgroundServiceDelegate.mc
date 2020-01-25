@@ -58,8 +58,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			: Lang.format("&wp=$1$", [weatherProviders[Setting.GetWeatherProvider()]]); 
 
 		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
-			//"localhost:5051/api/YAFace/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
+			//"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
+			"localhost:5051/api/YAFace/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
 			Setting.GetWatchServerToken(),
 			location[0],
 			location[1],
