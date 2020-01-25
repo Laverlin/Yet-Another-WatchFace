@@ -16,6 +16,7 @@ class DisplayFunctions
 	hidden var _eventTime = null;
 	hidden var _gTimeNow;
 	hidden var _dc;
+	hidden var _fonts;
 	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 	
 	hidden var _methods = [
@@ -28,9 +29,10 @@ class DisplayFunctions
 		_gTimeNow = time;
 	}
 	
-	function setDc(dc)
+	function setDc(dc, fonts)
 	{
 		_dc = dc;
+		_fonts = fonts;
 	}
 	
 	function LoadField3(layout)
@@ -324,9 +326,11 @@ class DisplayFunctions
 			// cut <city, country> length if it's too long.
 			// first cut country, if it's still not fit - cut and add dots.
 			//
-			//_dc.getTextWidthInPixels(city, layout["f"]) 
-			var maxLen = _dc.getWidth() / 10; // approx string width.
 			var city = fcity["City"];
+			
+			var ppc = _dc.getTextWidthInPixels(city, _fonts[layout["f"][0]-100]) / city.length(); 			 
+			var maxLen = _dc.getWidth() * .65 / ppc; // approx string width.
+			
 			if (city.length() > maxLen)
 			{
 				var dindex = city.find(",");

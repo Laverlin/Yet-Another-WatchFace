@@ -104,7 +104,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     function onUpdate(dc)  
     {
    		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
-   		_displayFunctions.setDc(dc);
+   		_displayFunctions.setDc(dc, _fonts);
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{

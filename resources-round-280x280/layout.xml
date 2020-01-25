@@ -36,7 +36,7 @@
 	<jsonData id="l_sec">{"x":[137], "y":[194], "c":[0], "f":[1], "a":[0], "t":[null], "fun":6}</jsonData>
 
 	<jsonData id="l_temp">
-		{"x":[148, 182, 240, 255], "y":[60, 66, 60, 71], "c":[1, 2, 1, 2], "f":[1, 101, 1, 100], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 2, null, null]}
+		{"x":[148, 182, 243, 258], "y":[60, 66, 60, 71], "c":[1, 2, 1, 2], "f":[1, 101, 1, 100], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 1, null, null]}
 	</jsonData>
 	<jsonData id="l_wind">
 		{"x":[148, 180, 255], "y":[90, 99, 92], "c":[1, 2, 0], "f":[1, 100, 101], "a":[2, 2, 0], "t":[null, null, null], "fun":8, "cor": [null, 3, null]}
