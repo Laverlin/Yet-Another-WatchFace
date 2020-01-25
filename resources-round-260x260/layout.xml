@@ -36,10 +36,10 @@
 	<jsonData id="l_sec">{"x":[127], "y":[180], "c":[0], "f":[1], "a":[0], "t":[null], "fun":6}</jsonData>
 
 	<jsonData id="l_temp">
-		{"x":[135, 175, 217, 231], "y":[50, 54, 50, 57], "c":[1, 2, 1, 2], "f":[1, 101, 1, 100], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 1, null, null]}
+		{"x":[135, 175, 217, 231], "y":[50, 54, 50, 59], "c":[1, 2, 1, 2], "f":[1, 101, 1, 100], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 1, null, null]}
 	</jsonData>
 	<jsonData id="l_wind">
-		{"x":[135, 175, 218], "y":[77, 84, 77], "c":[1, 2, 0], "f":[1, 100, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 1, null]}
+		{"x":[135, 175, 218], "y":[77, 84, 80], "c":[1, 2, 0], "f":[1, 100, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 1, null]}
 	</jsonData>
 	
 	<jsonData id="l_bt">{"x":[128], "y":[153], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>

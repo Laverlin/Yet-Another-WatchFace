@@ -47,8 +47,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1);
 		Setting.SetDeviceName(Ui.loadResource(Rez.Strings.DeviceName));
-
-		//Setting.SetLastKnownLocation([13.764073, 100.577436]);
+		
+		// if DarkSky API key wrong switch back to OpenWeather
+		//
+		if (Setting.GetWeatherApiKey().length() != 32)
+		{
+			Setting.SetWeatherProvider(0);
+		}
     }
 
     // Load your resources here
@@ -99,6 +104,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     function onUpdate(dc)  
     {
    		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
+   		_displayFunctions.setDc(dc);
     	var activityLocation = Activity.getActivityInfo().currentLocation;
     	if (activityLocation != null)
     	{
@@ -183,7 +189,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         if (Setting.GetIsTest())
 		{
 			dc.setColor(Setting.GetDimColor(), Gfx.COLOR_TRANSPARENT);
-			dc.drawText(dc.getWidth()/2, 220, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawText(dc.getWidth()/2, dc.getHeight() - 20, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
 		}
     }
     
@@ -191,12 +197,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     {
     	_colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), 0xFF422D];
     	
-    	_layouts = {};
-    	
-    	if (Setting.GetIsShowCity())
-    	{
-    		_layouts.put("city", Ui.loadResource(Setting.GetCityAlign() == 0 ? Rez.JsonData.l_city_left : Rez.JsonData.l_city_center));
-    	}   	
+    	_layouts = {};    	 	
     	
 		_layouts.put("hour", Ui.loadResource(_is90 ? Rez.JsonData.l_time_f90 : Rez.JsonData.l_time));
     	_layouts.put("date", Ui.loadResource(_is90 ? Rez.JsonData.l_date_f90 : Rez.JsonData.l_date));
@@ -227,6 +228,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	{
     		_layouts.put("msg", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_msg_right : Rez.JsonData.l_msg_center));
     	}    	
+    	
+    	if (Setting.GetIsShowCity())
+    	{
+    		_layouts.put("city", Ui.loadResource(Setting.GetCityAlign() == 0 ? Rez.JsonData.l_city_left : Rez.JsonData.l_city_center));
+    	}  
     	
     	_layouts.put("field3", Ui.loadResource(Rez.JsonData.l_field3));
     	_layouts.put("field4", Ui.loadResource(Rez.JsonData.l_field4));

@@ -15,6 +15,7 @@ class DisplayFunctions
 	hidden var _ecHour = null;
 	hidden var _eventTime = null;
 	hidden var _gTimeNow;
+	hidden var _dc;
 	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 	
 	hidden var _methods = [
@@ -25,6 +26,11 @@ class DisplayFunctions
 	function setTime(time)
 	{
 		_gTimeNow = time;
+	}
+	
+	function setDc(dc)
+	{
+		_dc = dc;
 	}
 	
 	function LoadField3(layout)
@@ -100,17 +106,21 @@ class DisplayFunctions
 						? "no GPS" 
 						: (Setting.GetAuthError())
 							? "auth error" 
-							: (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey() == "")
+							: (Setting.GetWeatherProvider() == 1 && (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey() == ""))
 								? "no API key"
 								: "loading...";
 			return [temp, "", "", ""];
         }
         else
         {
+        	var weatherPercent = Setting.GetWeatherProvider() == 1
+        		? weather["precipitation"] 
+        		: weather["humidity"];
+        	weatherPercent = (weatherPercent != null ) ? weatherPercent : 0;
         	var temp = (Setting.GetTempSystem() == 1 ? weather["temp"] : weather["temp"] * 1.8 + 32)
-				.format(weather["perception"] > 99 ? "%d" : "%2.1f");
+				.format(weatherPercent > 99 ? "%d" : "%2.1f");
 			
-			return [temp, Setting.GetTempSystem() == 1 ? "c" : "f", weather["perception"].format("%2d"), "%"];
+			return [temp, Setting.GetTempSystem() == 1 ? "c" : "f", weatherPercent.format("%2d"), "%"];
         }
     }
     
@@ -311,17 +321,19 @@ class DisplayFunctions
     	
     	if ( fcity != null && fcity["City"] != null)
 		{
-			// short <city, country> length if it's too long.
+			// cut <city, country> length if it's too long.
 			// first cut country, if it's still not fit - cut and add dots.
 			//
+			//_dc.getTextWidthInPixels(city, layout["f"]) 
+			var maxLen = _dc.getWidth() / 10; // approx string width.
 			var city = fcity["City"];
-			if (city.length() > 23)
+			if (city.length() > maxLen)
 			{
 				var dindex = city.find(",");
-				city = (dindex == 0) 
+				city = (dindex== null || dindex == 0) 
 					? city
 					: city.substring(0, dindex);
-				city = city.length() > 23 ? city.substring(0, 22) + "..." : city;
+				city = city.length() > maxLen ? city.substring(0, maxLen - 1) + "..." : city;
 			}
 			
 			return [city];

@@ -57,6 +57,13 @@
     	<settingConfig type="boolean"></settingConfig>
     </setting>
     
+    <setting propertyKey="@Properties.weather-provider" title="@Strings.weatherProviderTitle">
+     	<settingConfig type="list">
+    		<listEntry value="0">@Strings.openWeatherTitle</listEntry>
+    		<listEntry value="1">@Strings.darkSkyTitle</listEntry>
+    	</settingConfig>   
+    </setting>
+    
    	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
     	<settingConfig type="alphaNumeric"></settingConfig>
     </setting>

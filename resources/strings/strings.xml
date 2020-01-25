@@ -2,7 +2,11 @@
 
     <string id="AppName">YA-WatchFace</string>
     <string id="AppVersionTitle">App Version</string>
-    <string id="WeatherApiKeyTitle">Weather API Key</string>
+    
+    <string id="WeatherApiKeyTitle">http://darksky.net API key, if DarkSky was chosen above</string>
+    <string id="weatherProviderTitle">Choose the weather provider. DarkSky require a key but provide precipitation probability and a bit more accurate</string>
+    <string id="openWeatherTitle">OpenWeather (% humidity)</string>
+    <string id="darkSkyTitle">DarkSky (% precipitation probability)</string>
     
     <string id = "field_3_title">Show in field 3</string>
     <string id = "field_4_title">Show in field 4</string>
@@ -58,7 +62,7 @@
 	<string id="ColorYellow">Yellow</string>
 	<string id="ColorYellowRed">Yellow Red</string>
 	
-	<string id="isShowWeatherTitle">Show Weather (you must provide http://darksky.net API key)</string>
+	<string id="isShowWeatherTitle">Show Weather</string>
 	<string id="IsShowCityTitle">Show Current City</string>
 	<string id="isShowSecondsTitle">Display Seconds</string>
 	

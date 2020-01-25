@@ -24,6 +24,7 @@ class Setting
 	static hidden var _authError = "authError";
 	static hidden var _deviceName = "device-name";
 	static hidden var _watchServerApiToken = "server-api-token";
+	static hidden var _weatherProvider = "weather-provider";
 
 	public static function GetWeather()
 	{
@@ -33,6 +34,16 @@ class Setting
 	public static function SetWeather(weather)
 	{
 		App.getApp().setProperty(_weather, weather);
+	}
+	
+	public static function GetWeatherProvider()
+	{
+		return App.getApp().getProperty(_weatherProvider);
+	}
+	
+	public static function SetWeatherProvider(weatherProvider)
+	{
+		App.getApp().setProperty(_weatherProvider, weatherProvider);
 	}
 	
 	public static function SetDeviceName(deviceNme)
