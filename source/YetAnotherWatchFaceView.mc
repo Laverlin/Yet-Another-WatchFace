@@ -106,12 +106,19 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
    		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
    		_displayFunctions.setDc(dc, _fonts);
     	var activityLocation = Activity.getActivityInfo().currentLocation;
+    	
+    	// starting from 3.1.7 empty location returns 0
+    	//
+//    	Sys.println(activityLocation + ", " + Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion));
     	if (activityLocation != null)
     	{
-    		Setting.SetLastKnownLocation(activityLocation.toDegrees());
-    		//Setting.SetLastKnownLocation([35.523790,23.974350]);
-    	}
-
+    		var location = activityLocation.toDegrees();
+    		if (location[0] != 0.0 && location[1] != 0.0)
+    		{
+//    			Sys.println(activityLocation.toDegrees()[0] + ", " + activityLocation.toDegrees()[1]);
+    			Setting.SetLastKnownLocation(activityLocation.toDegrees());
+    		}
+    	} 
 
 		/// fire background process if needed
 		///

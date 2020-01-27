@@ -32,7 +32,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	    	// Request Location & weather
 	    	//
 	    	var location = Setting.GetLastKnownLocation();
-	    	if (location != null)
+	    	if (location != null && location[0] != 0.0 && location[1] != 0.0)
 	    	{
 	    		RequestWeather(Setting.GetWeatherApiKey(), location);
 	    	}
@@ -58,8 +58,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			: Lang.format("&wp=$1$", [weatherProviders[Setting.GetWeatherProvider()]]); 
 
 		var url = Lang.format(
-			//"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
-			"localhost:5051/api/YAFace/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
+			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
+			//"localhost:5051/api/YAFace/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
 			Setting.GetWatchServerToken(),
 			location[0],
 			location[1],
