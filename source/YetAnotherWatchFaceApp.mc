@@ -141,5 +141,12 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 				Setting.SetIsShowExchangeRate(true);
 			}
 		}
+		
+		// if DarkSky API key wrong switch back to OpenWeather
+		//
+		if (Setting.GetWeatherApiKey().length() != 32)
+		{
+			Setting.SetWeatherProvider(0);
+		}
     }
 }

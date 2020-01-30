@@ -130,7 +130,8 @@ class Setting
 	
 	public static function GetWeatherApiKey()
 	{
-		return App.getApp().getProperty("WeatherApiKey");
+		var waKey = App.getApp().getProperty("WeatherApiKey");
+		return waKey != null ? waKey : ""; 
 	}
 	
 	public static function GetExtraTimeZone()
@@ -168,7 +169,8 @@ class Setting
 	public static function GetAppVersion()
 	{
 		//return Storage.getValue(_appVersion); //, appVersionValue
-		return App.getApp().getProperty(_appVersion); 
+		var appVersion = App.getApp().getProperty(_appVersion);
+		return appVersion != null ? appVersion :"0.0"; 
 	}
 	
 	public static function GetIsShowCity()
@@ -208,7 +210,8 @@ class Setting
 	
 	public static function GetIsTest()
 	{
-		return App.getApp().getProperty(_isTest);
+		var isTest = App.getApp().getProperty(_isTest);
+		return isTest != null ? isTest : false;
 	}
 	
 	public static function SetIsTest(isTest)

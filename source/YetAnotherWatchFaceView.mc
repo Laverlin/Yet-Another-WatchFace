@@ -48,12 +48,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1);
 		Setting.SetDeviceName(Ui.loadResource(Rez.Strings.DeviceName));
 		
-		// if DarkSky API key wrong switch back to OpenWeather
-		//
-		if (Setting.GetWeatherApiKey().length() != 32)
-		{
-			Setting.SetWeatherProvider(0);
-		}
     }
 
     // Load your resources here

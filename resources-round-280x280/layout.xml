@@ -29,7 +29,7 @@
 	
 	<jsonData id="l_date">{"x":[134, 98, 60], "y":[128, 127, 127], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -5, -7]}</jsonData>
 	
-	<jsonData id="l_time">{"x":[112, 112], "y":[40, 141], "c":[0, 0], "f":[7, 7], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
+	<jsonData id="l_time">{"x":[112, 112], "y":[40, 141], "c":[0, 0], "f":[7, 7], "a":[0, 0], "t":[null, null], "fun":4, "tb":1}</jsonData>
 	
 	<jsonData id="l_pmam">{"x":[133], "y":[103], "c":[0], "f":[100], "a":[0], "t":[null], "fun":5}</jsonData>
 	
@@ -49,7 +49,7 @@
 	<jsonData id="l_field4">{"x":[148, 215], "y":[164, 176], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3}</jsonData>
 	<jsonData id="l_field5">{"x":[148, 215], "y":[194, 204], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3}</jsonData>
 	 
-    <jsonData id="l_battery">{"x":[132, 132, 132, 132], "y":[65, 75, 84, 93], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
+    <jsonData id="l_battery">{"x":[132, 132, 132, 132], "y":[65, 75, 84, 93], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":1}</jsonData>    
     
     <jsonData id="l_line">{"x":[140, 140],"y":[66, 220]}</jsonData>
     
