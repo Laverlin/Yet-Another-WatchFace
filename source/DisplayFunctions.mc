@@ -232,10 +232,12 @@ class DisplayFunctions
     function DisplayDistance(layout)
     {  	
         var info = ActivityMonitor.getInfo();
+        var distance = (info.distance != null) ? info.distance.toFloat() : 0;
+        var steps = (info.steps != null ) ? info.steps : 0;
     	var distanceValues = 
-			[(info.distance.toFloat()/100000).format("%2.1f"), 
-			 (info.distance.toFloat()/160934.4).format("%2.1f"), 
-			 info.steps.format("%d")];
+			[(distance/100000).format("%2.1f"), 
+			 (distance/160934.4).format("%2.1f"), 
+			 steps.format("%d")];
 		var distanceTitles = ["km", "mi", "st."];
 		
 		return [distanceValues[Setting.GetDistSystem()], distanceTitles[Setting.GetDistSystem()]];
@@ -246,7 +248,7 @@ class DisplayFunctions
     function DisplayFloors(layout)
     {
     	var info = ActivityMonitor.getInfo();
-    	if (info has :floorsClimbed)
+    	if (info has :floorsClimbed && info.floorsClimbed != null)
     	{ 
     		return [info.floorsClimbed.format("%d"), "fl."]; 
     	}
@@ -260,7 +262,7 @@ class DisplayFunctions
     function DisplayStepsNFloors(layout)
     {
     	var info = ActivityMonitor.getInfo();
-    	if (!(info has :floorsClimbed))
+    	if (!(info has :floorsClimbed) || info.floorsClimbed == null || info.steps == null)
     	{
     		return ["n/a", ""];
     	}
@@ -288,12 +290,18 @@ class DisplayFunctions
 	
 	function DisplayMsgCount(layout)
 	{
-		return [Sys.getDeviceSettings().notificationCount.format("%d"), "msg"]; 
+		var ds = Sys.getDeviceSettings();
+		return (ds != null && ds.notificationCount != null)
+			? [ds.notificationCount.format("%d"), "msg"]
+			: ["0", "msg"];
 	}
 	
 	function DisplayAlarmCount(layout)
 	{
-		return [Sys.getDeviceSettings().alarmCount.format("%d"), "alm"];
+		var ds = Sys.getDeviceSettings();
+	 	return (ds != null && ds.alarmCount != null) 
+			? [ds.alarmCount.format("%d"), "alm"]
+			: ["0", "alm"];
 	}
 	
 	
@@ -369,7 +377,7 @@ class DisplayFunctions
     function DisplayBottomAlarmCount(layout)
     {
     	var alarmCount = Sys.getDeviceSettings().alarmCount;
-    	if (Setting.GetShowAlarm() == 1 and alarmCount == 0)
+    	if (Setting.GetShowAlarm() == 1 and (alarmCount == null || alarmCount == 0))
     	{
 			return ["", ""];
     	} 
@@ -383,7 +391,7 @@ class DisplayFunctions
     function DisplayBottomMessageCount(layout)
     {
     	var msgCount = Sys.getDeviceSettings().notificationCount;
-    	if  (Setting.GetShowMessage() == 1 and msgCount == 0)
+    	if  (Setting.GetShowMessage() == 1 and (msgCount == null || msgCount == 0))
     	{
 			return ["", ""];
     	} 
