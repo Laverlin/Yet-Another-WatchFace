@@ -61,9 +61,10 @@ class DisplayFunctions
     ///
     /// returns [Hour, Min]
     ///
-    function DisplayTime(layout)
+    function DisplayTime(layout) 
     {
-    	return [Sys.getDeviceSettings().is24Hour 
+    	var deviceSettings = Sys.getDeviceSettings();
+    	return [(deviceSettings != null && deviceSettings.is24Hour) 
         			? _gTimeNow.hour.format("%02d") 
         			: (_gTimeNow.hour % 12 == 0 ? 12 : _gTimeNow.hour % 12).format("%02d"),
         		_gTimeNow.min.format("%02d")];
@@ -91,8 +92,9 @@ class DisplayFunctions
     function DisplayConnection(layout)
     {
     	layout["c"] = Setting.GetConError() ? [3] : [0];
+    	var deviceSettings = Sys.getDeviceSettings();
 
-    	return [Sys.getDeviceSettings().phoneConnected ? "a" : "b"];
+    	return [(deviceSettings != null && deviceSettings.phoneConnected) ? "a" : "b"];
     }
     
     ///
@@ -232,8 +234,8 @@ class DisplayFunctions
     function DisplayDistance(layout)
     {  	
         var info = ActivityMonitor.getInfo();
-        var distance = (info.distance != null) ? info.distance.toFloat() : 0;
-        var steps = (info.steps != null ) ? info.steps : 0;
+        var distance = (info != null && info.distance != null) ? info.distance.toFloat() : 0;
+        var steps = (info != null && info.steps != null ) ? info.steps : 0;
     	var distanceValues = 
 			[(distance/100000).format("%2.1f"), 
 			 (distance/160934.4).format("%2.1f"), 
@@ -248,7 +250,7 @@ class DisplayFunctions
     function DisplayFloors(layout)
     {
     	var info = ActivityMonitor.getInfo();
-    	if (info has :floorsClimbed && info.floorsClimbed != null)
+    	if (info != null && info has :floorsClimbed && info.floorsClimbed != null)
     	{ 
     		return [info.floorsClimbed.format("%d"), "fl."]; 
     	}
@@ -262,13 +264,11 @@ class DisplayFunctions
     function DisplayStepsNFloors(layout)
     {
     	var info = ActivityMonitor.getInfo();
-    	if (!(info has :floorsClimbed) || info.floorsClimbed == null || info.steps == null)
+    	if (info != null && info has :floorsClimbed && info has :steps && info.floorsClimbed != null && info.steps != null)
     	{
-    		return ["n/a", ""];
+	    	return [info.steps.format("%d") + "/" + info.floorsClimbed.format("%d"), ""];
     	}
-    	var floors = info.floorsClimbed;
-    	var steps = info.steps;
-    	return [steps.format("%d") + "/" + floors.format("%d"), ""];
+    	return ["n/a", ""];
     }
    
      // display current pulse
@@ -307,10 +307,11 @@ class DisplayFunctions
 	
 	function DisplayAltitude(layout)
 	{
-		var altitude = Activity.getActivityInfo().altitude;
-		if (altitude != null)
+		var altitude = null;
+		var info = Activity.getActivityInfo();
+		if (info != null && info has :altitude && info.altitude != null)
 		{
-			altitude = altitude * (Setting.GetAltimeterSystem() == 0 ? 1 : 3.28084);
+			altitude = info.altitude * (Setting.GetAltimeterSystem() == 0 ? 1 : 3.28084);
 		}
 		
 		return [(altitude != null) ? altitude.format("%d") : "---", (Setting.GetAltimeterSystem() == 0) ? "m" : "ft"];
@@ -360,7 +361,8 @@ class DisplayFunctions
     //
     function DisplayWatchStatus(layout)
     {
-		var batteryLevel = (Sys.getSystemStats().battery).toNumber();
+    	var stats = Sys.getSystemStats();
+		var batteryLevel = (stats != null) ? (stats.battery).toNumber() : 0;
 		
 		// set red color if battery level too low
 		// 
@@ -372,29 +374,31 @@ class DisplayFunctions
     }
     
     ///
+    /// Display notification count below main data
+    ///
+    function DisplayBottomMessageCount(layout)
+    {
+    	var ds = Sys.getDeviceSettings();
+    	if (ds != null && ds has :notificationCount && ds.notificationCount != null 
+    		&& ((Setting.GetShowMessage() == 1 && ds.notificationCount > 0) || Setting.GetShowMessage() == 2))
+    	{
+    		return ["e", ds.notificationCount.format("%d")];
+    	} 
+    	return ["", ""];
+    }   
+    
+    ///
     /// Display alam count under main data
     ///
     function DisplayBottomAlarmCount(layout)
     {
-    	var alarmCount = Sys.getDeviceSettings().alarmCount;
-    	if (Setting.GetShowAlarm() == 1 and (alarmCount == null || alarmCount == 0))
+    	var ds = Sys.getDeviceSettings();
+    	if (ds != null && ds has :alarmCount && ds.alarmCount != null 
+    		&& ((Setting.GetShowAlarm() == 1 && ds.alarmCount > 0) || Setting.GetShowAlarm() == 2))
     	{
-			return ["", ""];
+			return ["d", ds.alarmCount.format("%d")];
     	} 
-    	
-		return ["d", alarmCount.format("%d")];
+    	return ["", ""];
     }
     
-    ///
-    /// Display notification count under main data
-    ///
-    function DisplayBottomMessageCount(layout)
-    {
-    	var msgCount = Sys.getDeviceSettings().notificationCount;
-    	if  (Setting.GetShowMessage() == 1 and (msgCount == null || msgCount == 0))
-    	{
-			return ["", ""];
-    	} 
-		return ["e", msgCount.format("%d")];     
-    }   
 }
