@@ -48,59 +48,65 @@ class Setting
 	
 	public static function SetDeviceName(deviceNme)
 	{
-		Storage.setValue(_deviceName, deviceNme);
+		//Storage.setValue(_deviceName, deviceNme);
+		App.getApp().setProperty(_deviceName, deviceNme);
 	}
 
 	public static function GetDeviceName()
 	{
-		return Storage.getValue(_deviceName);
+		//return Storage.getValue(_deviceName);
+		return App.getApp().getProperty(_deviceName);
 	}
 	
 	public static function GetWatchServerToken()
 	{
-		return Storage.getValue(_watchServerApiToken);
+		//return Storage.getValue(_watchServerApiToken);
+		return App.getApp().getProperty(_watchServerApiToken);
 	}
 	
 	public static function SetWatchServerToken(watchServerApiToken)
 	{
-		Storage.setValue(_watchServerApiToken, watchServerApiToken);
+		//Storage.setValue(_watchServerApiToken, watchServerApiToken);
+		App.getApp().setProperty(_watchServerApiToken, watchServerApiToken);
 	}	
 	
 
 	public static function GetConError()
 	{
-		return Storage.getValue(_conError); 
-		//App.getApp().getProperty(_conError);
+		//return Storage.getValue(_conError); 
+		return App.getApp().getProperty(_conError);
 	}
 	
 	public static function SetConError(conError)
 	{
-		Storage.setValue(_conError, conError);
-		//App.getApp().setProperty(_conError, conError);	
+		//Storage.setValue(_conError, conError);
+		App.getApp().setProperty(_conError, conError);	
 	}
 	
 	public static function SetAuthError(authError)
 	{
-		Storage.setValue(_authError, authError);
+		//Storage.setValue(_authError, authError);
+		App.getApp().setProperty(_authError, authError);
 	}
 	
 	public static function GetAuthError()
 	{
-		return Storage.getValue(_authError);
+		//return Storage.getValue(_authError);
+		return App.getApp().getProperty(_authError);
 	}
 	
 
 	
 	public static function GetCity()
 	{
-		return Storage.getValue(_city);
-		//return App.getApp().getProperty(_city);
+		//return Storage.getValue(_city);
+		return App.getApp().getProperty(_city);
 	}
 	
 	public static function SetCity(city)
 	{
-		Storage.setValue(_city, city);
-		//App.getApp().setProperty(_city, city);
+		//Storage.setValue(_city, city);
+		App.getApp().setProperty(_city, city);
 	}
 	
 	public static function GetTimeColor()
@@ -122,12 +128,7 @@ class Setting
 	{
 		return App.getApp().getProperty("DimColor");
 	}
-		
-	public static function GetWeatherApiUrl()
-	{
-		return "https://ivan-b.com/garminapi/wf-service/weather";
-	}
-	
+			
 	public static function GetWeatherApiKey()
 	{
 		var waKey = App.getApp().getProperty("WeatherApiKey");
@@ -146,13 +147,14 @@ class Setting
 	
 	public static function GetLastKnownLocation()
 	{
-		return Storage.getValue(_lastKnownLocation);
+		return App.getApp().getProperty(_lastKnownLocation);
+		//return Storage.getValue(_lastKnownLocation);
 	}
 	
 	public static function SetLastKnownLocation(lastKnownLocation)
 	{
-		//App.getApp().setProperty
-		Storage.setValue(_lastKnownLocation, lastKnownLocation);
+		App.getApp().setProperty(_lastKnownLocation, lastKnownLocation);
+		//Storage.setValue(_lastKnownLocation, lastKnownLocation);
 	}
 	
 	public static function GetEtzId()

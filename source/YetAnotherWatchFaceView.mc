@@ -133,7 +133,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	
 		for (var i = 0; i < _layouts.size(); i++)
 		{
-			var funcs = (new Lang.Method(_displayFunctions, _funcs[_layouts.values()[i]["fun"]]).invoke(_layouts.values()[i]));
+			var funcs = null;
+			if (_displayFunctions has _funcs[_layouts.values()[i]["fun"]])
+			{
+				funcs = _displayFunctions.method(_funcs[_layouts.values()[i]["fun"]]).invoke(_layouts.values()[i]);
+			}
+			else
+			{
+				funcs = ["", "", "", "", ""];
+			}
 				
 			var x = null;
 			var f = null;	
