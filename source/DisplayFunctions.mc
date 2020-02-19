@@ -18,6 +18,7 @@ class DisplayFunctions
 	hidden var _dc;
 	hidden var _fonts;
 	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
+	hidden var _settings;
 	
 	hidden var _methods = [
 		:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
@@ -35,19 +36,24 @@ class DisplayFunctions
 		_fonts = fonts;
 	}
 	
+	function setSettings(settings)
+	{
+		_settings = settings;
+	}
+	
 	function LoadField3(layout)
     {
-       	return new Lang.Method(self, _methods[Setting.GetField(3)]).invoke(layout);
+       	return new Lang.Method(self, _methods[_settings.field3]).invoke(layout);
     }
     
    	function LoadField4(layout)
     {
-       	return new Lang.Method(self, _methods[Setting.GetField(4)]).invoke(layout);
+       	return new Lang.Method(self, _methods[_settings.field4]).invoke(layout);
     }
     
     function LoadField5(layout)
     {
-       	return new Lang.Method(self, _methods[Setting.GetField(5)]).invoke(layout);
+       	return new Lang.Method(self, _methods[_settings.field5]).invoke(layout);
     }
 
     ///
@@ -91,7 +97,7 @@ class DisplayFunctions
     ///   
     function DisplayConnection(layout)
     {
-    	layout["c"] = Setting.GetConError() ? [3] : [0];
+    	layout["c"] = _settings.connError ? [3] : [0];
     	var deviceSettings = Sys.getDeviceSettings();
 
     	return [(deviceSettings != null && deviceSettings.phoneConnected) ? "a" : "b"];
@@ -102,37 +108,37 @@ class DisplayFunctions
     ///
     function DisplayTemp(layout)
     {
-    	var weather = Setting.GetWeather();
+    	var weather = _settings.weather;
 
-    	if (weather == null || Setting.GetAuthError()) // no weather
+    	if (weather == null || _settings.authError) // no weather
         {
-			var temp =  Setting.GetLastKnownLocation() == null 
+			var temp =  _settings.lastKnownLocation == null 
 						? "no GPS" 
-						: (Setting.GetAuthError())
+						: (_settings.authError)
 							? "auth error" 
-							: (Setting.GetWeatherProvider() == 1 && (Setting.GetWeatherApiKey() == null || Setting.GetWeatherApiKey() == ""))
+							: (_settings.weatherProvider == 1 && (_settings.weatherApiKey == null || _settings.weatherApiKey == ""))
 								? "no API key"
 								: "loading...";
 			return [temp, "", "", ""];
         }
         else
         {
-        	var weatherPercent = Setting.GetWeatherProvider() == 1
+        	var weatherPercent = _settings.weatherProvider == 1
         		? weather["precipitation"] 
         		: weather["humidity"];
         	weatherPercent = (weatherPercent != null ) ? weatherPercent : 0;
-        	var temp = (Setting.GetTempSystem() == 1 ? weather["temp"] : weather["temp"] * 1.8 + 32)
+        	var temp = (_settings.weatherTempSystem == 1 ? weather["temp"] : weather["temp"] * 1.8 + 32)
 				.format(weatherPercent > 99 ? "%d" : "%2.1f");
 			
-			return [temp, Setting.GetTempSystem() == 1 ? "c" : "f", weatherPercent.format("%2d"), "%"];
+			return [temp, _settings.weatherTempSystem == 1 ? "c" : "f", weatherPercent.format("%2d"), "%"];
         }
     }
     
     function DisplayWind(layout)
     {
-    	var weather = Setting.GetWeather(); 
+    	var weather = _settings.weather; 
 
-    	if (weather == null || Setting.GetAuthError()) // no weather
+    	if (weather == null || _settings.authError) // no weather
         {
         	return ["", "", " "];
         }
@@ -141,8 +147,8 @@ class DisplayFunctions
         	var windMultiplier = [3.6, 1.94384, 1];
         	var windSystemLabel = ["k/h", "kn", "m/s"];
         	
-        	return [(weather["wndSpeed"] * windMultiplier[Setting.GetWindSystem()]).format("%2.1f"),
-        		windSystemLabel[Setting.GetWindSystem()],
+        	return [(weather["wndSpeed"] * windMultiplier[_settings.weatherWindSystem]).format("%2.1f"),
+        		windSystemLabel[_settings.weatherWindSystem],
         		(_conditionIcons[weather["condition"]] == null) 
         			? ""
         			: _conditionIcons[weather["condition"]]];
@@ -154,14 +160,14 @@ class DisplayFunctions
    	///
     function DisplayExtraTz(layout)
     {
-    	var tzInfo = WatchData.GetTzTime(Time.now(), Setting.GetExtraTimeZone());
+    	var tzInfo = WatchData.GetTzTime(Time.now(), _settings.extraTimeZone);
     	return [tzInfo[0].hour.format("%02d") + ":" + tzInfo[0].min.format("%02d"), tzInfo[1]];
     }
     
     function DisplaySunEvent(layout)
     {
         var eventTime = null;
-        var location = Setting.GetLastKnownLocation();
+        var location = _settings.lastKnownLocation;
         var time = Sys.getClockTime();
         
         if (_ecHour == time.hour && 
@@ -213,7 +219,7 @@ class DisplayFunctions
     //
     function DisplayExchangeRate(layout)
     {
-    		var currencyValue = Setting.GetExchangeRate(); 
+    		var currencyValue = _settings.exchangeRate; 
 			if (currencyValue == null || currencyValue == 0)
 			{
 				return ["loading...", ""];
@@ -242,7 +248,7 @@ class DisplayFunctions
 			 steps.format("%d")];
 		var distanceTitles = ["km", "mi", "st."];
 		
-		return [distanceValues[Setting.GetDistSystem()], distanceTitles[Setting.GetDistSystem()]];
+		return [distanceValues[_settings.distanceSystem], distanceTitles[_settings.distanceSystem]];
     }
     
     // Display the number of floors climbed for the current day.
@@ -271,16 +277,17 @@ class DisplayFunctions
     	return ["n/a", ""];
     }
    
-     // display current pulse
+    // display current pulse
     //
     function DisplayPulse(layout)
     {       
     	var isUpdate = false;
-		var chr = Activity.getActivityInfo().currentHeartRate;
-		if (chr != null && _heartRate != chr)
+    	var info = Activity.getActivityInfo();
+
+		if (info != null && info has :currentHeartRate && info.currentHeartRate != null && _heartRate != info.currentHeartRate)
 		{
-			_heartRate = chr;
-			_heartRateText = (chr < 100) ? chr.toString() + "  " : chr.toString();
+			_heartRate = info.currentHeartRate;
+			_heartRateText = (_heartRate < 100) ? _heartRate.toString() + "  " : _heartRate.toString();
 			isUpdate = true;
 		}
 
@@ -311,17 +318,21 @@ class DisplayFunctions
 		var info = Activity.getActivityInfo();
 		if (info != null && info has :altitude && info.altitude != null)
 		{
-			altitude = info.altitude * (Setting.GetAltimeterSystem() == 0 ? 1 : 3.28084);
+			altitude = info.altitude * (_settings.altimeterSystem == 0 ? 1 : 3.28084);
 		}
 		
-		return [(altitude != null) ? altitude.format("%d") : "---", (Setting.GetAltimeterSystem() == 0) ? "m" : "ft"];
+		return [(altitude != null) ? altitude.format("%d") : "---", (_settings.altimeterSystem == 0) ? "m" : "ft"];
 	}
 	
 	// Display the number of floors climbed for the current day.
     //
     function DisplayCalories(layout)
     {
-    	return [ActivityMonitor.getInfo().calories.format("%d"), "kCal"];
+    	var info = ActivityMonitor.getInfo();
+    	
+    	return (info != null && info.calories != null)
+    		? [info.calories.format("%d"), "kCal"]
+    		: ["n/a", ""];
     }
 
     // Display current city name based on known GPS location 
@@ -380,7 +391,7 @@ class DisplayFunctions
     {
     	var ds = Sys.getDeviceSettings();
     	if (ds != null && ds has :notificationCount && ds.notificationCount != null 
-    		&& ((Setting.GetShowMessage() == 1 && ds.notificationCount > 0) || Setting.GetShowMessage() == 2))
+    		&& ((_settings.showMessage == 1 && ds.notificationCount > 0) || _settings.showMessage == 2))
     	{
     		return ["e", ds.notificationCount.format("%d")];
     	} 
@@ -394,7 +405,7 @@ class DisplayFunctions
     {
     	var ds = Sys.getDeviceSettings();
     	if (ds != null && ds has :alarmCount && ds.alarmCount != null 
-    		&& ((Setting.GetShowAlarm() == 1 && ds.alarmCount > 0) || Setting.GetShowAlarm() == 2))
+    		&& ((_settings.showAlarm == 1 && ds.alarmCount > 0) || _settings.showAlarm == 2))
     	{
 			return ["d", ds.alarmCount.format("%d")];
     	} 

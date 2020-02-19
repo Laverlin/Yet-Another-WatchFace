@@ -99,6 +99,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     {
    		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
    		_displayFunctions.setDc(dc, _fonts);
+   		_displayFunctions.setSettings(new SettingsCache());
    		
     	var info = Activity.getActivityInfo();
     	
