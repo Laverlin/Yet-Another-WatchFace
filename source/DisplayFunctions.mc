@@ -43,17 +43,41 @@ class DisplayFunctions
 	
 	function LoadField3(layout)
     {
-       	return new Lang.Method(self, _methods[_settings.field3]).invoke(layout);
+    	if (_settings.field3 <= _methods.size() && _settings.field3 >= 0 &&
+    		self has _methods[_settings.field3])
+    	{
+    		return method(_methods[_settings.field3]).invoke(layout);
+    	}
+    	else
+    	{
+    		return ["", "", "", ""];
+    	}
     }
     
    	function LoadField4(layout)
     {
-       	return new Lang.Method(self, _methods[_settings.field4]).invoke(layout);
+        if (_settings.field4 <= _methods.size() && _settings.field4 >= 0 &&
+    		self has _methods[_settings.field4])
+    	{
+       		return method(_methods[_settings.field4]).invoke(layout);
+       	}
+       	else
+    	{
+    		return ["", "", "", ""];
+    	}
     }
     
     function LoadField5(layout)
     {
-       	return new Lang.Method(self, _methods[_settings.field5]).invoke(layout);
+        if (_settings.field5 <= _methods.size() && _settings.field5 >= 0 &&
+    		self has _methods[_settings.field5])
+    	{
+       		return method(_methods[_settings.field5]).invoke(layout);
+       	}
+       	else
+    	{
+    		return ["", "", "", ""];
+    	}
     }
 
     ///
