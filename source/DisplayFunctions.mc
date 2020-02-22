@@ -38,6 +38,10 @@ class DisplayFunctions
 	
 	function setSettings(settings)
 	{
+		if (settings == null)
+		{
+			throw new Lang.InvalidValueException("settings is null");
+		}
 		_settings = settings;
 	}
 	
