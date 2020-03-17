@@ -138,24 +138,28 @@ class DisplayFunctions
     {
     	var weather = _settings.weather;
 
-    	if (weather == null || _settings.authError) // no weather
+    	if (weather == null || weather["status"]["statusCode"] != 1) // no weather
         {
-			var temp =  _settings.lastKnownLocation == null 
-						? "no GPS" 
-						: (_settings.authError)
-							? "auth error" 
-							: (_settings.weatherProvider == 1 && (_settings.weatherApiKey == null || _settings.weatherApiKey == ""))
-								? "no API key"
-								: "loading...";
+			var temp = ((weather == null || weather["status"]["statusCode"] == 0) && _settings.lastKnownLocation == null)
+					? "no GPS" 
+					: ((weather == null  || weather["status"]["statusCode"] == 0) && 
+							(_settings.weatherProvider == 1 && (_settings.weatherApiKey == null || _settings.weatherApiKey == "")))
+							? "no API key"
+							: (weather != null && weather["status"]["statusCode"] == -1 && _settings.weatherProvider == 1 && 
+								(weather["status"]["errorCode"] == 403 || weather["status"]["errorCode"] == 401))
+								? "API key err"
+								: (weather != null && weather["status"]["statusCode"] == -1) 
+									? "conn err"
+									: "loading...";
 			return [temp, "", "", ""];
         }
         else
         {
         	var weatherPercent = _settings.weatherProvider == 1
-        		? weather["precipitation"] 
-        		: weather["humidity"];
+        		? weather["precipProbability"] * 100 
+        		: weather["humidity"] * 100;
         	weatherPercent = (weatherPercent != null ) ? weatherPercent : 0;
-        	var temp = (_settings.weatherTempSystem == 1 ? weather["temp"] : weather["temp"] * 1.8 + 32)
+        	var temp = (_settings.weatherTempSystem == 1 ? weather["temperature"] : weather["temperature"] * 1.8 + 32)
 				.format(weatherPercent > 99 ? "%d" : "%2.1f");
 			
 			return [temp, _settings.weatherTempSystem == 1 ? "c" : "f", weatherPercent.format("%2d"), "%"];
@@ -166,7 +170,7 @@ class DisplayFunctions
     {
     	var weather = _settings.weather; 
 
-    	if (weather == null || _settings.authError) // no weather
+    	if (weather == null || weather["status"]["statusCode"] != 1) // no weather
         {
         	return ["", "", " "];
         }
@@ -175,11 +179,11 @@ class DisplayFunctions
         	var windMultiplier = [3.6, 1.94384, 1];
         	var windSystemLabel = ["k/h", "kn", "m/s"];
         	
-        	return [(weather["wndSpeed"] * windMultiplier[_settings.weatherWindSystem]).format("%2.1f"),
+        	return [(weather["windSpeed"] * windMultiplier[_settings.weatherWindSystem]).format("%2.1f"),
         		windSystemLabel[_settings.weatherWindSystem],
-        		(_conditionIcons[weather["condition"]] == null) 
+        		(_conditionIcons[weather["icon"]] == null) 
         			? ""
-        			: _conditionIcons[weather["condition"]]];
+        			: _conditionIcons[weather["icon"]]];
         }
     }
     
@@ -247,19 +251,19 @@ class DisplayFunctions
     //
     function DisplayExchangeRate(layout)
     {
-    		var currencyValue = _settings.exchangeRate; 
-			if (currencyValue == null || currencyValue == 0)
+			if (_settings.exchangeRate == null)
 			{
 				return ["loading...", ""];
 			}		
 			else 
 			{
+				var currencyValue = _settings.exchangeRate["exchangeRate"]; 
 				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";
 				format = (currencyValue < 0.01) ? "%.4f" : format;
 				format = (currencyValue < 0.001) ? "%.5f" : format;
 				format = (currencyValue < 0.0001) ? "%.6f" : format;
 
-				return [currencyValue.format(format), Setting.GetTargetCurrency().toLower()];					
+				return [currencyValue.format(format), _settings.targetCurrency.toLower()];					
 			}
     }  
 
@@ -367,14 +371,14 @@ class DisplayFunctions
     //
     function DisplayLocation(layout)
     {
-    	var fcity = Setting.GetCity();
+    	var fcity = _settings.city;
     	
-    	if ( fcity != null && fcity["City"] != null)
+    	if ( fcity != null && fcity["cityName"] != null)
 		{
 			// cut <city, country> length if it's too long.
 			// first cut country, if it's still not fit - cut and add dots.
 			//
-			var city = fcity["City"];
+			var city = fcity["cityName"];
 			
 			var ppc = _dc.getTextWidthInPixels(city, _fonts[layout["f"][0]-100]) / city.length(); 			 
 			var maxLen = _dc.getWidth() * .65 / ppc; // approx string width.
