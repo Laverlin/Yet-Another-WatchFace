@@ -10,7 +10,6 @@ using Toybox.Application as App;
 (:background)
 class BackgroundServiceDelegate extends Sys.ServiceDelegate 
 {
-	hidden var _syncCounter = 0;
 	hidden var _received = {}; 
 	 
 	function initialize() 
@@ -22,19 +21,14 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     {
     	try
     	{
-	    	// Request Currency
-	    	//
-	    	if (Setting.GetIsShowExchangeRate())
-			{
-				RequestExchangeRate();
-			}
-	    
-	    	// Request Location & weather
+   	    	// Request update if one of the remote services displayed
 	    	//
 	    	var location = Setting.GetLastKnownLocation();
-	    	if (location != null && location[0] != 0.0 && location[1] != 0.0)
+	    	if (Setting.GetIsShowExchangeRate()
+	    		|| Setting.GetIsShowCity()
+	    		|| Setting.GetIsShowWeather())
 	    	{
-	    		RequestWeather(Setting.GetWeatherApiKey(), location);
+	    		RequestUpdate();
 	    	}
 
 		}
@@ -46,124 +40,71 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		}		
     }
     
-    function RequestWeather(apiKey, location)
-	{	
+    
+    function RequestUpdate()
+    {
 		var weatherProviders = ["OpenWeather", "DarkSky"];
 
-		var versions = Lang.format("$1$.$2$", Sys.getDeviceSettings().firmwareVersion) + 
-			Lang.format("&ciqv=$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion);
+		var versionsParam = Lang.format("&fw=$1$.$2$", Sys.getDeviceSettings().firmwareVersion) 
+			+ Lang.format("&ciqv=$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion);
 			
-		var provider = (Setting.GetWeatherProvider() == 1) 
+		var providerParam = (Setting.GetWeatherProvider() == 1) 
 			? Lang.format("&wapiKey=$1$&wp=$2$", [Setting.GetWeatherApiKey(), weatherProviders[Setting.GetWeatherProvider()]])
 			: Lang.format("&wp=$1$", [weatherProviders[Setting.GetWeatherProvider()]]); 
+		
+		var location = Setting.GetLastKnownLocation();
+		var locationParam = (location != null)
+			? Lang.format("&lat=$1$&lon=$2$", [location[0], location[1]])
+			: "";
+		
+		var deviceParam = Lang.format("&did=$1$&dn=$2$&av=$3$", 
+			[Sys.getDeviceSettings().uniqueIdentifier, Setting.GetDeviceName(), Setting.GetAppVersion()]);
+			
+		var currencyParam = (Setting.GetIsShowExchangeRate())
+			? Lang.format("&bc=$1$&tc=$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])
+			: "";
 
 		var url = Lang.format(
-			"https://ivan-b.com/garminapi/wf-service/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
-			//"localhost:5051/api/YAFace/weather?apiToken=$1$&lat=$2$&lon=$3$&did=$4$&v=$5$&fw=$6$&dname=$7$$8$", [
+			"https://ivan-b.com/watch-api/v2/YAFace?apiToken=$1$$2$$3$$4$$5$$6$", [
+			//"localhost:5051/api/v2/YAFace?apiToken=$1$$2$$3$$4$$5$$6$", [
 			Setting.GetWatchServerToken(),
-			location[0],
-			location[1],
-			Sys.getDeviceSettings().uniqueIdentifier,
-			Setting.GetAppVersion(),
-			versions,
-			Setting.GetDeviceName(),
-			provider]);			
+			deviceParam,
+			locationParam,
+			providerParam,
+			currencyParam,
+			versionsParam]);			
 			
-		//Sys.println(" :: weather request " + url);
+		//Sys.println(" :: update request " + url);
 
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
           :responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
         };
 
-		_syncCounter = _syncCounter + 1;
-    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveWeather));
-	}  
-	
-	function OnReceiveWeather(responseCode, data)
+    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveUpdate));    	
+    }
+    
+    
+    function OnReceiveUpdate(responseCode, data)
 	{
 		try
 		{
-			//Sys.println("weather data: " + data + "\n code: " + responseCode);
+//			Sys.println("weather data: " + data + "\n code: " + responseCode);
 		
 			if (responseCode == 200)
 			{
-				_received.put("weather", {
-					"temp" => data["temperature"].toFloat(),
-					"wndSpeed" => data["windSpeed"].toFloat(),
-					"precipitation" => data["precipProbability"].toFloat() * 100,
-					"humidity" => data["humidity"].toFloat() * 100,
-					"condition" => data["icon"]});
-				_received.put("city", { 
-					"City" => data["cityName"]});
+				_received = data;
 			}
 			else
 			{
 				_received.put("isErr", true);
 			}
-			
-			if (responseCode == 403 || responseCode == 401)
-			{
-				_received.put("isAuthErr", true);
-			}
-			
-			_syncCounter = _syncCounter - 1;
-			if (_syncCounter == 0)
-			{
-				Background.exit(_received);
-			}
+
+			Background.exit(_received);
 		}
 		catch(ex)
 		{
 			Sys.println("get weather error : " + ex.getErrorMessage());
-			_received.put("isErr", true);
-			Background.exit(_received);
-		}
-	}
-	
-	
-	function RequestExchangeRate()
-	{
-		var url = Lang.format("https://api.exchangeratesapi.io/latest?base=$1$&symbols=$2$", [
-			Setting.GetBaseCurrency(), 
-			Setting.GetTargetCurrency()]);	
-		 
-		//Sys.println(" :: ex rate request: " + url);
-		
-		var options = {
-        	:method => Comm.HTTP_REQUEST_METHOD_GET,
-          	:responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
-		};
-		
-		_syncCounter = _syncCounter + 1;
-    	Comm.makeWebRequest(url, {}, options, method(:OnReceiveExchangeRate));
-	}
-	
-	function OnReceiveExchangeRate(responseCode, data)
-	{
-		//Sys.println(" data = " + data);
-		//Sys.println(" code = " + responseCode);
-		try
-		{
-			if (responseCode == 200)
-			{
-				_received.put("exchange", {
-					"ExchangeRate" => data["rates"][Setting.GetTargetCurrency()].toFloat()});
-			}
-			else
-			{
-				_received.put("isErr", true);
-			}
-			
-			_syncCounter = _syncCounter - 1;
-			if (_syncCounter == 0)
-			{
-				Background.exit(_received);
-			}
-		}
-		catch(ex)
-		{
-			Sys.println("get ex rate error : " + ex.getErrorMessage());
 			_received.put("isErr", true);
 			Background.exit(_received);
 		}

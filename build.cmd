@@ -1,4 +1,6 @@
-SET CPath=c:\Projects\CIQSDK\connectiq-sdk-win-3.1.7-2020-01-23-a3869d977\bin\
+SET CPath=%CIQ_SDK_Path%
+
+rem c:\Projects\CIQSDK\connectiq-sdk-win-3.1.7-2020-01-23-a3869d977\bin\
 SET AppName=YAWatchFace
 SET Key=c:\#Sync\Projects\Garmin-Keys\YAWatchFace.key
 

@@ -13,18 +13,29 @@ class Setting
 	static hidden var _baseCurrency = "base-currency";
 	static hidden var _targetCurrency = "target-currency";
     static hidden var _locationApiKey = "location-api-key";
-    static hidden var _exchangeRate = "exchange-rate";
+    static hidden var _exchangeRate = "exchange-rate-v2";
     static hidden var _isShowExchangeRate = "is-show-exchange";
 	static hidden var _pulseField = "pulse-field";
 	static hidden var _exchangeApiKey = "exchange-api-key";
-	static hidden var _city = "city";
-	static hidden var _weather = "weather";
+	static hidden var _city = "city-v2";
+	static hidden var _weather = "weather-v2";
 	static hidden var _appVersion = "appVersion";
 	static hidden var _conError = "conError";
 	static hidden var _authError = "authError";
 	static hidden var _deviceName = "device-name";
 	static hidden var _watchServerApiToken = "server-api-token";
 	static hidden var _weatherProvider = "weather-provider";
+	static hidden var _weatherRefreshToken = "wr-token";
+
+	public static function GetWeatherRefreshToken()
+	{
+		return App.getApp().getProperty(_weatherRefreshToken);
+	}
+	
+	public static function SetWeatherRefreshToken(weatherRefreshToken)
+	{
+		App.getApp().setProperty(_weatherRefreshToken, weatherRefreshToken);
+	}
 
 	public static function GetWeather()
 	{

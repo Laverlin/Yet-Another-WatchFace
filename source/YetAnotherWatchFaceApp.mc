@@ -40,25 +40,30 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function onBackgroundData(data) 
     {
     	//Sys.println("on bg data : " + data);
+    	
         if (data != null)
         {
-      		Setting.SetConError(data.hasKey("isErr"));
-      		Setting.SetAuthError(data.hasKey("isAuthErr"));	
-
-        	if (data.hasKey("exchange"))
+        	if (data.hasKey("isErr"))
         	{
-        		Setting.SetExchangeRate(data["exchange"]["ExchangeRate"]);
-        	}
-        	
-        	if (data.hasKey("city"))
-        	{
-        		Setting.SetCity(data["city"]);
-        	}
-        	
-        	if (data.hasKey("weather"))
-        	{
-        		Setting.SetWeather(data["weather"]);
-        	}
+      			Setting.SetConError(true);
+      		}
+      		else
+      		{      			
+	        	if (data["exchange"]["status"]["statusCode"] == 1 || Setting.GetExchangeRate() == null)
+	        	{
+	        		Setting.SetExchangeRate(data["exchange"]);
+	        	}
+	        	
+	        	if (data["location"]["status"]["statusCode"] == 1 || Setting.GetCity() == null)
+	        	{
+	        		Setting.SetCity(data["location"]);
+	        	}
+	        	
+	        	if (data["weather"]["status"]["statusCode"] == 1 || Setting.GetWeather() == null)
+	        	{
+	        		Setting.SetWeather(data["weather"]);
+	        	}
+	        }
         }
 
         Ui.requestUpdate();
@@ -72,7 +77,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function InitBackgroundEvents()
     {
     	Setting.SetConError(false);
-    	Setting.SetAuthError(false);
     	//var time = System.getClockTime();
     	//Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
     	
@@ -101,7 +105,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		if (!symbols["symbols"][Setting.GetBaseCurrencyId()].equals(Setting.GetBaseCurrency()) ||
 			!symbols["symbols"][Setting.GetTargetCurrencyId()].equals(Setting.GetTargetCurrency()))
 		{
-       		Setting.SetExchangeRate(0);
+       		Setting.SetExchangeRate(null);
 		}
 		
 		// save new symbols in OS
@@ -147,6 +151,15 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		if (Setting.GetWeatherApiKey().length() != 32)
 		{
 			Setting.SetWeatherProvider(0);
+		}
+		
+		// update weather 
+		//
+		var token = Setting.GetWeatherApiKey() + Setting.GetWeatherProvider();
+		if (!token.equals(Setting.GetWeatherRefreshToken()))
+		{
+			Setting.SetWeather(null);
+			Setting.SetWeatherRefreshToken(token);
 		}
     }
 }

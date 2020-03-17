@@ -20,6 +20,7 @@ class SettingsCache
 		altimeterSystem = Setting.GetAltimeterSystem();
 		showMessage = Setting.GetShowMessage();
 		showAlarm = Setting.GetShowAlarm();
+		city = Setting.GetCity();
 	}
 	public var field3;
 	public var field4;
@@ -39,4 +40,5 @@ class SettingsCache
 	public var altimeterSystem;
 	public var showMessage;
 	public var showAlarm;
+	public var city;
 }
