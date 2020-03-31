@@ -31,6 +31,7 @@
     <string id="Knots">Knots</string>
     <string id="Meters">m/s</string>
     <string id="KilometersPh">km/h</string>
+    <string id="MilesPh">mph</string>
     
     <string id="DistSystemTitle">Distance</string>
     <string id="Kilometers">Kilometers</string>
@@ -61,6 +62,7 @@
 	<string id="ColorAqua">Aqua</string>
 	<string id="ColorYellow">Yellow</string>
 	<string id="ColorYellowRed">Yellow Red</string>
+	<string id="ColorOrange">Orange</string>
 	
 	<string id="isShowWeatherTitle">Show Weather</string>
 	<string id="IsShowCityTitle">Show Current City</string>

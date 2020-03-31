@@ -49,7 +49,8 @@ class Setting
 	
 	public static function GetWeatherProvider()
 	{
-		return App.getApp().getProperty(_weatherProvider);
+		var tmp = App.getApp().getProperty(_weatherProvider);
+		return tmp != null ? tmp : 0;
 	}
 	
 	public static function SetWeatherProvider(weatherProvider)
@@ -66,7 +67,8 @@ class Setting
 	public static function GetDeviceName()
 	{
 		//return Storage.getValue(_deviceName);
-		return App.getApp().getProperty(_deviceName);
+		var tmp = App.getApp().getProperty(_deviceName);
+		return tmp != null ? tmp : "unknown";
 	}
 	
 	public static function GetWatchServerToken()
@@ -94,17 +96,7 @@ class Setting
 		App.getApp().setProperty(_conError, conError);	
 	}
 	
-	public static function SetAuthError(authError)
-	{
-		//Storage.setValue(_authError, authError);
-		App.getApp().setProperty(_authError, authError);
-	}
-	
-	public static function GetAuthError()
-	{
-		//return Storage.getValue(_authError);
-		return App.getApp().getProperty(_authError);
-	}
+
 	
 
 	

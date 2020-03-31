@@ -7,7 +7,6 @@ class SettingsCache
 		field5 = Setting.GetField(5);
 		connError = Setting.GetConError();
 		weather = Setting.GetWeather();
-		authError = Setting.GetAuthError();
 		lastKnownLocation = Setting.GetLastKnownLocation();
 		weatherProvider = Setting.GetWeatherProvider();
 		weatherApiKey = Setting.GetWeatherApiKey();
@@ -27,7 +26,6 @@ class SettingsCache
 	public var field5;
 	public var connError;
 	public var weather;
-	public var authError;
 	public var lastKnownLocation;
 	public var weatherProvider;
 	public var weatherApiKey;

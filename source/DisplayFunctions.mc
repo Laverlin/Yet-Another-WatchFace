@@ -176,8 +176,8 @@ class DisplayFunctions
         }
         else
         {
-        	var windMultiplier = [3.6, 1.94384, 1];
-        	var windSystemLabel = ["k/h", "kn", "m/s"];
+        	var windMultiplier = [3.6, 1.94384, 1, 2.23694];
+        	var windSystemLabel = ["kph", "kn", "m/s", "mph"];
         	
         	return [(weather["windSpeed"] * windMultiplier[_settings.weatherWindSystem]).format("%2.1f"),
         		windSystemLabel[_settings.weatherWindSystem],

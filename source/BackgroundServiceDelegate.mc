@@ -44,15 +44,18 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     function RequestUpdate()
     {
 		var weatherProviders = ["OpenWeather", "DarkSky"];
+		var weatherApiKey = Setting.GetWeatherApiKey();
+		var weatherProvider = Setting.GetWeatherProvider();
+		var location = Setting.GetLastKnownLocation();
 
 		var versionsParam = Lang.format("&fw=$1$.$2$", Sys.getDeviceSettings().firmwareVersion) 
 			+ Lang.format("&ciqv=$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion);
 			
-		var providerParam = (Setting.GetWeatherProvider() == 1) 
-			? Lang.format("&wapiKey=$1$&wp=$2$", [Setting.GetWeatherApiKey(), weatherProviders[Setting.GetWeatherProvider()]])
-			: Lang.format("&wp=$1$", [weatherProviders[Setting.GetWeatherProvider()]]); 
+		var providerParam = (weatherProvider == 1) 
+			? Lang.format("&wapiKey=$1$&wp=$2$", [weatherApiKey, weatherProviders[weatherProvider]])
+			: Lang.format("&wp=$1$", [weatherProviders[weatherProvider]]); 
 		
-		var location = Setting.GetLastKnownLocation();
+		
 		var locationParam = (location != null)
 			? Lang.format("&lat=$1$&lon=$2$", [location[0], location[1]])
 			: "";
