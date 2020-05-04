@@ -26,6 +26,12 @@ class Setting
 	static hidden var _watchServerApiToken = "server-api-token";
 	static hidden var _weatherProvider = "weather-provider";
 	static hidden var _weatherRefreshToken = "wr-token";
+	static hidden var _dateOrder = "date-order";
+
+	public static function GetDateOrder()
+	{
+		return App.getApp().getProperty(_dateOrder);
+	}
 
 	public static function GetWeatherRefreshToken()
 	{

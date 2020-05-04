@@ -19,6 +19,7 @@ class DisplayFunctions
 	hidden var _fonts;
 	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
 	hidden var _settings;
+	hidden var _isInit = false;
 	
 	hidden var _methods = [
 		:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
@@ -89,7 +90,31 @@ class DisplayFunctions
     ///
     function DisplayDate(layout)
     {
-    	return [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()] ;
+        var data = [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()];
+    	var order = [[0, 1, 2],
+    				 [1, 0, 2],
+    				 [2, 1, 0],
+    				 [2, 0, 1]];
+
+    	//var fonts = [0, 1, 0];
+    	//var colors = [1, 2, 1];
+    	var ycor = [2, 0, 0];
+
+		var orderId = _settings.dateOrder;
+		var dateValues = ["", "", ""];
+    	for (var i = 0; i < 3; i++)
+    	{
+    		//layout["f"][i] = fonts[order[orderId][i]];
+    		//layout["c"][i] = colors[order[orderId][i]];
+    		if (!_isInit)
+    		{
+    			layout["y"][i] = layout["y"][i] + ycor[order[orderId][i]];
+    		}
+    		dateValues[i] = data[order[orderId][i]];
+    	}
+    	_isInit = true;
+    	
+    	return dateValues;
     }
 
     ///

@@ -25,4 +25,5 @@
     <property id = "altimeter-system" type = "number">0</property>
     <property id = "city-align" type = "number">0</property>
     <property id = "alarm-align" type = "number">0</property>
+    <property id = "date-order" type = "number">0</property>
 </properties>

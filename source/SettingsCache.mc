@@ -20,6 +20,7 @@ class SettingsCache
 		showMessage = Setting.GetShowMessage();
 		showAlarm = Setting.GetShowAlarm();
 		city = Setting.GetCity();
+		dateOrder = Setting.GetDateOrder();
 	}
 	public var field3;
 	public var field4;
@@ -39,4 +40,5 @@ class SettingsCache
 	public var showMessage;
 	public var showAlarm;
 	public var city;
+	public var dateOrder;
 }

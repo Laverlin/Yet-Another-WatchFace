@@ -46,6 +46,12 @@
     <string id="TimeColorTitle">Time Color</string>
     <string id="BrightColorTitle">Bright Color</string>
     <string id="DimColorTitle">Dim Color</string>
+    
+    <string id="DateOrderTitle">Date Format</string>
+    <string id="DateOrderWDM">WeekDay Month Day</string>
+    <string id="DateOrderWMD">WeekDay Day Month</string>
+    <string id="DateOrderDMW">Day Month WeekDay</string>
+    <string id="DateOrderMDW">Month Day WeekDay</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>

@@ -54,6 +54,16 @@
         </settingConfig>
     </setting>
     
+    <setting propertyKey="@Properties.date-order" title="@Strings.DateOrderTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.DateOrderWDM</listEntry>
+            <listEntry value="1">@Strings.DateOrderWMD</listEntry>
+            <listEntry value="2">@Strings.DateOrderDMW</listEntry>
+            <listEntry value="3">@Strings.DateOrderMDW</listEntry>            
+        </settingConfig>
+    </setting>
+    
+    
     <setting propertyKey="@Properties.is-show-weather" title="@Strings.isShowWeatherTitle">
     	<settingConfig type="boolean"></settingConfig>
     </setting>

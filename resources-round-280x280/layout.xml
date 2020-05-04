@@ -27,7 +27,7 @@
 	<jsonData id="l_msg_right">{"x":[182, 200], "y":[231, 231], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":2}</jsonData>
 	<jsonData id="l_msg_center">{"x":[150, 169], "y":[231, 231], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":2}</jsonData>
 	
-	<jsonData id="l_date">{"x":[134, 98, 60], "y":[128, 127, 127], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -5, -7]}</jsonData>
+	<jsonData id="l_date">{"x":[134, 98, 60], "y":[127, 127, 127], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -5, -7]}</jsonData>
 	
 	<jsonData id="l_time">{"x":[112, 112], "y":[40, 141], "c":[0, 0], "f":[7, 7], "a":[0, 0], "t":[null, null], "fun":4, "tb":1}</jsonData>
 	
