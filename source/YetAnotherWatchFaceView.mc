@@ -27,7 +27,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
 		:DisplayTemp, :DisplayWind, :DisplayConnection, 
 		:LoadField3, :LoadField4, :LoadField5, 
-		:DisplayWatchStatus];
+		:DisplayWatchStatus, :DisplayMoon];
 
 	hidden var _secDim;
 	hidden var _is90 = false;
@@ -185,7 +185,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	        			? _layouts.values()[i]["f"][j] 
 	        			: _fonts[_layouts.values()[i]["f"][j] - 100];
 
-				text = (_layouts.values()[i]["t"][j] == null)
+				text = (!_layouts.values()[i].hasKey("t") || _layouts.values()[i]["t"][j] == null)
 					? funcs[j] 
 	        		: _layouts.values()[i]["t"][j];
 	        			
@@ -249,6 +249,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("field4", Ui.loadResource(Rez.JsonData.l_field4));
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
+    	
+    	_layouts.put("moon", Ui.loadResource(Rez.JsonData.l_moon));
     	
     	_displayFunctions = new DisplayFunctions();
      }

@@ -46,6 +46,11 @@ class DisplayFunctions
 		_settings = settings;
 	}
 	
+	function DisplayMoon(layout)
+	{
+		return ["z", "Z"];
+	}
+	
 	function LoadField3(layout)
     {
     	if (_settings.field3 <= _methods.size() && _settings.field3 >= 0 &&
