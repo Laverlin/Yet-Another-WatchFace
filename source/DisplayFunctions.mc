@@ -48,7 +48,10 @@ class DisplayFunctions
 	
 	function DisplayMoon(layout)
 	{
-		return ["z", "Z"];
+		var phase = WatchData.GetMoonPhase(Time.now()) + 118;
+		
+		
+		return [phase.toChar() , "Z"];
 	}
 	
 	function LoadField3(layout)

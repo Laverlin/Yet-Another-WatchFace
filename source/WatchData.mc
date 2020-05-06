@@ -104,6 +104,40 @@ class WatchData
     	return num;
     }
     
+    static function GetMoonPhase(timeNow)
+    {
+    	var localTime = Sys.getClockTime();
+        var utcTime = timeNow.add(
+        	new Time.Duration( - localTime.timeZoneOffset + localTime.dst));
+        	
+    	var JD = timeNow.value().toDouble() / Gregorian.SECONDS_PER_DAY.toDouble() + 2440587.500;
+    	
+    	var Age = Normalize((JD - 2451550.1 ) / 29.530588853) * 29.53;
+    	
+    	var phase = 0;
+    	if(      Age <  1.84566 ) {phase = 0;} // new moon
+        else if( Age <  5.53699 ) {phase = 1;} // An evening crescent";
+        else if( Age <  9.22831 ) {phase = 2;} // A first quarter";
+        else if( Age < 12.91963 ) {phase = 3;} // A waxing gibbous";
+        else if( Age < 16.61096 ) {phase = 4;} // A full moon";
+        else if( Age < 20.30228 ) {phase = 5;} // A waning gibbous";
+        else if( Age < 23.99361 ) {phase = 6;} // A Last quarter";
+        else if( Age < 27.68493 ) {phase = 7;} // A Morning crescent";
+        else                      {phase = 0;} // A new moon";
+
+    	return phase;
+    }
+    
+    static function Normalize(value)
+    {
+    	var nValue = value - Math.floor(value);
+    	if (nValue < 0)
+    	{
+    		nValue = nValue + 1;
+    	}
+    	return nValue;
+    }
+    
     
     
 }
