@@ -54,7 +54,7 @@
     <jsonData id="l_battery">{"x":[114, 114, 114, 114], "y":[53, 63, 72, 81], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "fun":13, "tb":null}</jsonData>
     
     
-    <jsonData id="l_moon">{"x":[142, 162], "y":[13, 13], "c":[0, 1], "f":[101, 101], "a":[2,2], "fun":14, "tb":null}</jsonData>
+    <jsonData id="l_moon">{"x":[125, 150], "y":[12, 12], "c":[0, 1], "f":[101, 101], "a":[2,2], "fun":14, "tb":null}</jsonData>
     
     <jsonData id="l_line">{"x":[120, 120],"y":[54, 186]}</jsonData>
 </resources>    
