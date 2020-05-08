@@ -250,7 +250,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
     	
-    	_layouts.put("moon", Ui.loadResource(Rez.JsonData.l_moon));
+//    	_layouts.put("moon", Ui.loadResource(Rez.JsonData.l_moon));
+    	_layouts.put("moon-bottom", Ui.loadResource(Rez.JsonData.l_moon_bottom));
     	
     	_displayFunctions = new DisplayFunctions();
      }
