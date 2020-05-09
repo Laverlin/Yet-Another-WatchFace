@@ -56,6 +56,43 @@ class DisplayFunctions
 		return [phase.toChar() , zodiac.toChar()];
 	}
 	
+	function DisplayBottomLine(layout)
+	{
+		//var position = [0, 1, 2, 3, 4, 5];
+		var position = [4, 5, 0, 1, 2, 3];
+		var data = ["", "", "", "", "", ""];
+    	var ds = Sys.getDeviceSettings();
+    	
+    	var moonData = WatchData.GetMoonPhase(Time.now());
+		data[position[0]] = (moonData[0] + 118).toChar();
+		data[position[1]] = (moonData[1] + 78).toChar();
+    	layout["f"][position[1]] = 101;
+    	layout["c"][position[1]] = 1;
+    	layout["y"][position[1]] = 197;
+    	
+    	if (ds != null && ds has :alarmCount && ds.alarmCount != null 
+    		&& ((_settings.showAlarm == 1 && ds.alarmCount > 0) || _settings.showAlarm == 2))
+    	{
+    		data[position[2]] = "d";
+			data[position[3]] = ds.alarmCount.format("%d");
+    		layout["f"][position[3]] = 100;
+    		layout["c"][position[3]] = 2;
+    	} 
+    	
+    	if (ds != null && ds has :notificationCount && ds.notificationCount != null 
+    		&& ((_settings.showMessage == 1 && ds.notificationCount > 0) || _settings.showMessage == 2))
+    	{
+    		data[position[4]] = "e";
+    		data[position[5]] = ds.notificationCount.format("%d");
+    		layout["f"][position[5]] = 100;
+    		layout["c"][position[5]] = 2;
+    	} 
+
+		
+		return data;
+    	
+	}
+	
 	function LoadField3(layout)
     {
     	if (_settings.field3 <= _methods.size() && _settings.field3 >= 0 &&

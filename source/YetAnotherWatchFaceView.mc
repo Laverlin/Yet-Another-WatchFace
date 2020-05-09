@@ -27,7 +27,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
 		:DisplayTemp, :DisplayWind, :DisplayConnection, 
 		:LoadField3, :LoadField4, :LoadField5, 
-		:DisplayWatchStatus, :DisplayMoon];
+		:DisplayWatchStatus, :DisplayBottomLine];
 
 	hidden var _secDim;
 	hidden var _is90 = false;
@@ -230,6 +230,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		_layouts.put("wind", Ui.loadResource(Rez.JsonData.l_wind));
     	}
     	
+    	/*
     	if (Setting.GetShowAlarm() > 0)
     	{
     		_layouts.put("alarm", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_alarm_right : Rez.JsonData.l_alarm_center));
@@ -239,6 +240,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	{
     		_layouts.put("msg", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_msg_right : Rez.JsonData.l_msg_center));
     	}    	
+    	*/
     	
     	if (Setting.GetIsShowCity())
     	{
@@ -251,7 +253,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
     	
 //    	_layouts.put("moon", Ui.loadResource(Rez.JsonData.l_moon));
-    	_layouts.put("moon-bottom", Ui.loadResource(Rez.JsonData.l_moon_bottom));
+ //   	_layouts.put("moon-bottom", Ui.loadResource(Rez.JsonData.l_moon_bottom));
+ 		_layouts.put("bottom-line", Ui.loadResource(Rez.JsonData.l_bottom_line));
     	
     	_displayFunctions = new DisplayFunctions();
      }
