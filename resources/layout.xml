@@ -20,12 +20,6 @@
 	<jsonData id="l_city_left">{"x":[35], "y":[31], "c":[2], "f":[100], "a":[2], "fun":0}</jsonData>
 	<jsonData id="l_city_center">{"x":[120], "y":[31], "c":[2], "f":[100], "a":[1], "fun":0}</jsonData>
 	
-	<jsonData id="l_alarm_right">{"x":[124, 143], "y":[195, 195], "c":[0, 2], "f":[101, 100], "a":[2, 2], "fun":1}</jsonData>
-	<jsonData id="l_alarm_center">{"x":[91, 110], "y":[202, 202], "c":[0, 2], "f":[101, 100], "a":[2, 2], "fun":1}</jsonData>
-	
-	<jsonData id="l_msg_right">{"x":[160, 178], "y":[195, 195], "c":[0, 2], "f":[101, 100], "a":[2, 2], "fun":2}</jsonData>
-	<jsonData id="l_msg_center">{"x":[129, 147], "y":[202, 202], "c":[0, 2], "f":[101, 100], "a":[2, 2], "fun":2}</jsonData>
-	
 	<jsonData id="l_date">{"x":[115, 88, 50], "y":[105, 105, 105], "c":[1, 2, 1], "f":[0, 1, 0], "a":[0, 0, 0], "fun":3, "cor":[null, -5, -7]}</jsonData>
 	<jsonData id="l_date_f90">{"x":[115, 88, 50], "y":[105, 105, 105], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "fun":3, "cor":[null, -5, -7]}</jsonData>
 	
