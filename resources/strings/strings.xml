@@ -75,10 +75,12 @@
 	<string id="isShowSecondsTitle">Display Seconds</string>
 	
 	<string id="CityAlignTitle">City align</string>
-	<string id="AlarmAlignTitle">Alarm/Notifications align</string>
-	<string id = "Left">Left</string>
-	<string id = "Center">Center</string>
-	<string id = "Right">Right</string>
+	<string id="Left">Left</string>
+	<string id="Center">Center</string>
+	<string id="Right">Right</string>
+	<string id="BottomLineTitle">Bottom Line</string>
+	<string id = "BottomMoonRight">Moon:Alarm:Notification</string>
+	<string id = "BottomMoonLeft">Alarm:Notification:Moon</string>
 	
 	<string id="IsShowAlarmTitle">Show Alarm</string>
 	<string id="IsShowMessageTitle">Show Message</string>

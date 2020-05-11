@@ -254,7 +254,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	
 //    	_layouts.put("moon", Ui.loadResource(Rez.JsonData.l_moon));
  //   	_layouts.put("moon-bottom", Ui.loadResource(Rez.JsonData.l_moon_bottom));
- 		_layouts.put("bottom-line", Ui.loadResource(Rez.JsonData.l_bottom_line));
+ 		_layouts.put("bottom-line", Ui.loadResource(
+ 			(Setting.GetBottomLayout() == 0) ? Rez.JsonData.l_bottom_line1 : Rez.JsonData.l_bottom_line2));
+ 		
     	
     	_displayFunctions = new DisplayFunctions();
      }

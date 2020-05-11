@@ -122,10 +122,10 @@
     	</settingConfig>
     </setting>
     
-    <setting propertyKey="@Properties.alarm-align" title="@Strings.AlarmAlignTitle">
+    <setting propertyKey="@Properties.bottom-line" title="@Strings.BottomLineTitle">
     	<settingConfig type="list">
-    		<listEntry value="0">@Strings.Right</listEntry>
-    		<listEntry value="1">@Strings.Center</listEntry>
+    		<listEntry value="0">@Strings.BottomMoonRight</listEntry>
+    		<listEntry value="1">@Strings.BottomMoonLeft</listEntry>
     	</settingConfig>
     </setting>
        
