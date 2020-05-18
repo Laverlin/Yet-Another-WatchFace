@@ -78,6 +78,7 @@
 	<string id="Left">Left</string>
 	<string id="Center">Center</string>
 	<string id="Right">Right</string>
+	<string id="IsShowMoonTitle">Show Moon Phase</string>
 	<string id="BottomLineTitle">Bottom Line</string>
 	<string id = "BottomMoonRight">Moon:Alarm:Notification</string>
 	<string id = "BottomMoonLeft">Alarm:Notification:Moon</string>

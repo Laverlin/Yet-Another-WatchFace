@@ -27,4 +27,5 @@
     <property id = "alarm-align" type = "number">0</property>
     <property id = "date-order" type = "number">0</property>
     <property id = "bottom-line" type = "number">0</property>
+    <property id = "is-show-moon" type="boolean">false</property>
 </properties>

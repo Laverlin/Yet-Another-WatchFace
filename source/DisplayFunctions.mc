@@ -46,15 +46,6 @@ class DisplayFunctions
 		_settings = settings;
 	}
 	
-	function DisplayMoon(layout)
-	{
-		var moonData = WatchData.GetMoonPhase(Time.now());
-		
-		var phase = moonData[0] + 118;
-		var zodiac = moonData[1] + 78;
-
-		return [phase.toChar() , zodiac.toChar()];
-	}
 	
 	function DisplayBottomLine(layout)
 	{
@@ -62,9 +53,12 @@ class DisplayFunctions
 		var data = ["", "", "", "", "", ""];
     	var ds = Sys.getDeviceSettings();
     	
-    	var moonData = WatchData.GetMoonPhase(Time.now());
-		data[0] = (moonData[0] + 118).toChar();
-		data[1] = (moonData[1] + 78).toChar();
+    	if (_settings.isShowMoon)
+    	{
+    		var moonData = WatchData.GetMoonPhase(Time.now());
+			data[0] = (moonData[0] + 118).toChar();
+			data[1] = (moonData[1] + 78).toChar();
+		}
     	
     	if (ds != null && ds has :alarmCount && ds.alarmCount != null 
     		&& ((_settings.showAlarm == 1 && ds.alarmCount > 0) || _settings.showAlarm == 2))

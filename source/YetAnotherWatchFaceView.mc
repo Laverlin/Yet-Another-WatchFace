@@ -230,17 +230,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		_layouts.put("wind", Ui.loadResource(Rez.JsonData.l_wind));
     	}
     	
-    	/*
-    	if (Setting.GetShowAlarm() > 0)
-    	{
-    		_layouts.put("alarm", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_alarm_right : Rez.JsonData.l_alarm_center));
-    	}
-    	
-    	if (Setting.GetShowMessage() > 0)
-    	{
-    		_layouts.put("msg", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_msg_right : Rez.JsonData.l_msg_center));
-    	}    	
-    	*/
     	
     	if (Setting.GetIsShowCity())
     	{
@@ -252,8 +241,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
     	
-//    	_layouts.put("moon", Ui.loadResource(Rez.JsonData.l_moon));
- //   	_layouts.put("moon-bottom", Ui.loadResource(Rez.JsonData.l_moon_bottom));
  		_layouts.put("bottom-line", Ui.loadResource(
  			(Setting.GetBottomLayout() == 0) ? Rez.JsonData.l_bottom_line1 : Rez.JsonData.l_bottom_line2));
  		
