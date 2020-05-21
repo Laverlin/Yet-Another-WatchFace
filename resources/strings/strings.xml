@@ -16,8 +16,8 @@
     <string id = "DisplayDistance">Distance</string>
     <string id = "DisplayPulse">Pulse</string>
     <string id = "DisplayFloors">Floors Climbed</string>
-    <string id = "DisplayMsgCount">Message Count</string>
-    <string id = "DisplayAlarmCount">Alarm Count</string>
+    <string id = "DisplayMsgCount">Messages</string>
+    <string id = "DisplayAlarmCount">Alarms</string>
     <string id = "DisplayAltitude">Altitude</string>
     <string id = "DisplayCalories">Calories</string>
     <string id = "DisplayStepsNFloors">Steps/Floors</string>
@@ -72,7 +72,7 @@
 	
 	<string id="isShowWeatherTitle">Show Weather</string>
 	<string id="IsShowCityTitle">Show Current City</string>
-	<string id="isShowSecondsTitle">Display Seconds</string>
+	<string id="isShowSecondsTitle">Show Seconds</string>
 	
 	<string id="CityAlignTitle">City align</string>
 	<string id="Left">Left</string>
@@ -87,7 +87,7 @@
 	<string id="IsShowMessageTitle">Show Message</string>
 	
 	<string id="ShowNever">Never</string>
-	<string id="ShowOnlyValue">Non Zero Count</string>
+	<string id="ShowOnlyValue">Non-Zero</string>
 	<string id="ShowAlways">Always</string>
 	
 	<string id ="ExtraTimeZoneTitle">Second Time Zone</string>
