@@ -47,7 +47,7 @@ Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect I
 - add moon phases and moon zodiac
 - change bottom line settings
 
-## version 0.9.212 
+### version 0.9.212 
 - add various date formats
 - minor improvements: add mph to the wind speed, add orange color
 
