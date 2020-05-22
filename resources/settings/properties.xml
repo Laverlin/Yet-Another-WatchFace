@@ -16,6 +16,7 @@
     <property id = "show-message" type = "number">2</property>
     <property id="is-show-weather" type = "boolean">true</property>
     <property id="is-show-seconds" type = "boolean">true</property>
+    <property id = "is-show-moon" type="boolean">false</property>
     <property id="etzId" type="number">16</property>
     <property id="tempSystem" type="number">1</property>
     <property id="windSystem" type="number">1</property>
@@ -27,5 +28,5 @@
     <property id = "alarm-align" type = "number">0</property>
     <property id = "date-order" type = "number">0</property>
     <property id = "bottom-line" type = "number">0</property>
-    <property id = "is-show-moon" type="boolean">false</property>
+    
 </properties>

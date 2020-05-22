@@ -111,7 +111,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		var location = info.currentLocation.toDegrees();
     		if (location[0] != 0.0 && location[1] != 0.0)
     		{
-//    			Sys.println(activityLocation.toDegrees()[0] + ", " + activityLocation.toDegrees()[1]);
+    			//Sys.println(location[0] + ", " + location[1]);
     			Setting.SetLastKnownLocation(location);
     		}
     	} 

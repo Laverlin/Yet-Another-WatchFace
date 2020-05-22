@@ -21,7 +21,7 @@
     <string id = "DisplayAltitude">Altitude</string>
     <string id = "DisplayCalories">Calories</string>
     <string id = "DisplayStepsNFloors">Steps/Floors</string>
-    <string id = "DisplaySunEvent">Sun rise/set</string>
+    <string id = "DisplaySunEvent">Sunrise/Sunset</string>
     
     <string id="TempSystemTitle">Temperature</string>
     <string id="Celsius">Celsius</string>
@@ -83,8 +83,8 @@
 	<string id = "BottomMoonRight">Moon:Alarm:Notification</string>
 	<string id = "BottomMoonLeft">Alarm:Notification:Moon</string>
 	
-	<string id="IsShowAlarmTitle">Show Alarm</string>
-	<string id="IsShowMessageTitle">Show Message</string>
+	<string id="IsShowAlarmTitle">Show Alarms</string>
+	<string id="IsShowMessageTitle">Show Messages</string>
 	
 	<string id="ShowNever">Never</string>
 	<string id="ShowOnlyValue">Non-Zero</string>
