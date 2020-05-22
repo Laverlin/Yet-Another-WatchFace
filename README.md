@@ -37,9 +37,7 @@ Configure all the watch face options via the Garmin Connect mobile app:
 Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect IQ Apps, Watch Faces, (select YA-WatchFace), Settings.
 
 ## Screenshots
-<img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen1.png" height="250px" />
-<img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen2.png" height="250px" />
-<img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen3.png" height="250px" />
+<img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen1.png" height="250px" /> <img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen2.png" height="250px" />  <img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen3.png" height="250px" />
 
 
 
