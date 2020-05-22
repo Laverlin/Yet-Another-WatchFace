@@ -49,7 +49,6 @@ class DisplayFunctions
 	
 	function DisplayBottomLine(layout)
 	{
-
 		var data = ["", "", "", "", "", ""];
     	var ds = Sys.getDeviceSettings();
     	
@@ -74,9 +73,7 @@ class DisplayFunctions
     		data[5] = ds.notificationCount.format("%d");
     	} 
 
-		
 		return data;
-    	
 	}
 	
 	function LoadField3(layout)
@@ -129,16 +126,12 @@ class DisplayFunctions
     				 [2, 1, 0],
     				 [2, 0, 1]];
 
-    	//var fonts = [0, 1, 0];
-    	//var colors = [1, 2, 1];
     	var ycor = [2, 0, 0];
 
 		var orderId = _settings.dateOrder;
 		var dateValues = ["", "", ""];
     	for (var i = 0; i < 3; i++)
     	{
-    		//layout["f"][i] = fonts[order[orderId][i]];
-    		//layout["c"][i] = colors[order[orderId][i]];
     		if (!_isInit)
     		{
     			layout["y"][i] = layout["y"][i] + ycor[order[orderId][i]];
