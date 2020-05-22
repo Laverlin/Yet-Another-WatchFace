@@ -1,5 +1,4 @@
 # Yet-Another-WatchFace
-Watch Face application for Garmin Fenix 5[X][Plus], D2, Forerunner 245[M]/645[M]/935/945, Mk1, MARQ1 smartwatch
 
 Watch Face application for Garmin smartwatches: 
 <pre>
