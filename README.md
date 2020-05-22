@@ -1,4 +1,5 @@
 # Yet-Another-WatchFace
+Watch Face application for Garmin Fenix 5[X][Plus], D2, Forerunner 245[M]/645[M]/935/945, Mk1, MARQ1 smartwatch
 
 Watch Face application for Garmin smartwatches: 
 <pre>
@@ -19,20 +20,13 @@ Watch Face application for Garmin smartwatches:
 - Current City Name, based on GPS. You have to get GPS coordinates to update the city if the location has been changed 
 - Current Date and Week Day
 - Battery Level
-- Actual Weather in the current location, Temperature (C|F), Perception probability and Wind(kn|m/s|km/h|mp/h). Updates once in 60 min if internet connection is available
+- Actual Weather in current location, Temperature (C|F), Perception probability and Wind(kn|m/s)
 - Current Time in one addition timezone (DST will be calculated automatically)
-- Currency Exchange Rate, between two out of 47 currencies. Updates once in 60 min if internet connection is available
+- Actual Currency Exchange Rate, between two out of 47 currencies. Updates once in 60 min if internet connection is available
 - Pulse
 - Distance (km, miles, steps)
 - Floors climbed
-- Altitude
-- Calories
-- Sunrise / Sunset times
-- Alarm count
-- Notification count
-- Moon phase and Zodiac
- 
-## Configuration
+
 Configure all the watch face options via the Garmin Connect mobile app:
 Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect IQ Apps, Watch Faces, (select YA-WatchFace), Settings.
 

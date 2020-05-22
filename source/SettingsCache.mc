@@ -21,6 +21,7 @@ class SettingsCache
 		showAlarm = Setting.GetShowAlarm();
 		city = Setting.GetCity();
 		dateOrder = Setting.GetDateOrder();
+		isShowMoon = Setting.GetShowMoon();
 	}
 	public var field3;
 	public var field4;
@@ -41,4 +42,5 @@ class SettingsCache
 	public var showAlarm;
 	public var city;
 	public var dateOrder;
+	public var isShowMoon;
 }

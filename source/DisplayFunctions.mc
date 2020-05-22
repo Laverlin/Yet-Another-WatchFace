@@ -46,6 +46,36 @@ class DisplayFunctions
 		_settings = settings;
 	}
 	
+	
+	function DisplayBottomLine(layout)
+	{
+		var data = ["", "", "", "", "", ""];
+    	var ds = Sys.getDeviceSettings();
+    	
+    	if (_settings.isShowMoon)
+    	{
+    		var moonData = WatchData.GetMoonPhase(Time.now());
+			data[0] = (moonData[0] + 118).toChar();
+			data[1] = (moonData[1] + 78).toChar();
+		}
+    	
+    	if (ds != null && ds has :alarmCount && ds.alarmCount != null 
+    		&& ((_settings.showAlarm == 1 && ds.alarmCount > 0) || _settings.showAlarm == 2))
+    	{
+    		data[2] = "d";
+			data[3] = ds.alarmCount.format("%d");
+    	} 
+    	
+    	if (ds != null && ds has :notificationCount && ds.notificationCount != null 
+    		&& ((_settings.showMessage == 1 && ds.notificationCount > 0) || _settings.showMessage == 2))
+    	{
+    		data[4] = "e";
+    		data[5] = ds.notificationCount.format("%d");
+    	} 
+
+		return data;
+	}
+	
 	function LoadField3(layout)
     {
     	if (_settings.field3 <= _methods.size() && _settings.field3 >= 0 &&
@@ -96,16 +126,12 @@ class DisplayFunctions
     				 [2, 1, 0],
     				 [2, 0, 1]];
 
-    	//var fonts = [0, 1, 0];
-    	//var colors = [1, 2, 1];
     	var ycor = [2, 0, 0];
 
 		var orderId = _settings.dateOrder;
 		var dateValues = ["", "", ""];
     	for (var i = 0; i < 3; i++)
     	{
-    		//layout["f"][i] = fonts[order[orderId][i]];
-    		//layout["c"][i] = colors[order[orderId][i]];
     		if (!_isInit)
     		{
     			layout["y"][i] = layout["y"][i] + ycor[order[orderId][i]];

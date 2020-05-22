@@ -16,12 +16,12 @@
     <string id = "DisplayDistance">Distance</string>
     <string id = "DisplayPulse">Pulse</string>
     <string id = "DisplayFloors">Floors Climbed</string>
-    <string id = "DisplayMsgCount">Message Count</string>
-    <string id = "DisplayAlarmCount">Alarm Count</string>
+    <string id = "DisplayMsgCount">Messages</string>
+    <string id = "DisplayAlarmCount">Alarms</string>
     <string id = "DisplayAltitude">Altitude</string>
     <string id = "DisplayCalories">Calories</string>
     <string id = "DisplayStepsNFloors">Steps/Floors</string>
-    <string id = "DisplaySunEvent">Sun rise/set</string>
+    <string id = "DisplaySunEvent">Sunrise/Sunset</string>
     
     <string id="TempSystemTitle">Temperature</string>
     <string id="Celsius">Celsius</string>
@@ -48,10 +48,10 @@
     <string id="DimColorTitle">Dim Color</string>
     
     <string id="DateOrderTitle">Date Format</string>
-    <string id="DateOrderWDM">WeekDay Month Day</string>
-    <string id="DateOrderWMD">WeekDay Day Month</string>
-    <string id="DateOrderDMW">Day Month WeekDay</string>
-    <string id="DateOrderMDW">Month Day WeekDay</string>
+    <string id="DateOrderWDM">WeekDay:Month:Day</string>
+    <string id="DateOrderWMD">WeekDay:Day:Month</string>
+    <string id="DateOrderDMW">Day:Month:WeekDay</string>
+    <string id="DateOrderMDW">Month:Day:WeekDay</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>
@@ -72,19 +72,22 @@
 	
 	<string id="isShowWeatherTitle">Show Weather</string>
 	<string id="IsShowCityTitle">Show Current City</string>
-	<string id="isShowSecondsTitle">Display Seconds</string>
+	<string id="isShowSecondsTitle">Show Seconds</string>
 	
 	<string id="CityAlignTitle">City align</string>
-	<string id="AlarmAlignTitle">Alarm/Notifications align</string>
-	<string id = "Left">Left</string>
-	<string id = "Center">Center</string>
-	<string id = "Right">Right</string>
+	<string id="Left">Left</string>
+	<string id="Center">Center</string>
+	<string id="Right">Right</string>
+	<string id="IsShowMoonTitle">Show Moon Phase</string>
+	<string id="BottomLineTitle">Bottom Line</string>
+	<string id = "BottomMoonRight">Moon:Alarm:Notification</string>
+	<string id = "BottomMoonLeft">Alarm:Notification:Moon</string>
 	
-	<string id="IsShowAlarmTitle">Show Alarm</string>
-	<string id="IsShowMessageTitle">Show Message</string>
+	<string id="IsShowAlarmTitle">Show Alarms</string>
+	<string id="IsShowMessageTitle">Show Messages</string>
 	
 	<string id="ShowNever">Never</string>
-	<string id="ShowOnlyValue">Non Zero Count</string>
+	<string id="ShowOnlyValue">Non-Zero</string>
 	<string id="ShowAlways">Always</string>
 	
 	<string id ="ExtraTimeZoneTitle">Second Time Zone</string>

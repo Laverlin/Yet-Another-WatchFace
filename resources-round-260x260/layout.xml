@@ -20,13 +20,7 @@
 	 -->
 	<jsonData id="l_city_left">{"x":[41], "y":[32], "c":[2], "f":[100], "a":[2], "t":[null], "fun":0}</jsonData>
 	<jsonData id="l_city_center">{"x":[130], "y":[31], "c":[2], "f":[100], "a":[1], "t":[null], "fun":0}</jsonData>
-	
-	<jsonData id="l_alarm_right">{"x":[136, 155], "y":[215, 215], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":1}</jsonData>
-	<jsonData id="l_alarm_center">{"x":[98, 117], "y":[215, 215], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":1}</jsonData>
-	
-	<jsonData id="l_msg_right">{"x":[172, 190], "y":[215, 215], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":2}</jsonData>
-	<jsonData id="l_msg_center">{"x":[135, 154], "y":[215, 215], "c":[0, 2], "f":[101, 100], "a":[2, 2], "t":[null, null], "fun":2}</jsonData>
-	
+		
 	<jsonData id="l_date">{"x":[124, 88, 50], "y":[113, 113, 113], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -5, -7]}</jsonData>
 	
 	<jsonData id="l_time">{"x":[101, 101], "y":[34, 131], "c":[0, 0], "f":[7, 7], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
@@ -50,6 +44,10 @@
 	<jsonData id="l_field5">{"x":[135, 194], "y":[180, 186], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3}</jsonData>
 	 
     <jsonData id="l_battery">{"x":[122, 122, 122, 122], "y":[55, 65, 74, 83], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
+    
+    <jsonData id="l_bottom_line1">{"x":[58, 79, 134, 153, 170, 188], "y":[215, 215, 215, 215, 215, 215], "c":[0, 1, 0, 2, 0, 2], "f":[101, 101, 101, 100, 101, 100], "a":[2, 2, 2, 2, 2, 2], "fun":14, "tb":null}</jsonData>
+    <jsonData id="l_bottom_line2">{"x":[167, 188, 58, 77, 94, 113], "y":[215, 215, 215, 215, 215, 215], "c":[0, 1, 0, 2, 0, 2], "f":[101, 101, 101, 100, 101, 100], "a":[2, 2, 2, 2, 2, 2], "fun":14, "tb":null}</jsonData>
+    
     
     <jsonData id="l_line">{"x":[130, 130],"y":[56, 204]}</jsonData>
     

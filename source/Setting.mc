@@ -27,7 +27,18 @@ class Setting
 	static hidden var _weatherProvider = "weather-provider";
 	static hidden var _weatherRefreshToken = "wr-token";
 	static hidden var _dateOrder = "date-order";
+	static hidden var _bottomLayout = "bottom-line";
+	static hidden var _isShowMoon = "is-show-moon";
 
+	public static function GetShowMoon()
+	{
+		return App.getApp().getProperty(_isShowMoon);
+	}
+	public static function GetBottomLayout()
+	{
+		return App.getApp().getProperty(_bottomLayout);
+	}
+	
 	public static function GetDateOrder()
 	{
 		return App.getApp().getProperty(_dateOrder);

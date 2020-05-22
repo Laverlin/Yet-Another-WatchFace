@@ -27,7 +27,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
 		:DisplayTemp, :DisplayWind, :DisplayConnection, 
 		:LoadField3, :LoadField4, :LoadField5, 
-		:DisplayWatchStatus];
+		:DisplayWatchStatus, :DisplayBottomLine];
 
 	hidden var _secDim;
 	hidden var _is90 = false;
@@ -111,7 +111,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		var location = info.currentLocation.toDegrees();
     		if (location[0] != 0.0 && location[1] != 0.0)
     		{
-//    			Sys.println(activityLocation.toDegrees()[0] + ", " + activityLocation.toDegrees()[1]);
+    			//Sys.println(location[0] + ", " + location[1]);
     			Setting.SetLastKnownLocation(location);
     		}
     	} 
@@ -185,7 +185,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	        			? _layouts.values()[i]["f"][j] 
 	        			: _fonts[_layouts.values()[i]["f"][j] - 100];
 
-				text = (_layouts.values()[i]["t"][j] == null)
+				text = (!_layouts.values()[i].hasKey("t") || _layouts.values()[i]["t"][j] == null)
 					? funcs[j] 
 	        		: _layouts.values()[i]["t"][j];
 	        			
@@ -230,15 +230,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		_layouts.put("wind", Ui.loadResource(Rez.JsonData.l_wind));
     	}
     	
-    	if (Setting.GetShowAlarm() > 0)
-    	{
-    		_layouts.put("alarm", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_alarm_right : Rez.JsonData.l_alarm_center));
-    	}
-    	
-    	if (Setting.GetShowMessage() > 0)
-    	{
-    		_layouts.put("msg", Ui.loadResource(Setting.GetAlarmAlign() == 0 ? Rez.JsonData.l_msg_right : Rez.JsonData.l_msg_center));
-    	}    	
     	
     	if (Setting.GetIsShowCity())
     	{
@@ -249,6 +240,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts.put("field4", Ui.loadResource(Rez.JsonData.l_field4));
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
+    	
+ 		_layouts.put("bottom-line", Ui.loadResource(
+ 			(Setting.GetBottomLayout() == 0) ? Rez.JsonData.l_bottom_line1 : Rez.JsonData.l_bottom_line2));
+ 		
     	
     	_displayFunctions = new DisplayFunctions();
      }
