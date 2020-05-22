@@ -35,9 +35,9 @@ Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect I
 
 
 
-# Changelog
+## Changelog
 
-## version 0.9.239:latest
+### version 0.9.239:latest
 - add moon phases and moon zodiac
 - change bottom line settings
 
