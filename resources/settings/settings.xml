@@ -121,11 +121,11 @@
     		<listEntry value = "2">@Strings.ShowAlways</listEntry>
     	</settingConfig>
     </setting>
-    <!--  
+ 
     <setting propertyKey="@Properties.is-show-moon" title="@Strings.IsShowMoonTitle">
     	<settingConfig type="boolean"></settingConfig>
     </setting>
-    -->
+
     <setting propertyKey="@Properties.bottom-line" title="@Strings.BottomLineTitle">
     	<settingConfig type="list">
     		<listEntry value="0">@Strings.BottomMoonRight</listEntry>
