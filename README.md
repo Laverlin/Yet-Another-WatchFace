@@ -19,7 +19,7 @@ Watch Face application for Garmin smartwatches:
 - Current City Name, based on GPS. You have to get GPS coordinates to update the city if the location has been changed
 - Current Date and Week Day
 - Battery Level
-- Actual Weather in the current location, Temperature (C|F), Perception probability and Wind(kn|m/s|km/h|mp/h). Updates once in 60 min if internet connection is available
+- Actual Weather in the current location, Temperature (C/F), Perception probability and Wind(kn, m/s, km/h, mp/h). Updates once in 60 min if internet connection is available
 - Current Time in one addition timezone (DST will be calculated automatically)
 - Currency Exchange Rate, between two out of 47 currencies. Updates once in 60 min if internet connection is available
 - Pulse
