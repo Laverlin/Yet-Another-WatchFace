@@ -15,16 +15,21 @@ Watch Face application for Garmin smartwatches:
     vivoactive 4 
 </pre>
 ## Features
-- Time (this is a watch face, after all) 
-- Current City Name, based on GPS. You have to get GPS coordinates to update the city if the location has been changed 
+- Time (this is a watch face, after all)
+- Current City Name, based on GPS. You have to get GPS coordinates to update the city if the location has been changed
 - Current Date and Week Day
 - Battery Level
-- Actual Weather in current location, Temperature (C|F), Perception probability and Wind(kn|m/s)
+- Actual Weather in the current location, Temperature (C|F), Perception probability and Wind(kn|m/s|km/h|mp/h). Updates once in 60 min if internet connection is available
 - Current Time in one addition timezone (DST will be calculated automatically)
-- Actual Currency Exchange Rate, between two out of 47 currencies. Updates once in 60 min if internet connection is available
+- Currency Exchange Rate, between two out of 47 currencies. Updates once in 60 min if internet connection is available
 - Pulse
 - Distance (km, miles, steps)
 - Floors climbed
+- Altitude
+- Calories
+- Sunrise / Sunset
+- Alarms & Notifications
+- Moon phase and Zodiac
 
 Configure all the watch face options via the Garmin Connect mobile app:
 Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect IQ Apps, Watch Faces, (select YA-WatchFace), Settings.
