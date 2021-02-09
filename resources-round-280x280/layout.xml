@@ -41,7 +41,7 @@
 	
 	 
 	<jsonData id="l_field3">{"x":[148, 215], "y":[128, 138], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":10, "lcor" : 3}</jsonData>
-	<jsonData id="l_field4">{"x":[148, 215], "y":[164, 176], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3}</jsonData>
+	<jsonData id="l_field4">{"x":[148, 215], "y":[164, 174], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3}</jsonData>
 	<jsonData id="l_field5">{"x":[148, 215], "y":[194, 204], "c":[1, 2], "f":[1, 100], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3}</jsonData>
 	 
     <jsonData id="l_battery">{"x":[132, 132, 132, 132], "y":[65, 75, 84, 93], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":1}</jsonData>    
