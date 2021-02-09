@@ -313,8 +313,17 @@ class DisplayFunctions
 				format = (currencyValue < 0.01) ? "%.4f" : format;
 				format = (currencyValue < 0.001) ? "%.5f" : format;
 				format = (currencyValue < 0.0001) ? "%.6f" : format;
+				format = (currencyValue < 0.00001) ? "%.7f" : format;
+				
+				var targetCurrency = _settings.targetCurrency.toLower();
+				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("usd")) ? "$" : targetCurrency;
+				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("eur")) ? "€" : targetCurrency;
+				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("jpy")) ? "¥" : targetCurrency;
+				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("rub")) ? "₽" : targetCurrency;
+				
+				targetCurrency = (currencyValue < 0.0001 && targetCurrency.equals("btc")) ? "₿" : targetCurrency;
 
-				return [currencyValue.format(format), _settings.targetCurrency.toLower()];					
+				return [currencyValue.format(format), targetCurrency];					
 			}
     }  
 

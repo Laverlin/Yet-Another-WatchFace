@@ -34,6 +34,12 @@ class Setting
 	{
 		return App.getApp().getProperty(_isShowMoon);
 	}
+	
+	public static function SetShowMoon(isShowMoon)
+	{
+		App.getApp().setProperty(_isShowMoon, isShowMoon);
+	}
+	
 	public static function GetBottomLayout()
 	{
 		return App.getApp().getProperty(_bottomLayout);

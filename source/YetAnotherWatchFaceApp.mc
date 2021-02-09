@@ -39,7 +39,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     
     function onBackgroundData(data) 
     {
-    	//Sys.println("on bg data : " + data);
+        // Sys.println("on bg data : " + data);
     	
         if (data != null)
         {
@@ -48,7 +48,9 @@ class YetAnotherWatchFaceApp extends App.AppBase {
       			Setting.SetConError(true);
       		}
       		else
-      		{      			
+      		{   
+      			Setting.SetConError(false);
+      			   			
 	        	if (data["exchange"]["status"]["statusCode"] == 1 || Setting.GetExchangeRate() == null)
 	        	{
 	        		Setting.SetExchangeRate(data["exchange"]);
