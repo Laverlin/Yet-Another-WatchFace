@@ -317,9 +317,9 @@ class DisplayFunctions
 				
 				var targetCurrency = _settings.targetCurrency.toLower();
 				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("usd")) ? "$" : targetCurrency;
-				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("eur")) ? "€" : targetCurrency;
+				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("eur")) ? 8364.toChar() : targetCurrency;
 				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("jpy")) ? "¥" : targetCurrency;
-				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("rub")) ? "₽" : targetCurrency;
+				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("rub")) ? 8381.toChar() : targetCurrency;
 				
 				targetCurrency = (currencyValue < 0.0001 && targetCurrency.equals("btc")) ? 8383.toChar() : targetCurrency; //"₿" : targetCurrency;
 
