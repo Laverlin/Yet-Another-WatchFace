@@ -67,6 +67,8 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			? Lang.format("&bc=$1$&tc=$2$", [Setting.GetBaseCurrency(), Setting.GetTargetCurrency()])
 			: "";
 
+	locationParam = Lang.format("&lat=$1$&lon=$2$", [49.47188, 17.11184]); ///!!!
+
 		var url = Lang.format(
 			"https://ivan-b.com/watch-api/v2/YAFace?apiToken=$1$$2$$3$$4$$5$$6$", [
 			//"localhost:5051/api/v2/YAFace?apiToken=$1$$2$$3$$4$$5$$6$", [
