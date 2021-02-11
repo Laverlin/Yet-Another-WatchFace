@@ -321,7 +321,7 @@ class DisplayFunctions
 				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("jpy")) ? "¥" : targetCurrency;
 				targetCurrency = (currencyValue > 10000 && targetCurrency.equals("rub")) ? "₽" : targetCurrency;
 				
-				targetCurrency = (currencyValue < 0.0001 && targetCurrency.equals("btc")) ? "₿" : targetCurrency;
+				targetCurrency = (currencyValue < 0.0001 && targetCurrency.equals("btc")) ? 8383.toChar() : targetCurrency; //"₿" : targetCurrency;
 
 				return [currencyValue.format(format), targetCurrency];					
 			}
