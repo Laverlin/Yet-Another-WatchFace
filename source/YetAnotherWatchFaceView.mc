@@ -51,7 +51,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_is90 = (dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 90 || 
     		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 82 ||
     		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 92) ? true : false;
-    	// Sys.println(dc.getFontHeight(Gfx.FONT_NUMBER_HOT));
 		
 		InvalidateLayout();
     }
