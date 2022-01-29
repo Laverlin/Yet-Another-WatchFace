@@ -6,16 +6,7 @@ using Toybox.Time.Gregorian as Gregorian;
 using Toybox.Time as Time;
 
 
-// Main WatchFaace view
-// ToDo:: 
-//        -- 1. Create Wrapper around ObjectStore 
-//        -- 2. Move UI logic to functions
-//        -- 3. Fix Timezone Issue 
-//		  -- 4. Add option to show city name
-//		  -- 5. Adjust exchange rate output
-//        6. Refactor backround process (error handling)
-//        -- 7. Option to Show weather
-//        8. Refactor resources, name conventions, etc..
+// Main WatchFace view
 //
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
@@ -36,6 +27,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _wfApp;
 	hidden var _lastBg = null;
 	hidden var _bgInterval = new Toybox.Time.Duration(59 * 60); //one hour
+
+	hidden var _settingCache = new SettingsCache();
 	
     function initialize(wfApp) 
     {
@@ -58,8 +51,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_is90 = (dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 90 || 
     		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 82 ||
     		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 92) ? true : false;
-    	//Sys.println(dc.getFontHeight(Gfx.FONT_NUMBER_HOT));
-
+    	// Sys.println(dc.getFontHeight(Gfx.FONT_NUMBER_HOT));
+		
 		InvalidateLayout();
     }
     
@@ -67,10 +60,10 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onPartialUpdate(dc)
     {
-    	if (Setting.GetIsShowSeconds())
+    	if (_settingCache.isShowSeconds)
     	{
 	    	dc.setClip(_layouts["sec"]["x"][0] - _secDim[0], _layouts["sec"]["y"][0], _layouts["sec"]["x"][0] + 1, _secDim[1]);
-	    	dc.setColor(Setting.GetTimeColor(), Setting.GetBackgroundColor());
+	    	dc.setColor(_settingCache.timeColor, _settingCache.backgroundColor);
 	    	dc.drawText(
 	    		_layouts["sec"]["x"][0], 
 	    		_layouts["sec"]["y"][0], 
@@ -79,15 +72,15 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	    		Gfx.TEXT_JUSTIFY_RIGHT);
 		}
 		
-		if (Setting.GetPulseField() != 0)
+		if (_settingCache.pulseField != 0)
 		{
-			var layout = _layouts["field" + Setting.GetPulseField()];
+			var layout = _layouts["field" + _settingCache.pulseField];
 			var pulseData = _displayFunctions.DisplayPulse(layout);
 			
 			if (pulseData[2])
 			{
 				dc.setClip(layout["x"][0], layout["y"][0], layout["x"][0] + _secDim[0], _secDim[1]);
-				dc.setColor(Setting.GetBrightColor(), Setting.GetBackgroundColor());
+				dc.setColor(_settingCache.brightColor, _settingCache.backgroundColor);
 				dc.drawText(layout["x"][0], layout["y"][0], Gfx.FONT_TINY, pulseData[0], Gfx.TEXT_JUSTIFY_LEFT);
 			}
 		}
@@ -99,7 +92,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     {
    		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
    		_displayFunctions.setDc(dc, _fonts);
-   		_displayFunctions.setSettings(new SettingsCache());
+		_displayFunctions.setSettings(_settingCache);
    		
     	var info = Activity.getActivityInfo();
     	

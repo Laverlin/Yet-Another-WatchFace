@@ -22,6 +22,12 @@ class SettingsCache
 		city = Setting.GetCity();
 		dateOrder = Setting.GetDateOrder();
 		isShowMoon = Setting.GetShowMoon();
+
+		isShowSeconds = Setting.GetIsShowSeconds();
+		pulseField = Setting.GetPulseField();
+		timeColor = Setting.GetTimeColor();
+		brightColor = Setting.GetBrightColor();
+		backgroundColor = Setting.GetBackgroundColor();
 	}
 	public var field3;
 	public var field4;
@@ -43,4 +49,9 @@ class SettingsCache
 	public var city;
 	public var dateOrder;
 	public var isShowMoon;
+	public var isShowSeconds;
+	public var pulseField;
+	public var timeColor;
+	public var brightColor;
+	public var backgroundColor;	
 }
