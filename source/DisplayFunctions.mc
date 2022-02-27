@@ -294,6 +294,9 @@ class DisplayFunctions
 	    else
 	    {
 	    	layout["f"][1] = 101;
+			if (layout["cy"] != null) {
+				layout["y"][1] = layout["cy"];
+			}
 	    	return [eventTime[0].format("%02d") + ":" + eventTime[1].format("%02d"), eventTime[2] ? "r" : "s"];
 	    }
     }
