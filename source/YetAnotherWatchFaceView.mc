@@ -11,6 +11,7 @@ using Toybox.Time as Time;
 class YetAnotherWatchFaceView extends Ui.WatchFace 
 {
 	hidden var _layouts = {};
+	hidden var _blayout = {};
 	hidden var _fonts = [
 		Ui.loadResource(Rez.Fonts.unicode_mss16_font), Ui.loadResource(Rez.Fonts.icon_font), Ui.loadResource(Rez.Fonts.vertical_font)];
 	hidden var _funcs = [
@@ -27,6 +28,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _wfApp;
 	hidden var _lastBg = null;
 	hidden var _bgInterval = new Toybox.Time.Duration(59 * 60); //one hour
+	hidden var _upTop = true;
+
+	hidden var _isCanBurn = false;
+	hidden var _isInLowPower = false;
+	hidden var _checkmateImage = null;
 
 	hidden var _settingCache = new SettingsCache();
 	
@@ -40,7 +46,29 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
 		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1);
 		Setting.SetDeviceName(Ui.loadResource(Rez.Strings.DeviceName));
+
+		var deviceSettings = Sys.getDeviceSettings();
+        if(deviceSettings has :requiresBurnInProtection) {    
+            _isCanBurn = deviceSettings.requiresBurnInProtection;
+			_checkmateImage = Application.loadResource( Rez.Drawables.checkmate ) as BitmapResource;
+        }
 		
+    }
+
+	// This method is called when the device re-enters sleep mode.
+	//
+    function onEnterSleep() {
+        _isInLowPower = true;
+		Sys.print(_isInLowPower);
+        Ui.requestUpdate(); 
+    }
+    
+    // This method is called when the device exits sleep mode.
+	//
+    function onExitSleep() {
+        _isInLowPower = false;
+		Sys.print(_isInLowPower);
+        Ui.requestUpdate(); 
     }
 
     // Load your resources here
@@ -59,6 +87,11 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onPartialUpdate(dc)
     {
+		if (_isInLowPower && _isCanBurn) 
+		{
+			return;
+		}
+
     	if (_settingCache.isShowSeconds)
     	{
 	    	dc.setClip(_layouts["sec"]["x"][0] - _secDim[0], _layouts["sec"]["y"][0], _layouts["sec"]["x"][0] + 1, _secDim[1]);
@@ -123,13 +156,25 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		dc.clearClip();
 		dc.setColor(Gfx.COLOR_TRANSPARENT, Setting.GetBackgroundColor());
     	dc.clear();
+
+		var layout;
+		if(_isInLowPower && _isCanBurn) {
+			Sys.print("in low power");
+            // dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK); // removing the background color and all the data points from the background, leaving just the hour hands
+            // dc.fillRectangle(0, 0, dc.getWidth(), dc.getHeight()); //width & height?
+			layout = _blayout;
+        }
+		else 
+		{
+			layout = _layouts;
+		}
     	
-		for (var i = 0; i < _layouts.size(); i++)
+		for (var i = 0; i < layout.size(); i++)
 		{
 			var funcs = null;
-			if (_displayFunctions has _funcs[_layouts.values()[i]["fun"]])
+			if (_displayFunctions has _funcs[layout.values()[i]["fun"]])
 			{
-				funcs = _displayFunctions.method(_funcs[_layouts.values()[i]["fun"]]).invoke(_layouts.values()[i]);
+				funcs = _displayFunctions.method(_funcs[layout.values()[i]["fun"]]).invoke(layout.values()[i]);
 			}
 			else
 			{
@@ -140,48 +185,48 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			var f = null;	
 			var text = null;
 			
-			for(var j = 0; j < _layouts.values()[i]["x"].size(); j++)
+			for(var j = 0; j < layout.values()[i]["x"].size(); j++)
 			{
-				dc.setColor(_colors[_layouts.values()[i]["c"][j]], 
-					_layouts.values()[i].hasKey("tb") ? Gfx.COLOR_TRANSPARENT : Setting.GetBackgroundColor());
+				dc.setColor(_colors[layout.values()[i]["c"][j]], 
+					layout.values()[i].hasKey("tb") ? Gfx.COLOR_TRANSPARENT : Setting.GetBackgroundColor());
 
-	        	var a = _layouts.values()[i]["a"][j];
+	        	var a = layout.values()[i]["a"][j];
 	        	
 	        	// if lcor is present AND lenght of prev text is greater than default X. 
 	        	// then default x should be increased on lcor
 	        	//
-	        	if (_layouts.values()[i].hasKey("lcor") && 
-	        		_layouts.values()[i]["lcor"] != null &&
+	        	if (layout.values()[i].hasKey("lcor") && 
+	        		layout.values()[i]["lcor"] != null &&
 	        		text != null &&
-	        		x + dc.getTextWidthInPixels(text, f) > _layouts.values()[i]["x"][j])
+	        		x + dc.getTextWidthInPixels(text, f) > layout.values()[i]["x"][j])
 	        	{
-	        		x = x + dc.getTextWidthInPixels(text, f) + _layouts.values()[i]["lcor"];
+	        		x = x + dc.getTextWidthInPixels(text, f) + layout.values()[i]["lcor"];
 	        	}
 	        	else
 	        	{
 		        	// if cor is present default X should be adjasted on cor
 		        	//
-		        	if (_layouts.values()[i].hasKey("cor") && 
-		        		_layouts.values()[i]["cor"][j] != null &&
+		        	if (layout.values()[i].hasKey("cor") && 
+		        		layout.values()[i]["cor"][j] != null &&
 		        		text != null) 
 		        	{
-		        		x = x + (a == 0 ? -1 : 1) * dc.getTextWidthInPixels(text, f) + _layouts.values()[i]["cor"][j];
+		        		x = x + (a == 0 ? -1 : 1) * dc.getTextWidthInPixels(text, f) + layout.values()[i]["cor"][j];
 		        	}
 		        	else
 		        	{
-		        		x = _layouts.values()[i]["x"][j];
+		        		x = layout.values()[i]["x"][j];
 		        	}
 	        	}
 
-				f = _layouts.values()[i]["f"][j] < 100 
-	        			? _layouts.values()[i]["f"][j] 
-	        			: _fonts[_layouts.values()[i]["f"][j] - 100];
+				f = layout.values()[i]["f"][j] < 100 
+	        			? layout.values()[i]["f"][j] 
+	        			: _fonts[layout.values()[i]["f"][j] - 100];
 
-				text = (!_layouts.values()[i].hasKey("t") || _layouts.values()[i]["t"][j] == null)
+				text = (!layout.values()[i].hasKey("t") || layout.values()[i]["t"][j] == null)
 					? funcs[j] 
-	        		: _layouts.values()[i]["t"][j];
+	        		: layout.values()[i]["t"][j];
 	        			
-				dc.drawText(x, _layouts.values()[i]["y"][j], f, text, a);
+				dc.drawText(x, layout.values()[i]["y"][j], f, text, a);
 			}
 		}
 		
@@ -194,15 +239,32 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 			dc.setColor(Setting.GetDimColor(), Gfx.COLOR_TRANSPARENT);
 			dc.drawText(dc.getWidth()/2, dc.getHeight() - 20, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
 		}
+
+		// draw checkmate
+		//
+		if(_isInLowPower && _isCanBurn) {
+			_upTop=!_upTop;
+			//var even = true;
+			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
+          	for (var row=(_upTop) ? 1 : 0; row < dc.getHeight(); row += 50) {
+            	for (var col=0 ; col <= dc.getWidth(); col += 50) {
+					//dc.drawPoint(row, col);
+					dc.drawBitmap(row, col, _checkmateImage);
+                }
+				//even = !even;
+            }
+		}
     }
     
     function InvalidateLayout()
     {
     	_colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), 0xFF422D];
     	
-    	_layouts = {};    	 	
+    	_layouts = {};
+		_blayout = {};    	 	
     	
 		_layouts.put("hour", Ui.loadResource(_is90 ? Rez.JsonData.l_time_f90 : Rez.JsonData.l_time));
+		_blayout.put("hour", Ui.loadResource(Rez.JsonData.l_time));
     	_layouts.put("date", Ui.loadResource(_is90 ? Rez.JsonData.l_date_f90 : Rez.JsonData.l_date));
 		_layouts.put("btooth", Ui.loadResource(Rez.JsonData.l_bt));    	
     	
@@ -219,7 +281,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	if (Setting.GetIsShowWeather())
     	{
     		_layouts.put("temp", Ui.loadResource(Rez.JsonData.l_temp));
+			_blayout.put("temp", Ui.loadResource(Rez.JsonData.l_temp));
     		_layouts.put("wind", Ui.loadResource(Rez.JsonData.l_wind));
+			_blayout.put("wind", Ui.loadResource(Rez.JsonData.l_wind));
     	}
     	
     	
@@ -229,8 +293,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	}  
     	
     	_layouts.put("field3", Ui.loadResource(Rez.JsonData.l_field3));
+		_blayout.put("field3", Ui.loadResource(Rez.JsonData.l_field3));
+
     	_layouts.put("field4", Ui.loadResource(Rez.JsonData.l_field4));
+		_blayout.put("field4", Ui.loadResource(Rez.JsonData.l_field4));
+
     	_layouts.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
+		_blayout.put("field5", Ui.loadResource(Rez.JsonData.l_field5));
+
     	_layouts.put("battery", Ui.loadResource(Rez.JsonData.l_battery));
     	
  		_layouts.put("bottom-line", Ui.loadResource(

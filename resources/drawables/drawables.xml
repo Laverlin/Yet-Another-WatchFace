@@ -1,3 +1,4 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="checkmate" filename="checkmate.png" />
 </drawables>

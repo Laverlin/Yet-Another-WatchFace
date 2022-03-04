@@ -443,7 +443,14 @@ class DisplayFunctions
 			//
 			var city = fcity["cityName"];
 			
-			var ppc = _dc.getTextWidthInPixels(city, _fonts[layout["f"][0]-100]) / city.length(); 			 
+			var font;
+			if (layout["f"][0] > 99) {
+				font = _fonts[layout["f"][0]-100];
+			}
+			else {
+				font = layout["f"][0];
+			}
+			var ppc = _dc.getTextWidthInPixels(city, font) / city.length(); 			 
 			var maxLen = _dc.getWidth() * .65 / ppc; // approx string width.
 			
 			if (city.length() > maxLen)
