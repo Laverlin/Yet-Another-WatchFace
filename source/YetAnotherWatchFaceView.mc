@@ -55,11 +55,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		
     }
 
+	function InvalidateSettingCache() {
+		_settingCache = new SettingsCache();
+	}
+
 	// This method is called when the device re-enters sleep mode.
 	//
     function onEnterSleep() {
         _isInLowPower = true;
-		Sys.print(_isInLowPower);
         Ui.requestUpdate(); 
     }
     
@@ -67,7 +70,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	//
     function onExitSleep() {
         _isInLowPower = false;
-		Sys.print(_isInLowPower);
         Ui.requestUpdate(); 
     }
 
@@ -157,17 +159,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		dc.setColor(Gfx.COLOR_TRANSPARENT, Setting.GetBackgroundColor());
     	dc.clear();
 
-		var layout;
-		if(_isInLowPower && _isCanBurn) {
-			Sys.print("in low power");
-            // dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK); // removing the background color and all the data points from the background, leaving just the hour hands
-            // dc.fillRectangle(0, 0, dc.getWidth(), dc.getHeight()); //width & height?
-			layout = _blayout;
-        }
-		else 
-		{
-			layout = _layouts;
-		}
+		var layout = (_isInLowPower && _isCanBurn) ? _blayout : _layouts;
     	
 		for (var i = 0; i < layout.size(); i++)
 		{
@@ -244,20 +236,18 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		//
 		if(_isInLowPower && _isCanBurn) {
 			_upTop=!_upTop;
-			//var even = true;
 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
           	for (var row=(_upTop) ? 1 : 0; row < dc.getHeight(); row += 50) {
             	for (var col=0 ; col <= dc.getWidth(); col += 50) {
-					//dc.drawPoint(row, col);
 					dc.drawBitmap(row, col, _checkmateImage);
                 }
-				//even = !even;
             }
 		}
     }
     
     function InvalidateLayout()
     {
+		InvalidateSettingCache();
     	_colors = [Setting.GetTimeColor(), Setting.GetBrightColor(), Setting.GetDimColor(), 0xFF422D];
     	
     	_layouts = {};
@@ -266,7 +256,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		_layouts.put("hour", Ui.loadResource(_is90 ? Rez.JsonData.l_time_f90 : Rez.JsonData.l_time));
 		_blayout.put("hour", Ui.loadResource(Rez.JsonData.l_time));
     	_layouts.put("date", Ui.loadResource(_is90 ? Rez.JsonData.l_date_f90 : Rez.JsonData.l_date));
-		_layouts.put("btooth", Ui.loadResource(Rez.JsonData.l_bt));    	
+		_blayout.put("date", Ui.loadResource(Rez.JsonData.l_date));  
+
+		_layouts.put("btooth", Ui.loadResource(Rez.JsonData.l_bt));  	
     	
     	if (Setting.GetIsShowSeconds())
     	{
