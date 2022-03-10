@@ -36,7 +36,7 @@
 		{"x":[223, 233, 320], "y":[130, 138, 140], "c":[1, 2, 0], "f":[1, 0, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 3, null]}
 	</jsonData>
 	
-	<jsonData id="l_bt">{"x":[200], "y":[250], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
+	<jsonData id="l_bt">{"x":[196], "y":[250], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
 	
 	<jsonData id="l_field3">{"x":[223, 317], "y":[187, 195], "c":[1, 2], "f":[1, 0], "a":[2, 2], "t":[null, null], "fun":10, "lcor" : 6, "cy":205}</jsonData>
 	<jsonData id="l_field4">{"x":[223, 317], "y":[242, 249], "c":[1, 2], "f":[1, 0], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3, "cy":260}</jsonData>
