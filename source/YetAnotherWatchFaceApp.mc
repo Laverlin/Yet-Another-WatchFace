@@ -67,7 +67,7 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 	        	}
 	        }
         }
-		_watchFaceView.InvalidateSettingCache();
+		// _watchFaceView.InvalidateSettingCache();
         Ui.requestUpdate();
     }    
 

@@ -1,11 +1,18 @@
 using Toybox.Application as App;
 using Toybox.Application.Storage as Storage;
+using Toybox.System as Sys;
 
 /// Wrapper class for stored properties
 ///
 (:background)
 class Setting
 {
+
+	static hidden var _exchangeRateValue;
+	static hidden var _locationValue;
+	static hidden var _weatherValue;
+	static hidden var _conErrorValue;
+
 	static hidden var _lastKnownLocation = "lastKnownLocation";
 	static hidden var _etz = "etz";
 	static hidden var _isTest = "isTest";
@@ -62,11 +69,16 @@ class Setting
 
 	public static function GetWeather()
 	{
-		return App.getApp().getProperty(_weather);
+		if (_weatherValue == null)
+		{
+			_weatherValue = App.getApp().getProperty(_weather);
+		}
+		return _weatherValue;
 	}
 	
 	public static function SetWeather(weather)
 	{
+		_weatherValue = weather;
 		App.getApp().setProperty(_weather, weather);
 	}
 	
@@ -109,13 +121,16 @@ class Setting
 
 	public static function GetConError()
 	{
-		//return Storage.getValue(_conError); 
-		return App.getApp().getProperty(_conError);
+		if (_conErrorValue == null)
+		{
+			_conErrorValue = App.getApp().getProperty(_conError);
+		} 
+		return _conErrorValue;
 	}
 	
 	public static function SetConError(conError)
 	{
-		//Storage.setValue(_conError, conError);
+		_conErrorValue = conError;
 		App.getApp().setProperty(_conError, conError);	
 	}
 	
@@ -125,13 +140,16 @@ class Setting
 	
 	public static function GetCity()
 	{
-		//return Storage.getValue(_city);
-		return App.getApp().getProperty(_city);
+		if (_locationValue == null)
+		{
+			_locationValue = App.getApp().getProperty(_city);
+		}
+		return _locationValue;
 	}
 	
 	public static function SetCity(city)
 	{
-		//Storage.setValue(_city, city);
+		_locationValue = city;
 		App.getApp().setProperty(_city, city);
 	}
 	
@@ -317,12 +335,17 @@ class Setting
 	
 	public static function SetExchangeRate(rate)
 	{
+		_exchangeRateValue = rate;
 		App.getApp().setProperty(_exchangeRate, rate);
 	}
 	
 	public static function GetExchangeRate()
 	{
-		return App.getApp().getProperty(_exchangeRate);
+		if (_exchangeRateValue == null)
+		{
+			_exchangeRateValue = App.getApp().getProperty(_exchangeRate);
+		}
+		return _exchangeRateValue;
 	}
 	
 	public static function GetShowAlarm()

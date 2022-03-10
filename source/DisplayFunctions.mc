@@ -176,7 +176,7 @@ class DisplayFunctions
     ///   
     function DisplayConnection(layout)
     {
-    	layout["c"] = _settings.connError ? [3] : [0];
+    	layout["c"] = Setting.GetConError() ? [3] : [0];
     	var deviceSettings = Sys.getDeviceSettings();
 
     	return [(deviceSettings != null && deviceSettings.phoneConnected) ? "a" : "b"];
@@ -187,7 +187,7 @@ class DisplayFunctions
     ///
     function DisplayTemp(layout)
     {
-    	var weather = _settings.weather;
+    	var weather = Setting.GetWeather(); //_settings.weather;
 
     	if (weather == null || weather["status"]["statusCode"] != 1) // no weather
         {
@@ -219,7 +219,7 @@ class DisplayFunctions
     
     function DisplayWind(layout)
     {
-    	var weather = _settings.weather; 
+    	var weather = Setting.GetWeather(); //_settings.weather; 
 
     	if (weather == null || weather["status"]["statusCode"] != 1) // no weather
         {
@@ -305,13 +305,14 @@ class DisplayFunctions
     //
     function DisplayExchangeRate(layout)
     {
-			if (_settings.exchangeRate == null)
+			var exchangeRate = Setting.GetExchangeRate();
+			if (exchangeRate == null)
 			{
 				return ["loading...", ""];
 			}		
 			else 
 			{
-				var currencyValue = _settings.exchangeRate["exchangeRate"]; 
+				var currencyValue = exchangeRate["exchangeRate"]; 
 				var format = (currencyValue > 1) ? "%2.2f" : "%1.3f";
 				format = (currencyValue < 0.01) ? "%.4f" : format;
 				format = (currencyValue < 0.001) ? "%.5f" : format;
@@ -434,7 +435,7 @@ class DisplayFunctions
     //
     function DisplayLocation(layout)
     {
-    	var fcity = _settings.city;
+    	var fcity = Setting.GetCity(); //_settings.city;
     	
     	if ( fcity != null && fcity["cityName"] != null)
 		{
