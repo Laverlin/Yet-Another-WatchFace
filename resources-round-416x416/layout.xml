@@ -1,4 +1,10 @@
 <resources>	
+
+	<font id="msss16_font" filename="../resources/msss16Font.fnt" antialias="true" />
+	<font id="icon_font" filename="../resources/IconFontLarge.fnt" antialias="true"/>
+	<font id="vertical_font" filename="../resources/VerticalFontLarge.fnt" antialias="true"/>
+	<font id="unicode_mss16_font" filename="../resources/unicode_mss16.fnt" antialias="true"/>
+
 <!-- Epix 2 -->
 	
 	<!-- 
@@ -36,13 +42,13 @@
 		{"x":[223, 233, 320], "y":[130, 138, 140], "c":[1, 2, 0], "f":[1, 0, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 3, null]}
 	</jsonData>
 	
-	<jsonData id="l_bt">{"x":[196], "y":[250], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
+	<jsonData id="l_bt">{"x":[200], "y":[250], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
 	
 	<jsonData id="l_field3">{"x":[223, 317], "y":[187, 195], "c":[1, 2], "f":[1, 0], "a":[2, 2], "t":[null, null], "fun":10, "lcor" : 6, "cy":205}</jsonData>
 	<jsonData id="l_field4">{"x":[223, 317], "y":[242, 249], "c":[1, 2], "f":[1, 0], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3, "cy":260}</jsonData>
 	<jsonData id="l_field5">{"x":[223, 317], "y":[290, 298], "c":[1, 2], "f":[1, 0], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3, "cy": 308}</jsonData>
 	 
-    <jsonData id="l_battery">{"x":[197, 197, 197, 197], "y":[93, 103, 112, 121], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
+    <jsonData id="l_battery">{"x":[195, 195, 195, 195], "y":[95, 117, 132, 144], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
     
 	<jsonData id="l_bottom_line1">{"x":[137, 158, 222, 242, 261, 280], "y":[343, 343, 343, 343, 343, 343], "c":[0, 1, 0, 2, 0, 2], "f":[101, 101, 101, 100, 101, 100], "a":[2, 2, 2, 2, 2, 2], "fun":14, "tb":null}</jsonData>
     <jsonData id="l_bottom_line2">{"x":[254, 274, 121, 141, 170, 189], "y":[343, 343, 343, 343, 343, 343], "c":[0, 1, 0, 2, 0, 2], "f":[101, 101, 101, 100, 101, 100], "a":[2, 2, 2, 2, 2, 2], "fun":14, "tb":null}</jsonData>
