@@ -39,7 +39,7 @@
 		{"x":[223, 233, 348, 366], "y":[84, 92, 84, 94], "c":[1, 2, 1, 2], "f":[1, 101, 1, 0], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 2, null, null]}
 	</jsonData>
 	<jsonData id="l_wind">
-		{"x":[223, 233, 340], "y":[130, 138, 130], "c":[1, 2, 0], "f":[1, 0, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 3, null]}
+		{"x":[223, 233, 310], "y":[130, 138, 130], "c":[1, 2, 0], "f":[1, 0, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 3, 17]}
 	</jsonData>
 	
 	<jsonData id="l_bt">{"x":[200], "y":[250], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
