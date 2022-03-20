@@ -12,7 +12,8 @@ Watch Face application for Garmin smartwatches:
     fēnix® 6S, fēnix® 6S Pro, fēnix® 6S Sapphire, 
     fēnix® 6X Pro, fēnix® 6X Sapphire, fēnix® 6X Pro Solar, tactix® Delta Sapphire, 
     MARQ Adventurer, MARQ Athlete, MARQ Aviator, MARQ Captain, MARQ Commander, MARQ Driver, MARQ Expedition, 
-    vivoactive 4 
+    vivoactive 4,
+    Epix 2
 </pre>
 ## Features
 - Time (this is a watch face, after all)
@@ -31,17 +32,20 @@ Watch Face application for Garmin smartwatches:
 - Alarms & Notifications
 - Moon phase and Zodiac
 
-Configure all the watch face options via the Garmin Connect mobile app:
-Open Garmin Connect Mobile. Touch More, Garmin Devices, (your device), Connect IQ Apps, Watch Faces, (select YA-WatchFace), Settings.
+Configure all the watch face options via the Garmin Connect mobile app.
 
 ## Screenshots
 <img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen1.png" height="300px" /> <img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen2.png" height="300px" />  <img src="https://raw.githubusercontent.com/Laverlin/Yet-Another-WatchFace/master/resources/screens/WatchScreen3.png" height="300px" />
 
 
-
 ## Changelog
 
-### version 0.9.239:latest
+### version 0.9.276:latest
+- fix minor issues
+- add support for Fenix 7* and Epix 2 watchfaces
+- adjust time-zones
+
+### version 0.9.239
 - add moon phases and moon zodiac
 - change bottom line settings
 
