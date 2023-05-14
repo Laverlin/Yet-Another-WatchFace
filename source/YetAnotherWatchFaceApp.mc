@@ -37,13 +37,14 @@ class YetAnotherWatchFaceApp extends App.AppBase {
         Ui.requestUpdate();
     }
     
-    function onBackgroundData(data) 
+    function onBackgroundData(d) 
     {
         // Sys.println("on bg data : " + data);
+		var data = d as Lang.Object;
     	
         if (data != null)
         {
-        	if (data.hasKey("isErr"))
+        	if ((data as Lang.Dictionary).hasKey("isErr"))
         	{
       			Setting.SetConError(true);
       		}

@@ -24,7 +24,7 @@ class DisplayFunctions
 	hidden var _methods = [
 		:DisplayExtraTz, :DisplayExchangeRate, :DisplayDistance, :DisplayPulse, 
 		:DisplayFloors, :DisplayMsgCount, :DisplayAlarmCount, :DisplayAltitude, 
-		:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent];
+		:DisplayCalories, :DisplayStepsNFloors, :DisplaySunEvent] as Lang.Array<Lang.Symbol>;
 	
 	function setTime(time)
 	{
@@ -481,7 +481,7 @@ class DisplayFunctions
 			? [3, 3, 3, 3]
 			: [2, 2, 2, 2];
 	
-		return (batteryLevel.format("%d") + "%").toCharArray().reverse().add("").add("");
+		return (batteryLevel.format("%d") + "%").toCharArray().reverse().add("" as Lang.Char).add("" as Lang.Char);
     }
     
     ///

@@ -2,6 +2,7 @@ using Toybox.Background;
 using Toybox.System as Sys;
 using Toybox.Communications as Comm;
 using Toybox.Application as App;
+using Toybox.Lang as Lang;
 
 // The Service Delegate is the main entry point for background processes
 // our onTemporalEvent() method will get run each time our periodic event
@@ -23,7 +24,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     	{
    	    	// Request update if one of the remote services displayed
 	    	//
-	    	var location = Setting.GetLastKnownLocation();
+	    	//var location = Setting.GetLastKnownLocation();
 	    	if (Setting.GetIsShowExchangeRate()
 	    		|| Setting.GetIsShowCity()
 	    		|| Setting.GetIsShowWeather())
@@ -88,7 +89,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     }
     
     
-    function OnReceiveUpdate(responseCode, data)
+    function OnReceiveUpdate(responseCode as Lang.Number, data as Null or Lang.Dictionary or Lang.String) as Void
 	{
 		try
 		{
