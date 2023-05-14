@@ -1,21 +1,17 @@
 using Toybox.Application as App;
 using Toybox.Application.Storage as Storage;
 using Toybox.System as Sys;
+using Toybox.Application.Properties as Properties;
+using Toybox.Application.Storage;
+using Toybox.WatchUi as Ui;
 
 /// Wrapper class for stored properties
 ///
 (:background)
 class Setting
 {
-
-	static hidden var _exchangeRateValue;
-	static hidden var _locationValue;
-	static hidden var _weatherValue;
-	static hidden var _conErrorValue;
-
 	static hidden var _lastKnownLocation = "lastKnownLocation";
 	static hidden var _etz = "etz";
-	static hidden var _isTest = "isTest";
 	
 	static hidden var _baseCurrency = "base-currency";
 	static hidden var _targetCurrency = "target-currency";
@@ -39,328 +35,312 @@ class Setting
 
 	public static function GetShowMoon()
 	{
-		return App.getApp().getProperty(_isShowMoon);
-	}
-	
-	public static function SetShowMoon(isShowMoon)
-	{
-		App.getApp().setProperty(_isShowMoon, isShowMoon);
+		return GetValue(_isShowMoon);
 	}
 	
 	public static function GetBottomLayout()
 	{
-		return App.getApp().getProperty(_bottomLayout);
+		return GetValue(_bottomLayout);
 	}
 	
 	public static function GetDateOrder()
 	{
-		return App.getApp().getProperty(_dateOrder);
+		return GetValue(_dateOrder);
 	}
 
 	public static function GetWeatherRefreshToken()
 	{
-		return App.getApp().getProperty(_weatherRefreshToken);
+		return GetTmpValue(_weatherRefreshToken);
 	}
 	
 	public static function SetWeatherRefreshToken(weatherRefreshToken)
 	{
-		App.getApp().setProperty(_weatherRefreshToken, weatherRefreshToken);
+		SetTmpValue(_weatherRefreshToken, weatherRefreshToken);
 	}
 
 	public static function GetWeather()
 	{
-		if (_weatherValue == null)
-		{
-			_weatherValue = App.getApp().getProperty(_weather);
-		}
-		return _weatherValue;
+		return GetTmpValue(_weather);
 	}
 	
 	public static function SetWeather(weather)
 	{
-		_weatherValue = weather;
-		App.getApp().setProperty(_weather, weather);
+		SetTmpValue(_weather, weather);
 	}
 	
 	public static function GetWeatherProvider()
 	{
-		var tmp = App.getApp().getProperty(_weatherProvider);
+		var tmp = GetTmpValue(_weatherProvider);
 		return tmp != null ? tmp : 0;
 	}
 	
 	public static function SetWeatherProvider(weatherProvider)
 	{
-		App.getApp().setProperty(_weatherProvider, weatherProvider);
+		SetTmpValue(_weatherProvider, weatherProvider);
 	}
 	
 	public static function SetDeviceName(deviceNme)
-	{
-		//Storage.setValue(_deviceName, deviceNme);
-		App.getApp().setProperty(_deviceName, deviceNme);
+	{	
+		SetTmpValue(_deviceName, deviceNme);
 	}
 
 	public static function GetDeviceName()
 	{
-		//return Storage.getValue(_deviceName);
-		var tmp = App.getApp().getProperty(_deviceName);
+		var tmp = GetTmpValue(_deviceName);
 		return tmp != null ? tmp : "unknown";
 	}
 	
 	public static function GetWatchServerToken()
 	{
-		//return Storage.getValue(_watchServerApiToken);
-		return App.getApp().getProperty(_watchServerApiToken);
+		return GetTmpValue(_watchServerApiToken);
 	}
 	
 	public static function SetWatchServerToken(watchServerApiToken)
 	{
-		//Storage.setValue(_watchServerApiToken, watchServerApiToken);
-		App.getApp().setProperty(_watchServerApiToken, watchServerApiToken);
+		SetTmpValue(_watchServerApiToken, watchServerApiToken);
 	}	
 	
-
 	public static function GetConError()
 	{
-		if (_conErrorValue == null)
-		{
-			_conErrorValue = App.getApp().getProperty(_conError);
-		} 
-		return _conErrorValue;
+		return GetTmpValue(_conError);
 	}
 	
 	public static function SetConError(conError)
 	{
-		_conErrorValue = conError;
-		App.getApp().setProperty(_conError, conError);	
+		SetTmpValue(_conError, conError);	
 	}
-	
-
-	
-
 	
 	public static function GetCity()
 	{
-		if (_locationValue == null)
-		{
-			_locationValue = App.getApp().getProperty(_city);
-		}
-		return _locationValue;
+		return GetTmpValue(_city);
 	}
 	
 	public static function SetCity(city)
 	{
-		_locationValue = city;
-		App.getApp().setProperty(_city, city);
+		SetTmpValue(_city, city);
 	}
 	
 	public static function GetTimeColor()
 	{
-		return App.getApp().getProperty("TimeColor");
+		return GetValue("TimeColor");
 	}
 	
 	public static function GetBackgroundColor()
 	{
-		return App.getApp().getProperty("BackgroundColor");
+		return GetValue("BackgroundColor");
 	}
 	
 	public static function GetBrightColor()
 	{
-		return App.getApp().getProperty("BrightColor");
+		return GetValue("BrightColor");
 	}
 	
 	public static function GetDimColor()
 	{
-		return App.getApp().getProperty("DimColor");
+		return GetValue("DimColor");
 	}
 			
 	public static function GetWeatherApiKey()
 	{
-		var waKey = App.getApp().getProperty("WeatherApiKey");
+		var waKey = GetTmpValue("WeatherApiKey");
 		return waKey != null ? waKey : ""; 
 	}
 	
 	public static function GetExtraTimeZone()
 	{
-		return App.getApp().getProperty(_etz);
+		return GetTmpValue(_etz);
 	}
 	
 	public static function SetExtraTimeZone(etz)
 	{
-		App.getApp().setProperty(_etz, etz);
+		SetTmpValue(_etz, etz);
 	}
 	
 	public static function GetLastKnownLocation()
 	{
-		return App.getApp().getProperty(_lastKnownLocation);
-		//return Storage.getValue(_lastKnownLocation);
+		var location = GetTmpValue(_lastKnownLocation);
+		return location;
 	}
 	
 	public static function SetLastKnownLocation(lastKnownLocation)
 	{
-		App.getApp().setProperty(_lastKnownLocation, lastKnownLocation);
-		//Storage.setValue(_lastKnownLocation, lastKnownLocation);
+		SetTmpValue(_lastKnownLocation, lastKnownLocation);
 	}
 	
 	public static function GetEtzId()
 	{
-		return App.getApp().getProperty("etzId");
+		return GetValue("etzId");
 	}
 	
 	public static function SetAppVersion(appVersionValue)
 	{
-		//Storage.setValue(_appVersion, appVersionValue);
-		App.getApp().setProperty(_appVersion, appVersionValue); 
+		SetValue(_appVersion, appVersionValue); 
 	}
 	
 	public static function GetAppVersion()
 	{
-		//return Storage.getValue(_appVersion); //, appVersionValue
-		var appVersion = App.getApp().getProperty(_appVersion);
+		var appVersion = GetValue(_appVersion);
 		return appVersion != null ? appVersion :"0.0"; 
 	}
 	
 	public static function GetIsShowCity()
 	{
-		return App.getApp().getProperty("is-show-city");
+		return GetValue("is-show-city");
 	}
 	
 	public static function GetWindSystem()
 	{
-		return App.getApp().getProperty("windSystem");
+		return GetValue("windSystem");
 	}
 	
 	public static function GetTempSystem()
 	{
-		return App.getApp().getProperty("tempSystem");
+		return GetValue("tempSystem");
 	}
 	
 	public static function GetDistSystem()
 	{
-		return App.getApp().getProperty("distSystem");
+		return GetValue("distSystem");
 	}
 	
 	public static function GetAltimeterSystem()
 	{
-		return App.getApp().getProperty("altimeter-system");
+		return GetValue("altimeter-system");
 	}
 	
 	public static function GetCityAlign()
 	{
-		return App.getApp().getProperty("city-align");
+		return GetValue("city-align");
 	}
 	
 	public static function GetAlarmAlign()
 	{
-		return App.getApp().getProperty("alarm-align");
+		return GetValue("alarm-align");
 	}
 	
 	public static function GetIsTest()
 	{
-		var isTest = App.getApp().getProperty(_isTest);
-		return isTest != null ? isTest : false;
-	}
-	
-	public static function SetIsTest(isTest)
-	{
-		return App.getApp().setProperty(_isTest, isTest);
+		return Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1;
 	}
 	
 	public static function GetIsShowExchangeRate()
 	{
-		return App.getApp().getProperty(_isShowExchangeRate);
+		return GetTmpValue(_isShowExchangeRate);
 	}
 	
 	public static function SetIsShowExchangeRate(isShowExchange)
 	{
-		App.getApp().setProperty(_isShowExchangeRate, isShowExchange);
+		SetTmpValue(_isShowExchangeRate, isShowExchange);
 	}	
 	
 	public static function GetPulseField()
 	{
-		return App.getApp().getProperty(_pulseField);
+		return GetTmpValue(_pulseField);
 	}
 	
 	public static function SetPulseField(pulseField)
 	{
-		App.getApp().setProperty(_pulseField, pulseField);
+		SetTmpValue(_pulseField, pulseField);
 	}
 	
 	public static function GetBaseCurrency()
 	{
-		return App.getApp().getProperty(_baseCurrency);
+		return GetTmpValue(_baseCurrency);
 	}
 	
 	public static function GetTargetCurrency()
 	{
-		return App.getApp().getProperty(_targetCurrency);
+		return GetTmpValue(_targetCurrency);
 	}
 	
 	public static function SetBaseCurrency(baseCurrency)
 	{
-		App.getApp().setProperty(_baseCurrency, baseCurrency);
+		SetTmpValue(_baseCurrency, baseCurrency);
 	}
 	public static function SetTargetCurrency(targetCurrency)
 	{
-		App.getApp().setProperty(_targetCurrency, targetCurrency);
-	}
-	
-	public static function GetExchangeApiKey()
-	{
-		return App.getApp().getProperty(_exchangeApiKey);
-	}
-	public static function SetExchangeApiKey(apiKey)
-	{
-		App.getApp().setProperty(_exchangeApiKey, apiKey);
+		SetTmpValue(_targetCurrency, targetCurrency);
 	}
 	
 	public static function GetBaseCurrencyId()
 	{
-		return App.getApp().getProperty("base-currency-id2");
+		return GetValue("base-currency-id2");
 	}
 	
 	public static function GetTargetCurrencyId()
 	{
-		return App.getApp().getProperty("target-currency-id2");
+		return GetValue("target-currency-id2");
 	}
 	
 	public static function GetIsShowWeather()
 	{
-		return App.getApp().getProperty("is-show-weather");
+		return GetValue("is-show-weather");
 	}
 	
 	public static function GetIsShowSeconds()
 	{
-		return App.getApp().getProperty("is-show-seconds");
+		return GetValue("is-show-seconds");
 	}
 	
 	public static function SetExchangeRate(rate)
 	{
-		_exchangeRateValue = rate;
-		App.getApp().setProperty(_exchangeRate, rate);
+		SetTmpValue(_exchangeRate, rate);
 	}
 	
 	public static function GetExchangeRate()
 	{
-		if (_exchangeRateValue == null)
-		{
-			_exchangeRateValue = App.getApp().getProperty(_exchangeRate);
-		}
-		return _exchangeRateValue;
+		return GetTmpValue(_exchangeRate);
 	}
 	
 	public static function GetShowAlarm()
 	{
-		return App.getApp().getProperty("show-alarm");
+		return GetValue("show-alarm");
 	}
 	
 	public static function GetShowMessage()
 	{
-		return App.getApp().getProperty("show-message");
+		return GetValue("show-message");
 	}	
 	
 	public static function GetField(id)
 	{
-		return App.getApp().getProperty("field-" + id).toNumber();
+		return GetValue("field-" + id) as Toybox.Lang.Number;
+	}
+
+
+	private static function GetValue(key)
+	{
+		var value = null;
+		try
+		{
+			value = Properties.getValue(key);
+		}
+		finally 
+		{
+			return value;
+		}
+	}
+
+	private static function SetValue(key, value)
+	{
+		try
+		{
+			Properties.setValue(key, value);
+		}
+		catch(ex) 
+		{
+			Sys.println("set value error (" + key + ", " + value + ") \n" + ex.getErrorMessage());
+		}
+	}
+
+	private static function GetTmpValue(key)
+	{
+		return Storage.getValue(key);
+	}
+
+	private static function SetTmpValue(key, value)
+	{
+		Storage.setValue(key, value);
 	}
 	
 }

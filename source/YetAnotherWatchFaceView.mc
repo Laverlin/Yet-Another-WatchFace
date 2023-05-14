@@ -43,14 +43,14 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetWatchServerToken(Ui.loadResource(Rez.Strings.WatchServerTokenValue));
-		Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
-		Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1);
+		//Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
+		//Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1);
 		Setting.SetDeviceName(Ui.loadResource(Rez.Strings.DeviceName));
 
 		var deviceSettings = Sys.getDeviceSettings();
         if(deviceSettings has :requiresBurnInProtection) {    
             _isCanBurn = deviceSettings.requiresBurnInProtection;
-			_checkmateImage = Application.loadResource( Rez.Drawables.checkmate ) as BitmapResource;
+			_checkmateImage = Application.loadResource( Rez.Drawables.checkmate ) as Ui.BitmapResource;
         }
 		
     }
@@ -138,7 +138,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		var location = info.currentLocation.toDegrees();
     		if (location[0] != 0.0 && location[1] != 0.0)
     		{
-    			//Sys.println(location[0] + ", " + location[1]);
+    			Sys.println("update location:" + location[0] + ", " + location[1]);
     			Setting.SetLastKnownLocation(location);
     		}
     	} 
@@ -173,9 +173,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 				funcs = ["", "", "", "", ""];
 			}
 				
-			var x = null;
-			var f = null;	
-			var text = null;
+			var x = null as Lang.Number;
+			var f = null as Toybox.Graphics.FontReference;	
+			var text = null as Lang.String;
 			
 			for(var j = 0; j < layout.values()[i]["x"].size(); j++)
 			{
