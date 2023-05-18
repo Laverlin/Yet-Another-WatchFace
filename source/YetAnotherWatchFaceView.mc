@@ -138,16 +138,21 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     		var location = info.currentLocation.toDegrees();
     		if (location[0] != 0.0 && location[1] != 0.0)
     		{
-    			Sys.println("update location:" + location[0] + ", " + location[1]);
+    			// Sys.println("update location:" + location[0] + ", " + location[1]);
     			Setting.SetLastKnownLocation(location);
     		}
     	} 
 
 		/// fire background process if needed
 		///
+		if (Setting.GetRefInterval() != null) 
+		{
+			_bgInterval = new Toybox.Time.Duration(59 * Setting.GetRefInterval().toNumber());
+		}
 		if (_lastBg == null)
 		{
 			_lastBg = new Time.Moment(Time.now().value());
+			_wfApp.InitBackgroundEvents();
 		}
 		else if (_lastBg.add(_bgInterval).lessThan(new Time.Moment(Time.now().value())))
 		{

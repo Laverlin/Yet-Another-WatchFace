@@ -70,7 +70,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 
 		var url = Lang.format(
 			"https://ivan-b.com/watch-api/v2/YAFace?apiToken=$1$$2$$3$$4$$5$$6$", [
-			//"localhost:5051/api/v2/YAFace?apiToken=$1$$2$$3$$4$$5$$6$", [
+			//"https://localhost:7290/api/v2/YAFace?apiToken=test-token$2$$3$$4$$5$$6$", [
 			Setting.GetWatchServerToken(),
 			deviceParam,
 			locationParam,

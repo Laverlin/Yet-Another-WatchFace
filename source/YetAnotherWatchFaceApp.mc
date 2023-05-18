@@ -66,6 +66,11 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 	        	{
 	        		Setting.SetWeather(data["weather"]);
 	        	}
+
+				if (data["ref-interval"] != null && (data["ref-interval"].toNumber()) > 5 && (data["ref-interval"].toNumber()) < 60 )
+				{
+					Setting.SetRefInterval(data["ref-interval"].toNumber());
+				}
 	        }
         }
 		// _watchFaceView.InvalidateSettingCache();
@@ -80,8 +85,6 @@ class YetAnotherWatchFaceApp extends App.AppBase {
     function InitBackgroundEvents()
     {
     	Setting.SetConError(false);
-    	//var time = System.getClockTime();
-    	//Sys.println(Lang.format("callback happened $1$:$2$:$3$", [time.hour, time.min, time.sec]));
     	
     	var FIVE_MINUTES = new Toybox.Time.Duration(5 * 60);
 

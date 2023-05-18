@@ -307,6 +307,16 @@ class Setting
 		return GetValue("field-" + id) as Toybox.Lang.Number;
 	}
 
+	public static function GetRefInterval()
+	{
+		return GetTmpValue("ref-interval");
+	}
+
+	public static function SetRefInterval(interval)
+	{
+		SetTmpValue("ref-interval", interval);
+	}
+
 
 	private static function GetValue(key)
 	{
