@@ -191,17 +191,20 @@ class DisplayFunctions
 
     	if (weather == null || weather["status"]["statusCode"] != 1) // no weather
         {
-			var temp = ((weather == null || weather["status"]["statusCode"] == 0) && _settings.lastKnownLocation == null)
-					? "no GPS" 
-					: ((weather == null  || weather["status"]["statusCode"] == 0) && 
-							(_settings.weatherProvider == 1 && (_settings.weatherApiKey == null || _settings.weatherApiKey == "")))
-							? "no API key"
-							: (weather != null && weather["status"]["statusCode"] == -1 && _settings.weatherProvider == 1 && 
-								(weather["status"]["errorCode"] == 403 || weather["status"]["errorCode"] == 401))
-								? "API key err"
-								: (weather != null && weather["status"]["statusCode"] == -1) 
-									? "conn err"
-									: "loading...";
+			var temp;
+			if ((weather == null || weather["status"]["statusCode"] == 0) && _settings.lastKnownLocation == null)
+			{
+				temp = "no GPS";
+			} else {
+				if (weather != null && weather["status"]["statusCode"] == -1)
+				{
+					temp = "conn err";
+				}
+				else {
+					temp = "loading...";
+				}
+			}
+
 			return [temp, "", "", ""];
         }
         else

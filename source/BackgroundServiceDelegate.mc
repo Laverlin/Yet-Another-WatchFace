@@ -44,18 +44,14 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     
     function RequestUpdate()
     {
-		var weatherProviders = ["OpenWeather", "DarkSky"];
-		var weatherApiKey = Setting.GetWeatherApiKey();
+		var weatherProviders = ["OpenWeather", "AppleDarkSky"];
 		var weatherProvider = Setting.GetWeatherProvider();
 		var location = Setting.GetLastKnownLocation();
 
 		var versionsParam = Lang.format("&fw=$1$.$2$", Sys.getDeviceSettings().firmwareVersion) 
 			+ Lang.format("&ciqv=$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion);
 			
-		var providerParam = (weatherProvider == 1) 
-			? Lang.format("&wapiKey=$1$&wp=$2$", [weatherApiKey, weatherProviders[weatherProvider]])
-			: Lang.format("&wp=$1$", [weatherProviders[weatherProvider]]); 
-		
+		var providerParam = Lang.format("&wp=$1$", [weatherProviders[weatherProvider]]);
 		
 		var locationParam = (location != null)
 			? Lang.format("&lat=$1$&lon=$2$", [location[0], location[1]])
@@ -93,8 +89,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 	{
 		try
 		{
-//			Sys.println("weather data: " + data + "\n code: " + responseCode);
-		
 			if (responseCode == 200)
 			{
 				_received = data;

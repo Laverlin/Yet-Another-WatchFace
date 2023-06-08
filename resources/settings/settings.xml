@@ -63,7 +63,6 @@
         </settingConfig>
     </setting>
     
-    
     <setting propertyKey="@Properties.is-show-weather" title="@Strings.isShowWeatherTitle">
     	<settingConfig type="boolean"></settingConfig>
     </setting>
@@ -75,9 +74,9 @@
     	</settingConfig>   
     </setting>
     
-   	<setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
+   	<!-- <setting propertyKey="@Properties.WeatherApiKey" title="@Strings.WeatherApiKeyTitle">
     	<settingConfig type="alphaNumeric"></settingConfig>
-    </setting>
+    </setting> -->
     
     <setting propertyKey="@Properties.tempSystem" title="@Strings.TempSystemTitle">
     	<settingConfig type="list">

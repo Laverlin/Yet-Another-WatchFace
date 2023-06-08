@@ -154,14 +154,14 @@ class YetAnotherWatchFaceApp extends App.AppBase {
 		
 		// if DarkSky API key wrong switch back to OpenWeather
 		//
-		if (Setting.GetWeatherApiKey().length() != 32)
-		{
-			Setting.SetWeatherProvider(0);
-		}
+		// if (Setting.GetWeatherApiKey().length() != 32)
+		// {
+		// 	Setting.SetWeatherProvider(0);
+		// }
 		
 		// update weather 
 		//
-		var token = Setting.GetWeatherApiKey() + Setting.GetWeatherProvider();
+		var token = Setting.GetWeatherProvider(); //Setting.GetWeatherApiKey() + Setting.GetWeatherProvider();
 		if (!token.equals(Setting.GetWeatherRefreshToken()))
 		{
 			Setting.SetWeather(null);

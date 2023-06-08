@@ -70,8 +70,7 @@ class Setting
 	
 	public static function GetWeatherProvider()
 	{
-		var tmp = GetTmpValue(_weatherProvider);
-		return tmp != null ? tmp : 0;
+		return GetValue(_weatherProvider);
 	}
 	
 	public static function SetWeatherProvider(weatherProvider)
@@ -140,11 +139,11 @@ class Setting
 		return GetValue("DimColor");
 	}
 			
-	public static function GetWeatherApiKey()
-	{
-		var waKey = GetTmpValue("WeatherApiKey");
-		return waKey != null ? waKey : ""; 
-	}
+	// public static function GetWeatherApiKey()
+	// {
+	// 	var waKey = GetTmpValue("WeatherApiKey");
+	// 	return waKey != null ? waKey : ""; 
+	// }
 	
 	public static function GetExtraTimeZone()
 	{
