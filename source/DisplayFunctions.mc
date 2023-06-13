@@ -327,7 +327,7 @@ class DisplayFunctions
 				
 				targetCurrency = (currencyValue < 0.0001 && targetCurrency.equals("btc")) ? 8383.toChar() : targetCurrency; //"₿" : targetCurrency;
 
-				return [currencyValue.format(format), targetCurrency];					
+				return [currencyValue.format(format), targetCurrency];
 			}
     }  
 

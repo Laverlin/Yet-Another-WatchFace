@@ -74,8 +74,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			currencyParam,
 			versionsParam]);			
 			
-		//Sys.println(" :: update request " + url);
-
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
           :responseType => Comm.HTTP_RESPONSE_CONTENT_TYPE_JSON
