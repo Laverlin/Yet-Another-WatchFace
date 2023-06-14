@@ -24,8 +24,8 @@
 				1 => Gfx.TEXT_JUSTIFY_CENTER
 				2 => Gfx.TEXT_JUSTIFY_LEFT
 	 -->
-	<jsonData id="l_city_left">{"x":[80], "y":[52], "c":[2], "f":[0], "a":[2], "t":[null], "fun":0}</jsonData>
-	<jsonData id="l_city_center">{"x":[227], "y":[54], "c":[2], "f":[0], "a":[1], "t":[null], "fun":0}</jsonData>
+	<jsonData id="l_city_left">{"x":[84], "y":[53], "c":[2], "f":[0], "a":[2], "t":[null], "fun":0}</jsonData>
+	<jsonData id="l_city_center">{"x":[227], "y":[53], "c":[2], "f":[0], "a":[1], "t":[null], "fun":0}</jsonData>
 	
 	<jsonData id="l_date">{"x":[210, 160, 103], "y":[201, 201, 201], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -12, -18]}</jsonData>
 	
