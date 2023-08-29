@@ -1,0 +1,116 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    env:
+      SDK_VER: "4.2.4"
+      CONNECTIQ_SDK_URL: "https://developer.garmin.com/downloads/connect-iq/sdks"
+      SDK_PATH: "/garminsdk"
+      DEVICES_PATH: "/root/.Garmin/ConnectIQ/"
+      RELEASE_PATH: "/release"
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      - name: Install Devices
+        run: |
+          sudo apt update 
+          sudo apt install -y xmlstarlet
+
+      - name: Install SDK
+        run: |
+          filename=$(curl -s "$CONNECTIQ_SDK_URL/sdks.json" | jq -r --arg version "$SDK_VER" '.[] | select(.version=="'$SDK_VER'") | .linux')
+          sudo curl "$CONNECTIQ_SDK_URL/$filename" --output /tmp/connectiq.zip;
+          sudo unzip /tmp/connectiq.zip -d $SDK_PATH
+
+      - name: Install Devices
+        env: 
+          AZURE_KEYS_SAS: ${{ secrets.AZURE_KEYS_SAS }}
+        run: |
+          curl "https://ibglobalstorage.blob.core.windows.net/garmin-ci/Devices.zip$AZURE_KEYS_SAS" --output /tmp/devices.zip
+          sudo mkdir -p $DEVICES_PATH
+          sudo unzip /tmp/devices.zip -d $DEVICES_PATH
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: paulhatch/semantic-version@v5.1.0
+        id: semver
+        with:
+          tag_prefix: "v"
+
+          # A string to determine the format of the version output
+          # version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+          version_format: "${major}.${minor}.${patch}"
+
+          # If this is set to true, *every* commit will be treated as a new version.
+          bump_each_commit: true
+
+          # If bump_each_commit is also set to true, setting this value will cause the version to increment only if the pattern specified is matched.
+          search_commit_body: false
+
+      - name: Write Version 
+        run: |
+            cat <<EOF > $GITHUB_WORKSPACE/resources/settings/version.xml
+            <strings><string id="AppVersionValue">${{ steps.semver.outputs.version }}</string></strings>
+            EOF
+
+      - name: Write AppId
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+        run: |
+          xmlstarlet ed -u '/iq:manifest/iq:application/@id' -v $APP_ID $GITHUB_WORKSPACE/manifest.xml
+
+      - name: Write Secrets
+        env:
+          WATCHSERVER_KEY: ${{ secrets.WATCHSERVER_KEY }}
+        run: |    
+            cat <<EOF > $GITHUB_WORKSPACE/resources/settings/secrets.xml
+            <strings><string id="LocationApiKeyValue">not_used</string><string id="IsTest">0</string><string id="ExchangeApiKeyValue">not_used</string><string id="WatchServerTokenValue">$WATCHSERVER_KEY</string></strings>
+            EOF
+
+      - name: Download App Key
+        env: 
+          AZURE_KEYS_SAS: ${{ secrets.AZURE_KEYS_SAS }}
+        run: |
+          curl "https://ibglobalstorage.blob.core.windows.net/garmin-ci/YAWatchFace.key$AZURE_KEYS_SAS" --output $GITHUB_WORKSPACE/app.key
+
+      - name: Generate Device Files
+        run: |
+          for device in $(xmlstarlet select -t -v '//iq:product/@id' $GITHUB_WORKSPACE/manifest.xml)
+          do
+            mkdir -p ./resources-$device
+            echo '<strings><string id="DeviceName">'$device'</string></strings>' > $GITHUB_WORKSPACE/resources-$device/device.xml
+          done
+
+      - name: Build
+        run: |
+          sudo java -cp /garminsdk/bin/monkeybrains.jar com.garmin.monkeybrains.Monkeybrains -o $RELEASE_PATH/yas-${{ steps.semver.outputs.version }}.iq -f $GITHUB_WORKSPACE/monkey.jungle -y $GITHUB_WORKSPACE/app.key -e -w -r -l 0
+
+      - name: Publish build result
+        env: 
+          AZURE_RELEASE_SAS: ${{ secrets.AZURE_RELEASE_SAS }}
+        run: |
+          curl -H "x-ms-blob-type: BlockBlob" --upload-file $RELEASE_PATH/yas-${{ steps.semver.outputs.version }}.iq --url "https://ibglobalstorage.blob.core.windows.net/garmin-yawf-release/yas-${{ steps.semver.outputs.version }}.iq$AZURE_RELEASE_SAS"

@@ -16,7 +16,7 @@
 	
 	<font id="msss16_font" filename="msss16Font.fnt" antialias="true" />
 	<font id="icon_font" filename="IconFont.fnt" antialias="true"/>
-	<font id="vertical_font" filename="Vertical12.fnt" antialias="true"/>
+	<font id="vertical_font" filename="vertical12.fnt" antialias="true"/>
 	<font id="unicode_mss16_font" filename="unicode_mss16.fnt" antialias="true"/>
 	
 

@@ -2,7 +2,7 @@
 
 	<font id="msss16_font" filename="../resources/msss16Font.fnt" antialias="true" />
 	<font id="icon_font" filename="../resources/IconFontLarge.fnt" antialias="true"/>
-	<font id="vertical_font" filename="../resources/VerticalFontLarge.fnt" antialias="true"/>
+	<font id="vertical_font" filename="../resources/verticalFontLarge.fnt" antialias="true"/>
 	<font id="unicode_mss16_font" filename="../resources/unicode_mss16.fnt" antialias="true"/>
 
 <!-- Epix 2 -->
