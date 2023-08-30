@@ -9,7 +9,6 @@ class SettingsCache
 		weather = Setting.GetWeather();
 		lastKnownLocation = Setting.GetLastKnownLocation();
 		weatherProvider = Setting.GetWeatherProvider();
-		// weatherApiKey = Setting.GetWeatherApiKey();
 		weatherTempSystem = Setting.GetTempSystem();
 		weatherWindSystem = Setting.GetWindSystem();
 		extraTimeZone = Setting.GetExtraTimeZone();
@@ -36,7 +35,6 @@ class SettingsCache
 	public var weather;
 	public var lastKnownLocation;
 	public var weatherProvider;
-	// public var weatherApiKey;
 	public var weatherTempSystem;
 	public var weatherWindSystem;
 	public var extraTimeZone;

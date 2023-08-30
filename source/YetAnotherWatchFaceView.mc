@@ -4,6 +4,7 @@ using Toybox.System as Sys;
 using Toybox.Lang as Lang;
 using Toybox.Time.Gregorian as Gregorian;
 using Toybox.Time as Time;
+using Toybox.Weather as Weather;
 
 
 // Main WatchFace view
@@ -128,20 +129,50 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
    		_displayFunctions.setDc(dc, _fonts);
 		_displayFunctions.setSettings(_settingCache);
    		
-    	var info = Activity.getActivityInfo();
+    	// var info = Activity.getActivityInfo();
     	
-    	// starting from 3.1.7 empty location returns 0
-    	//
-    	//Sys.println(info.currentLocation + ", " + Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion));
-    	if (info != null && info.currentLocation != null)
-    	{
-    		var location = info.currentLocation.toDegrees();
-    		if (location[0] != 0.0 && location[1] != 0.0)
-    		{
-    			// Sys.println("update location:" + location[0] + ", " + location[1]);
-    			Setting.SetLastKnownLocation(location);
-    		}
-    	} 
+    	// // starting from 3.1.7 empty location returns 0
+    	// //
+    	// //Sys.println(info.currentLocation + ", " + Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion));
+    	// if (info != null && info.currentLocation != null)
+    	// {
+    	// 	var location = info.currentLocation.toDegrees();
+    	// 	if (location[0] != 0.0 && location[1] != 0.0)
+    	// 	{
+    	// 		// Sys.println("update location:" + location[0] + ", " + location[1]);
+    	// 		Setting.SetLastKnownLocation(location);
+    	// 	}
+    	// } 
+
+		// var locationInfo = Position.getInfo();
+    	// if (locationInfo != null && locationInfo.position != null) {
+		// 	var location = locationInfo.position.toDegrees();
+		// 	if (!ValidateLocation(location)) {
+		// 		var conditions = Weather.getCurrentConditions();
+		// 		if (conditions != null && conditions.observationLocationPosition != null) {
+		// 			location = conditions.observationLocationPosition.toDegrees();
+		// 		}
+		// 	}
+		// 	Setting.SetLastKnownLocation(location);
+		// 	Sys.println(location);
+    	// }
+
+		// var locationInfo = Position.getInfo();
+		// if (locationInfo == null || locationInfo.position == null || !ValidateLocation(locationInfo.position.toDegrees())) {
+		// 	var conditions = Weather.getCurrentConditions();
+		// 	if (conditions != null && conditions.observationLocationPosition != null) {
+		// 		location = conditions.observationLocationPosition.toDegrees();
+		// 	}
+		// }
+
+		var location = getGpsPosition();
+		if (location == null) {
+			location = getWeatherPosition();
+		}
+		if (location != null) {
+			Setting.SetLastKnownLocation(location);
+		}
+
 
 		/// fire background process if needed
 		///
@@ -249,7 +280,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
             }
 		}
     }
-    
+
     function InvalidateLayout()
     {
 		InvalidateSettingCache();
@@ -306,4 +337,34 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	
     	_displayFunctions = new DisplayFunctions();
      }
+
+
+
+	private function getGpsPosition() 
+	{
+		var locationInfo = Position.getInfo();
+		if (locationInfo == null || locationInfo.position == null) {
+			return null;
+		}
+		var location = locationInfo.position.toDegrees();
+		if ((Math.round(location[0]) == 0 && Math.round(location[1]) == 0) ||
+			Math.round(location[0]) == 180 && Math.round(location[1]) == 180) {
+			return null;
+		}
+		return location;
+	}
+
+	private function getWeatherPosition()
+	{
+		var conditions = Weather.getCurrentConditions();
+		if (conditions == null || conditions.observationLocationPosition == null) {
+			return null;
+		}
+		var location = conditions.observationLocationPosition.toDegrees();
+		if ((Math.round(location[0]) == 0 && Math.round(location[1]) == 0) ||
+			Math.round(location[0]) == 180 && Math.round(location[1]) == 180) {
+			return null;
+		}
+		return location;
+	}
 }

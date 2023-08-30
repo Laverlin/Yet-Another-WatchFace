@@ -72,7 +72,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			locationParam,
 			providerParam,
 			currencyParam,
-			versionsParam]);			
+			versionsParam]);
 			
         var options = {
           :method => Comm.HTTP_REQUEST_METHOD_GET,
@@ -100,7 +100,7 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 		}
 		catch(ex)
 		{
-			Sys.println("get weather error : " + ex.getErrorMessage());
+			Sys.println("get data error : " + ex.getErrorMessage());
 			_received.put("isErr", true);
 			Background.exit(_received);
 		}

@@ -138,12 +138,6 @@ class Setting
 	{
 		return GetValue("DimColor");
 	}
-			
-	// public static function GetWeatherApiKey()
-	// {
-	// 	var waKey = GetTmpValue("WeatherApiKey");
-	// 	return waKey != null ? waKey : ""; 
-	// }
 	
 	public static function GetExtraTimeZone()
 	{
@@ -319,27 +313,12 @@ class Setting
 
 	private static function GetValue(key)
 	{
-		var value = null;
-		try
-		{
-			value = Properties.getValue(key);
-		}
-		finally 
-		{
-			return value;
-		}
+		return Properties.getValue(key);
 	}
 
 	private static function SetValue(key, value)
 	{
-		try
-		{
-			Properties.setValue(key, value);
-		}
-		catch(ex) 
-		{
-			Sys.println("set value error (" + key + ", " + value + ") \n" + ex.getErrorMessage());
-		}
+		Properties.setValue(key, value);
 	}
 
 	private static function GetTmpValue(key)
