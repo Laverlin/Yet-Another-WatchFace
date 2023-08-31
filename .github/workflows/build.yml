@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SDK_VER: "4.2.4"
+      SDK_VER: "6.2.2" #"4.2.4"
       CONNECTIQ_SDK_URL: "https://developer.garmin.com/downloads/connect-iq/sdks"
       SDK_PATH: "/garminsdk"
       DEVICES_PATH: "/root/.Garmin/ConnectIQ/"
@@ -61,6 +61,8 @@ jobs:
         with:
           tag_prefix: "v"
 
+          minor_pattern: "(MINOR)"
+          search_commit_body: true
           # A string to determine the format of the version output
           # version_format: "${major}.${minor}.${patch}-prerelease${increment}"
           version_format: "${major}.${minor}.${patch}"
@@ -68,8 +70,6 @@ jobs:
           # If this is set to true, *every* commit will be treated as a new version.
           bump_each_commit: true
 
-          # If bump_each_commit is also set to true, setting this value will cause the version to increment only if the pattern specified is matched.
-          search_commit_body: false
 
       - name: Write Version 
         run: |
@@ -114,3 +114,9 @@ jobs:
           AZURE_RELEASE_SAS: ${{ secrets.AZURE_RELEASE_SAS }}
         run: |
           curl -H "x-ms-blob-type: BlockBlob" --upload-file $RELEASE_PATH/yas-${{ steps.semver.outputs.version }}.iq --url "https://ibglobalstorage.blob.core.windows.net/garmin-yawf-release/yas-${{ steps.semver.outputs.version }}.iq$AZURE_RELEASE_SAS"
+
+      - name: Create Tag
+        if: ${{ steps.semver.outputs.version_type == 'major' || steps.semver.outputs.version_type == 'minor' }}
+        run: |
+            git tag ${{ steps.semver.outputs.version_tag }}
+            git push origin ${{ steps.semver.outputs.version_tag }}

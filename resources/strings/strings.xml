@@ -4,7 +4,7 @@
     <string id="AppVersionTitle">App Version</string>
     
     <!-- <string id="WeatherApiKeyTitle">http://darksky.net API key, if DarkSky was chosen above</string> -->
-    <string id="weatherProviderTitle">Choose the weather provider. AppleWebkit (uses DarkSky) provides precipitation probability, and OpenWeather gives you the humidity level.</string>
+    <string id="weatherProviderTitle">Choose the weather provider. AppleWebkit (ex DarkSky) % - precipitation probability, OpenWeather % - humidity level.</string>
     <string id="openWeatherTitle">OpenWeather (% humidity)</string>
     <string id="darkSkyTitle">AppleWebkit (% precipitation probability)</string>
     

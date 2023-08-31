@@ -44,8 +44,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 
 		Setting.SetAppVersion(Ui.loadResource(Rez.Strings.AppVersionValue));
 		Setting.SetWatchServerToken(Ui.loadResource(Rez.Strings.WatchServerTokenValue));
-		//Setting.SetExchangeApiKey(Ui.loadResource(Rez.Strings.ExchangeApiKeyValue));
-		//Setting.SetIsTest(Ui.loadResource(Rez.Strings.IsTest).toNumber() == 1);
 		Setting.SetDeviceName(Ui.loadResource(Rez.Strings.DeviceName));
 
 		var deviceSettings = Sys.getDeviceSettings();
@@ -129,42 +127,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
    		_displayFunctions.setDc(dc, _fonts);
 		_displayFunctions.setSettings(_settingCache);
    		
-    	// var info = Activity.getActivityInfo();
-    	
-    	// // starting from 3.1.7 empty location returns 0
-    	// //
-    	// //Sys.println(info.currentLocation + ", " + Lang.format("$1$.$2$.$3$", Sys.getDeviceSettings().monkeyVersion));
-    	// if (info != null && info.currentLocation != null)
-    	// {
-    	// 	var location = info.currentLocation.toDegrees();
-    	// 	if (location[0] != 0.0 && location[1] != 0.0)
-    	// 	{
-    	// 		// Sys.println("update location:" + location[0] + ", " + location[1]);
-    	// 		Setting.SetLastKnownLocation(location);
-    	// 	}
-    	// } 
-
-		// var locationInfo = Position.getInfo();
-    	// if (locationInfo != null && locationInfo.position != null) {
-		// 	var location = locationInfo.position.toDegrees();
-		// 	if (!ValidateLocation(location)) {
-		// 		var conditions = Weather.getCurrentConditions();
-		// 		if (conditions != null && conditions.observationLocationPosition != null) {
-		// 			location = conditions.observationLocationPosition.toDegrees();
-		// 		}
-		// 	}
-		// 	Setting.SetLastKnownLocation(location);
-		// 	Sys.println(location);
-    	// }
-
-		// var locationInfo = Position.getInfo();
-		// if (locationInfo == null || locationInfo.position == null || !ValidateLocation(locationInfo.position.toDegrees())) {
-		// 	var conditions = Weather.getCurrentConditions();
-		// 	if (conditions != null && conditions.observationLocationPosition != null) {
-		// 		location = conditions.observationLocationPosition.toDegrees();
-		// 	}
-		// }
-
 		var location = getGpsPosition();
 		if (location == null) {
 			location = getWeatherPosition();

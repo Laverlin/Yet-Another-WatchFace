@@ -24,7 +24,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
     	{
    	    	// Request update if one of the remote services displayed
 	    	//
-	    	//var location = Setting.GetLastKnownLocation();
 	    	if (Setting.GetIsShowExchangeRate()
 	    		|| Setting.GetIsShowCity()
 	    		|| Setting.GetIsShowWeather())
@@ -40,7 +39,6 @@ class BackgroundServiceDelegate extends Sys.ServiceDelegate
 			Background.exit(_received);
 		}		 
     }
-    
     
     function RequestUpdate()
     {
