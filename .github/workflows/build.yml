@@ -81,7 +81,7 @@ jobs:
         env:
           APP_ID: ${{ secrets.APP_ID }}
         run: |
-          xmlstarlet ed -u '/iq:manifest/iq:application/@id' -v $APP_ID $GITHUB_WORKSPACE/manifest.xml
+          xmlstarlet ed -L -N iq="http://www.garmin.com/xml/connectiq" -u '/iq:manifest/iq:application/@id' -v $APP_ID $GITHUB_WORKSPACE/manifest.xml
 
       - name: Write Secrets
         env:
