@@ -116,7 +116,6 @@ jobs:
           curl -H "x-ms-blob-type: BlockBlob" --upload-file $RELEASE_PATH/yas-${{ steps.semver.outputs.version }}.iq --url "https://ibglobalstorage.blob.core.windows.net/garmin-yawf-release/yas-${{ steps.semver.outputs.version }}.iq$AZURE_RELEASE_SAS"
 
       - name: Create Tag
-        if: ${{ steps.semver.outputs.version_type == 'major' || steps.semver.outputs.version_type == 'minor' }}
         run: |
             git tag ${{ steps.semver.outputs.version_tag }}
             git push origin ${{ steps.semver.outputs.version_tag }}
