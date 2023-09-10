@@ -1,20 +1,15 @@
-info face="Fixedsys" size=150 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=2 padding=0,0,0,0 spacing=0,0 outline=0
-common lineHeight=150 base=122 scaleW=256 scaleH=256 pages=5 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
+info face="OCR A Extended" size=100 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=2 padding=0,0,0,0 spacing=0,0 outline=0
+common lineHeight=100 base=83 scaleW=256 scaleH=256 pages=2 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
 page id=0 file="Digits-454_0.png"
 page id=1 file="Digits-454_1.png"
-page id=2 file="Digits-454_2.png"
-page id=3 file="Digits-454_3.png"
-page id=4 file="Digits-454_4.png"
 chars count=10
-char id=48   x=0     y=0     width=111   height=150   xoffset=0     yoffset=0     xadvance=111   page=0  chnl=15
-char id=49   x=104   y=0     width=97    height=150   xoffset=0     yoffset=0     xadvance=97    page=1  chnl=15
-char id=50   x=111   y=0     width=104   height=150   xoffset=0     yoffset=0     xadvance=104   page=0  chnl=15
-char id=51   x=0     y=0     width=89    height=150   xoffset=0     yoffset=0     xadvance=89    page=4  chnl=15
-char id=52   x=0     y=0     width=104   height=150   xoffset=0     yoffset=0     xadvance=104   page=1  chnl=15
-char id=53   x=97    y=0     width=97    height=150   xoffset=0     yoffset=0     xadvance=97    page=2  chnl=15
-char id=54   x=89    y=0     width=89    height=150   xoffset=0     yoffset=0     xadvance=89    page=3  chnl=15
-char id=55   x=89    y=0     width=82    height=150   xoffset=0     yoffset=0     xadvance=82    page=4  chnl=15
-char id=56   x=0     y=0     width=97    height=150   xoffset=0     yoffset=0     xadvance=97    page=2  chnl=15
-char id=57   x=0     y=0     width=89    height=150   xoffset=0     yoffset=0     xadvance=89    page=3  chnl=15
-kernings count=1
-kerning first=49  second=49  amount=-10 
+char id=48   x=0     y=0     width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=49   x=58    y=0     width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=50   x=116   y=0     width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=51   x=174   y=0     width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=52   x=0     y=100   width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=53   x=58    y=100   width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=54   x=116   y=100   width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=55   x=174   y=100   width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=0  chnl=15
+char id=56   x=58    y=0     width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=1  chnl=15
+char id=57   x=0     y=0     width=58    height=100   xoffset=0     yoffset=0     xadvance=58    page=1  chnl=15
