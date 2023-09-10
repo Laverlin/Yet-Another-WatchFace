@@ -4,6 +4,7 @@
 	<font id="icon_font" filename="../resources/IconFontLarge.fnt" antialias="true"/>
 	<font id="vertical_font" filename="../resources/verticalFontLarge.fnt" antialias="true"/>
 	<font id="unicode_mss16_font" filename="../resources/unicode_mss16.fnt" antialias="true"/>
+	<font id="digits" filename="../resources/Digits-454.fnt" antialias="true"/>
 
 <!-- Epix 2 Pro 51" -->
 	
@@ -19,6 +20,7 @@
 				100 => msss16_font
 				101 => icon_font
 				102 => vertical_font
+				103 => Custom Digits
 				
 		align:	0 => Gfx.TEXT_JUSTIFY_RIGHT
 				1 => Gfx.TEXT_JUSTIFY_CENTER
@@ -29,7 +31,7 @@
 	
 	<jsonData id="l_date">{"x":[210, 160, 103], "y":[201, 201, 201], "c":[1, 2, 1], "f":[1, 1, 1], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -12, -18]}</jsonData>
 	
-	<jsonData id="l_time">{"x":[180, 180], "y":[56, 222], "c":[0, 0], "f":[8, 8], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
+	<jsonData id="l_time">{"x":[180, 180], "y":[106, 272], "c":[0, 0], "f":[103, 103], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
 	
 	<jsonData id="l_pmam">{"x":[195], "y":[154], "c":[0], "f":[100], "a":[0], "t":[null], "fun":5}</jsonData>
 	
