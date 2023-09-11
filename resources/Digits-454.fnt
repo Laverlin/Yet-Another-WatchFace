@@ -1,16 +1,17 @@
-info face="Envy Code R" size=140 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=2 padding=0,0,0,0 spacing=0,0 outline=0
-common lineHeight=140 base=112 scaleW=256 scaleH=256 pages=3 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
+info face="Share Tech Mono" size=140 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=2 padding=0,0,0,0 spacing=0,0 outline=0
+common lineHeight=140 base=110 scaleW=256 scaleH=256 pages=4 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
 page id=0 file="Digits-454_0.png"
 page id=1 file="Digits-454_1.png"
 page id=2 file="Digits-454_2.png"
+page id=3 file="Digits-454_3.png"
 chars count=10
-char id=48   x=0     y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=0  chnl=15
-char id=49   x=64    y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=0  chnl=15
-char id=50   x=128   y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=0  chnl=15
-char id=51   x=192   y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=0  chnl=15
-char id=52   x=64    y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=2  chnl=15
-char id=53   x=0     y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=2  chnl=15
-char id=54   x=192   y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=1  chnl=15
-char id=55   x=128   y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=1  chnl=15
-char id=56   x=64    y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=1  chnl=15
-char id=57   x=0     y=0     width=64    height=140   xoffset=0     yoffset=0     xadvance=64    page=1  chnl=15
+char id=48   x=0     y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=0  chnl=15
+char id=49   x=67    y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=0  chnl=15
+char id=50   x=134   y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=0  chnl=15
+char id=51   x=0     y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=3  chnl=15
+char id=52   x=134   y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=2  chnl=15
+char id=53   x=67    y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=2  chnl=15
+char id=54   x=0     y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=2  chnl=15
+char id=55   x=134   y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=1  chnl=15
+char id=56   x=67    y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=1  chnl=15
+char id=57   x=0     y=0     width=67    height=140   xoffset=0     yoffset=0     xadvance=67    page=1  chnl=15
