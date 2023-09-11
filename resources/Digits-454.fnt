@@ -1,4 +1,4 @@
-info face="Bitstream Vera Sans Mono" size=135 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=2 padding=0,0,0,0 spacing=0,0 outline=0
+info face="Droid Sans Mono" size=135 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=2 padding=0,0,0,0 spacing=0,0 outline=0
 common lineHeight=135 base=108 scaleW=256 scaleH=256 pages=4 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
 page id=0 file="Digits-454_0.png"
 page id=1 file="Digits-454_1.png"
