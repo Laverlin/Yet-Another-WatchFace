@@ -17,7 +17,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		Ui.loadResource(Rez.Fonts.unicode_mss16_font), 
 		Ui.loadResource(Rez.Fonts.icon_font), 
 		Ui.loadResource(Rez.Fonts.vertical_font),
-		Ui.loadResource(Rez.Fonts.digits)];
+		Ui.loadResource(Rez.Fonts.digits),
+		Ui.loadResource(Rez.Fonts.text),
+		Ui.loadResource(Rez.Fonts.hint)];
 	hidden var _funcs = [
 		:DisplayLocation, :DisplayBottomAlarmCount, :DisplayBottomMessageCount, 
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
