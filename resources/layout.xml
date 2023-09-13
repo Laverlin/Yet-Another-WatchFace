@@ -1,4 +1,9 @@
 <resources>	
+
+	<font id="digits" filename="../resources/IconFont.fnt" antialias="true"/>
+	<font id="text" filename="../resources/IconFont.fnt" antialias="true"/>
+	<font id="hint" filename="../resources/IconFont.fnt" antialias="true"/>
+	
 	<!-- Default -->
 	<!-- 
 		layout constants
