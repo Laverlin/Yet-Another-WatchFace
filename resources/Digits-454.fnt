@@ -1,15 +1,15 @@
-info face="JetBrains Mono Medium" size=-126 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=4 padding=0,0,0,0 spacing=0,0 outline=0
-common lineHeight=167 base=129 scaleW=256 scaleH=256 pages=2 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
+info face="JetBrains Mono ExtraBold" size=-116 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=4 padding=0,0,0,0 spacing=0,0 outline=0
+common lineHeight=153 base=119 scaleW=256 scaleH=256 pages=2 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
 page id=0 file="Digits-454_0.png"
 page id=1 file="Digits-454_1.png"
 chars count=10
-char id=48   x=58    y=0     width=57    height=95    xoffset=9     yoffset=35    xadvance=75    page=0  chnl=15
-char id=49   x=0     y=0     width=58    height=93    xoffset=11    yoffset=36    xadvance=75    page=1  chnl=15
-char id=50   x=0     y=95    width=59    height=94    xoffset=8     yoffset=35    xadvance=75    page=0  chnl=15
-char id=51   x=59    y=95    width=58    height=94    xoffset=8     yoffset=36    xadvance=75    page=0  chnl=15
-char id=52   x=58    y=0     width=55    height=93    xoffset=9     yoffset=36    xadvance=75    page=1  chnl=15
-char id=53   x=117   y=94    width=56    height=94    xoffset=10    yoffset=36    xadvance=75    page=0  chnl=15
-char id=54   x=115   y=0     width=61    height=94    xoffset=7     yoffset=36    xadvance=75    page=0  chnl=15
-char id=55   x=173   y=94    width=59    height=93    xoffset=9     yoffset=36    xadvance=75    page=0  chnl=15
-char id=56   x=0     y=0     width=58    height=95    xoffset=9     yoffset=35    xadvance=75    page=0  chnl=15
-char id=57   x=176   y=0     width=61    height=94    xoffset=7     yoffset=35    xadvance=75    page=0  chnl=15
+char id=48   x=58    y=0     width=56    height=88    xoffset=7     yoffset=32    xadvance=69    page=0  chnl=15
+char id=49   x=0     y=0     width=56    height=86    xoffset=9     yoffset=33    xadvance=69    page=1  chnl=15
+char id=50   x=0     y=88    width=57    height=87    xoffset=6     yoffset=32    xadvance=69    page=0  chnl=15
+char id=51   x=57    y=88    width=57    height=87    xoffset=6     yoffset=33    xadvance=69    page=0  chnl=15
+char id=52   x=56    y=0     width=55    height=86    xoffset=6     yoffset=33    xadvance=69    page=1  chnl=15
+char id=53   x=114   y=87    width=56    height=87    xoffset=7     yoffset=33    xadvance=69    page=0  chnl=15
+char id=54   x=114   y=0     width=60    height=87    xoffset=5     yoffset=33    xadvance=69    page=0  chnl=15
+char id=55   x=170   y=87    width=59    height=86    xoffset=5     yoffset=33    xadvance=69    page=0  chnl=15
+char id=56   x=0     y=0     width=58    height=88    xoffset=6     yoffset=32    xadvance=69    page=0  chnl=15
+char id=57   x=174   y=0     width=60    height=87    xoffset=5     yoffset=32    xadvance=69    page=0  chnl=15
