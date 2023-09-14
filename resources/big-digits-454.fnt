@@ -1,7 +1,7 @@
 info face="JetBrains Mono ExtraBold" size=-116 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=4 padding=0,0,0,0 spacing=0,0 outline=0
 common lineHeight=153 base=119 scaleW=256 scaleH=256 pages=2 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
-page id=0 file="Digits-454_0.png"
-page id=1 file="Digits-454_1.png"
+page id=0 file="big-digits-454_0.png"
+page id=1 file="big-digits-454_1.png"
 chars count=10
 char id=48   x=58    y=0     width=56    height=88    xoffset=7     yoffset=32    xadvance=69    page=0  chnl=15
 char id=49   x=0     y=0     width=56    height=86    xoffset=9     yoffset=33    xadvance=69    page=1  chnl=15
