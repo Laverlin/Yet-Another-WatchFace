@@ -1,6 +1,6 @@
 <resources>	
 
-	<font id="icon_font" filename="../resources/IconFontLarge.fnt" antialias="true"/>
+	<font id="icon_font" filename="icons-454.fnt" antialias="true"/>
 	<font id="vertical_font" filename="../resources/verticalFontLarge.fnt" antialias="true"/>
 	<font id="unicode_mss16_font" filename="../resources/unicode_mss16.fnt" antialias="true"/>
 	<font id="digits" filename="big-digits-454.fnt" antialias="true"/>
