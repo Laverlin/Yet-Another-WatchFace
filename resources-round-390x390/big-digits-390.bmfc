@@ -2,10 +2,10 @@
 fileVersion=1
 
 # font settings
-fontName=JetBrains Mono ExtraBold
+fontName=Inconsolata SemiCondensed Black
 fontFile=
 charSet=0
-fontSize=-90
+fontSize=-120
 aa=4
 scaleH=100
 useSmoothing=1
