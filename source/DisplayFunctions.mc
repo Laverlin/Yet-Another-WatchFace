@@ -126,7 +126,7 @@ class DisplayFunctions
 		var dows = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 		var dTimeInfo = Gregorian.info(_dTimeNow, Time.FORMAT_SHORT);
         var data = [_gTimeNow.day.format("%02d"), months[dTimeInfo.month - 1], dows[dTimeInfo.day_of_week - 1]];
-		//var data = [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()];
+		// var data = [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()];
     	var order = [[0, 1, 2],
     				 [1, 0, 2],
     				 [2, 1, 0],
