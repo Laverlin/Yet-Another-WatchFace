@@ -1,11 +1,11 @@
 <resources>	
 
-	<font id="icon_font" filename="icons-416.fnt" antialias="true"/>
+	<font id="icon_font" filename="icons-390.fnt" antialias="true"/>
 	<font id="vertical_font" filename="../resources/verticalFontLarge.fnt" antialias="true"/>
 	<font id="unicode_mss16_font" filename="../resources/unicode_mss16.fnt" antialias="true"/>
 	<font id="digits" filename="big-digits-390.fnt" antialias="true"/>
 	<font id="text" filename="text-390.fnt" antialias="true"/>
-	<font id="hint" filename="hint-416.fnt" antialias="true"/>
+	<font id="hint" filename="hint-390.fnt" antialias="true"/>
 
 <!-- 390 x 390 -->
 	
@@ -61,4 +61,4 @@
 
     <jsonData id="l_line">{"x":[195, 195],"y":[78, 312]}</jsonData>
     
-</resources>    
+</resources>
