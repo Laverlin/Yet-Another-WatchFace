@@ -33,26 +33,26 @@
 	<jsonData id="l_city_left">{"x":[69], "y":[54], "c":[2], "f":[105], "a":[2], "t":[null], "fun":0}</jsonData>
 	<jsonData id="l_city_center">{"x":[208], "y":[54], "c":[2], "f":[105], "a":[1], "t":[null], "fun":0}</jsonData>
 	
-	<jsonData id="l_date">{"x":[198, 150, 90], "y":[185, 185, 185], "c":[1, 2, 1], "f":[104, 104, 104], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -10, -14]}</jsonData>
+	<jsonData id="l_date">{"x":[198, 150, 90], "y":[175, 175, 175], "c":[1, 2, 1], "f":[104, 104, 104], "a":[0, 0, 0], "t":[null, null, null], "fun":3, "cor":[null, -10, -14]}</jsonData>
 	
 	<jsonData id="l_time">{"x":[157, 157], "y":[63, 220], "c":[0, 0], "f":[103, 103], "a":[0, 0], "t":[null, null], "fun":4, "tb":null}</jsonData>
 	
 	<jsonData id="l_pmam">{"x":[195], "y":[152], "c":[0], "f":[105], "a":[0], "t":[null], "fun":5, "tb": null}</jsonData>
 	
-	<jsonData id="l_sec">{"x":[197], "y":[289], "c":[0], "f":[104], "a":[0], "t":[null], "fun":6}</jsonData>
+	<jsonData id="l_sec">{"x":[197], "y":[279], "c":[0], "f":[104], "a":[0], "t":[null], "fun":6}</jsonData>
 
 	<jsonData id="l_temp">
-		{"x":[223, 233, 348, 366], "y":[84, 92, 84, 95], "c":[1, 2, 1, 2], "f":[104, 101, 104, 105], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 2, null, null], "tb": null}
+		{"x":[223, 233, 348, 366], "y":[74, 92, 74, 97], "c":[1, 2, 1, 2], "f":[104, 101, 104, 105], "a":[2, 2, 0, 0], "t":[null, null, null, null], "fun":7, "cor": [null, 2, null, null], "tb": null}
 	</jsonData>
 	<jsonData id="l_wind">
-		{"x":[223, 233, 340], "y":[130, 141, 140], "c":[1, 2, 0], "f":[104, 105, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 3, null], "tb": null}
+		{"x":[223, 233, 340], "y":[120, 143, 140], "c":[1, 2, 0], "f":[104, 105, 101], "a":[2, 2, 2], "t":[null, null, null], "fun":8, "cor": [null, 3, null], "tb": null}
 	</jsonData>
 	
 	<jsonData id="l_bt">{"x":[200], "y":[250], "c":[0], "f":[101], "a":[0], "t":[null], "fun":9}</jsonData>
 	
-	<jsonData id="l_field3">{"x":[223, 337], "y":[187, 198], "c":[1, 2], "f":[104, 105], "a":[2, 2], "t":[null, null], "fun":10, "lcor" : 6}</jsonData>
-	<jsonData id="l_field4">{"x":[223, 337], "y":[242, 252], "c":[1, 2], "f":[104, 105], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3}</jsonData>
-	<jsonData id="l_field5">{"x":[223, 337], "y":[290, 301], "c":[1, 2], "f":[104, 105], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3}</jsonData>
+	<jsonData id="l_field3">{"x":[223, 337], "y":[177, 200], "c":[1, 2], "f":[104, 105], "a":[2, 2], "t":[null, null], "fun":10, "lcor" : 6}</jsonData>
+	<jsonData id="l_field4">{"x":[223, 337], "y":[232, 254], "c":[1, 2], "f":[104, 105], "a":[2, 2], "t":[null, null], "fun":11, "lcor" : 3}</jsonData>
+	<jsonData id="l_field5">{"x":[223, 337], "y":[280, 303], "c":[1, 2], "f":[104, 105], "a":[2, 2], "t":[null, null], "fun":12, "lcor" : 3}</jsonData>
 	 
     <jsonData id="l_battery">{"x":[195, 195, 195, 195], "y":[95, 117, 132, 144], "c":[2, 2, 2, 2], "f":[102, 102, 102, 102], "a":[0, 0, 0, 0], "t":[null, null, null, null], "fun":13, "tb":null}</jsonData>
     
