@@ -15,6 +15,7 @@ class DisplayFunctions
 	hidden var _ecHour = null;
 	hidden var _eventTime = null;
 	hidden var _gTimeNow;
+	hidden var _dTimeNow;
 	hidden var _dc;
 	hidden var _fonts;
 	hidden var _conditionIcons = Ui.loadResource(Rez.JsonData.conditionIcons);
@@ -28,7 +29,8 @@ class DisplayFunctions
 	
 	function setTime(time)
 	{
-		_gTimeNow = time;
+		_dTimeNow = time;
+		_gTimeNow = Gregorian.info(_dTimeNow, Time.FORMAT_MEDIUM);
 	}
 	
 	function setDc(dc, fonts)
@@ -120,7 +122,11 @@ class DisplayFunctions
     ///
     function DisplayDate(layout)
     {
-        var data = [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()];
+		var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+		var dows = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+		var dTimeInfo = Gregorian.info(_dTimeNow, Time.FORMAT_SHORT);
+        var data = [_gTimeNow.day.format("%02d"), months[dTimeInfo.month - 1], dows[dTimeInfo.day_of_week - 1]];
+		//var data = [_gTimeNow.day.format("%02d"), _gTimeNow.month.toLower(), _gTimeNow.day_of_week.toLower()];
     	var order = [[0, 1, 2],
     				 [1, 0, 2],
     				 [2, 1, 0],

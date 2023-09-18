@@ -128,7 +128,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     //
     function onUpdate(dc)  
     {
-   		_displayFunctions.setTime(Gregorian.info(Time.now(), Time.FORMAT_MEDIUM));
+   		_displayFunctions.setTime(Time.now());
    		_displayFunctions.setDc(dc, _fonts);
 		_displayFunctions.setSettings(_settingCache);
    		
