@@ -2,10 +2,10 @@
 fileVersion=1
 
 # font settings
-fontName=Inconsolata UltraCondensed Medi
+fontName=Inconsolata ExtraCondensed Semi
 fontFile=
 charSet=0
-fontSize=-18
+fontSize=-32
 aa=4
 scaleH=100
 useSmoothing=1
@@ -54,6 +54,6 @@ invB=0
 outlineThickness=0
 
 # selected chars
-chars=32-126,160-255
+chars=32-126,160-255,8353,8355-8356,8358-8359,8361,8363-8365,8369-8370,8373,8377-8378,8380-8381
 
 # imported icon images
