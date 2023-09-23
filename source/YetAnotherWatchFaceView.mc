@@ -17,9 +17,8 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		Ui.loadResource(Rez.Fonts.hint),
 		Ui.loadResource(Rez.Fonts.icon_font), 
 		Ui.loadResource(Rez.Fonts.vertical_font),
-		Ui.loadResource(Rez.Fonts.digits),
-		Ui.loadResource(Rez.Fonts.text),
-		Ui.loadResource(Rez.Fonts.hint) // for backward compatibility REMOVE when all layouts are updated
+		Rez.Fonts has :digits ? Ui.loadResource(Rez.Fonts.digits) : null,
+		Rez.Fonts has :text ? Ui.loadResource(Rez.Fonts.text) : null
 		];
 	hidden var _funcs = [
 		:DisplayLocation, :DisplayBottomAlarmCount, :DisplayBottomMessageCount, 
@@ -29,7 +28,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 		:DisplayWatchStatus, :DisplayBottomLine];
 
 	hidden var _secDim;
-	hidden var _is90 = false;
 	hidden var _displayFunctions = new DisplayFunctions();
 	hidden var _colors;
 	hidden var _wfApp;
@@ -83,9 +81,6 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     function onLayout(dc) 
     {
     	_secDim = [dc.getTextWidthInPixels("00", Gfx.FONT_TINY), dc.getFontHeight(Gfx.FONT_TINY)];
-    	_is90 = (dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 90 || 
-    		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 82 ||
-    		dc.getFontHeight(Gfx.FONT_NUMBER_HOT) == 92) ? true : false;
 		
 		InvalidateLayout();
     }
@@ -257,9 +252,9 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	_layouts = {};
 		_blayout = {};    	 	
     	
-		_layouts.put("hour", Ui.loadResource(_is90 ? Rez.JsonData.l_time_f90 : Rez.JsonData.l_time));
+		_layouts.put("hour", Ui.loadResource(Rez.JsonData.l_time));
 		_blayout.put("hour", Ui.loadResource(Rez.JsonData.l_time));
-    	_layouts.put("date", Ui.loadResource(_is90 ? Rez.JsonData.l_date_f90 : Rez.JsonData.l_date));
+    	_layouts.put("date", Ui.loadResource(Rez.JsonData.l_date));
 		_blayout.put("date", Ui.loadResource(Rez.JsonData.l_date));  
 
 		_layouts.put("btooth", Ui.loadResource(Rez.JsonData.l_bt));  	
@@ -271,7 +266,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
     	
     	if (!Sys.getDeviceSettings().is24Hour)
     	{
-    		_layouts.put("pmam", Ui.loadResource(_is90 ? Rez.JsonData.l_pmam_f90 : Rez.JsonData.l_pmam));
+    		_layouts.put("pmam", Ui.loadResource(Rez.JsonData.l_pmam));
     	}
     	
     	if (Setting.GetIsShowWeather())

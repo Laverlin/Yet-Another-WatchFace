@@ -1,6 +1,10 @@
 <resources>	
-<!-- fenix 6 X -->
-	
+<!-- 280 x 280 -->
+
+	<font id="hint" filename="hint-280.fnt" antialias="true"/>
+	<font id="icon_font" filename="icons-280.fnt" antialias="true"/>
+	<font id="vertical_font" filename="../resources/vertical12.fnt" antialias="true"/>
+
 	<!-- 
 		layout constants
 		color:	0 => time
@@ -10,7 +14,7 @@
 		font:	0 => Gfx.FONT_NUMBER_XTINY
 				1 => Gfx.FONT_NUMBER_TINY
 				7 => Gfx.FONT_NUMBER_HOT
-				100 => msss16_font
+				100 => Custom Text
 				101 => icon_font
 				102 => vertical_font
 				

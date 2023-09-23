@@ -13,11 +13,6 @@
 		"cloudy":"J"
 	}
 	</jsonData>
-	
-	<font id="icon_font" filename="IconFont.fnt" antialias="true"/>
-	<font id="vertical_font" filename="vertical12.fnt" antialias="true"/>
-	<font id="unicode_mss16_font" filename="unicode_mss16.fnt" antialias="true"/>
-	
 
 <jsonData id="tzData1">{"Offsets":[720],"Abbrs":["-12"],"Untils":[null]}</jsonData>
 <jsonData id="tzData2">{"Offsets":[660],"Abbrs":["SST"],"Untils":[null]}</jsonData>
@@ -68,8 +63,5 @@
     		"HRK", "EGP", "HKD", "MXN", "NOK", "PLN", "RUB", "VND", "UAH",
     		"GBP", "BTC", "BYN"]}
 	</jsonData>
-	
 
-    
-	
 </resources>
