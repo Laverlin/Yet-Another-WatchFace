@@ -14,12 +14,13 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
 	hidden var _layouts = {};
 	hidden var _blayout = {};
 	hidden var _fonts = [
-		Ui.loadResource(Rez.Fonts.unicode_mss16_font), 
+		Ui.loadResource(Rez.Fonts.hint),
 		Ui.loadResource(Rez.Fonts.icon_font), 
 		Ui.loadResource(Rez.Fonts.vertical_font),
 		Ui.loadResource(Rez.Fonts.digits),
 		Ui.loadResource(Rez.Fonts.text),
-		Ui.loadResource(Rez.Fonts.hint)];
+		Ui.loadResource(Rez.Fonts.hint) // for backward compatibility REMOVE when all layouts are updated
+		];
 	hidden var _funcs = [
 		:DisplayLocation, :DisplayBottomAlarmCount, :DisplayBottomMessageCount, 
 		:DisplayDate, :DisplayTime, :DisplayPmAm, :DisplaySeconds,
@@ -232,7 +233,7 @@ class YetAnotherWatchFaceView extends Ui.WatchFace
         if (Setting.GetIsTest())
 		{
 			dc.setColor(Setting.GetDimColor(), Gfx.COLOR_TRANSPARENT);
-			dc.drawText(dc.getWidth()/2, dc.getHeight() - 20, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawText(dc.getWidth()/2, dc.getHeight() - 30, _fonts[0], Setting.GetAppVersion(), Gfx.TEXT_JUSTIFY_CENTER);
 		}
 
 		// draw checkmate
