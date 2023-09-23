@@ -108,13 +108,13 @@ jobs:
 
       - name: Build
         run: |
-          sudo java -cp /garminsdk/bin/monkeybrains.jar com.garmin.monkeybrains.Monkeybrains -o $RELEASE_PATH/yas-${{ steps.semver.outputs.version }}.iq -f $GITHUB_WORKSPACE/monkey.jungle -y $GITHUB_WORKSPACE/app.key -e -w -r -l 0
+          sudo java -cp /garminsdk/bin/monkeybrains.jar com.garmin.monkeybrains.Monkeybrains -o $RELEASE_PATH/yawf-${{ steps.semver.outputs.version }}.iq -f $GITHUB_WORKSPACE/monkey.jungle -y $GITHUB_WORKSPACE/app.key -e -w -r -l 0
 
       - name: Publish build result
         env: 
           AZURE_RELEASE_SAS: ${{ secrets.AZURE_RELEASE_SAS }}
         run: |
-          curl -H "x-ms-blob-type: BlockBlob" --upload-file $RELEASE_PATH/yas-${{ steps.semver.outputs.version }}.iq --url "https://ibglobalstorage.blob.core.windows.net/garmin-yawf-release/yas-${{ steps.semver.outputs.version }}.iq$AZURE_RELEASE_SAS"
+          curl -H "x-ms-blob-type: BlockBlob" --upload-file $RELEASE_PATH/yawf-${{ steps.semver.outputs.version }}.iq --url "https://ibglobalstorage.blob.core.windows.net/garmin-yawf-release/yawf-${{ steps.semver.outputs.version }}.iq$AZURE_RELEASE_SAS"
 
       - name: Create Tag
         run: |
