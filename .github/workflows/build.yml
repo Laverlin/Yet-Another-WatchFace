@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SDK_VER: "6.3.0" #"4.2.4"
+      SDK_VER: "7.3.1" #"4.2.4"
       CONNECTIQ_SDK_URL: "https://developer.garmin.com/downloads/connect-iq/sdks"
       SDK_PATH: "/garminsdk"
       DEVICES_PATH: "/root/.Garmin/ConnectIQ/"
